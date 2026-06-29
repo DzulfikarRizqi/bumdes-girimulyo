@@ -1,217 +1,475 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { Leaf, ArrowLeft, ShoppingBag, Users, Phone, CheckCircle } from "lucide-react";
+import Navbar from "@/components/ui/Navbar";
+import {
+  Leaf, ArrowLeft, Bird, Wheat, CalendarDays, Scale,
+  Phone, MapPin, Mail, ChevronRight, CheckCircle2,
+  Maximize2, Egg, Palette, ShieldCheck,
+} from "lucide-react";
 
-const PRODUCTS = [
+// ─── Types ───────────────────────────────────────────────────────────────────
+type Tab = "lohmann" | "telur";
+
+// ─── Data ────────────────────────────────────────────────────────────────────
+const STATS = [
   {
-    img: "photo-1706784694581-4c6e001c3c37",
-    name: "Sayuran Segar Campur",
-    desc: "Aneka sayuran organik segar langsung dari kebun — bayam, kangkung, wortel, dan brokoli.",
-    price: "Rp 15.000 / kg",
-    badge: "Tersedia",
-    badgeColor: "bg-[#2C5F1A]",
+    icon: Bird,
+    label: "Populasi",
+    value: "1.271",
+    unit: "Ekor",
+    desc: "Ayam betina produktif aktif",
+    bg: "#FFF7ED",
+    iconColor: "#C2551C",
   },
   {
-    img: "photo-1659822887922-c1386185cc6b",
-    name: "Paket Sayur Harian",
-    desc: "Paket sayuran pilihan untuk kebutuhan dapur harian. Segar, bersih, tanpa pestisida kimia.",
-    price: "Rp 45.000 / paket",
-    badge: "Best Seller",
-    badgeColor: "bg-[#8B5E3C]",
+    icon: Wheat,
+    label: "Pakan",
+    value: "Complete",
+    unit: "Feed",
+    desc: "Pakan formulasi seimbang",
+    bg: "#F0FDF4",
+    iconColor: "#2C5F1A",
   },
   {
-    img: "photo-1553787434-45e1d245bfbb",
-    name: "Aneka Umbi & Rempah",
-    desc: "Jahe, kunyit, temulawak, dan umbi lokal pilihan. Ideal untuk jamu, masakan, dan UMKM.",
-    price: "Rp 20.000 / kg",
-    badge: "Organik",
-    badgeColor: "bg-[#2C5F1A]",
+    icon: CalendarDays,
+    label: "Masa Produktif",
+    value: ">100",
+    unit: "Minggu",
+    desc: "Umur produktif panjang",
+    bg: "#FFF7ED",
+    iconColor: "#8B5E3C",
   },
   {
-    img: "photo-1741112477809-b776ab602c2d",
-    name: "Petai & Kacang Lokal",
-    desc: "Petai segar, kacang panjang, dan polong-polongan khas ladang Giripurno yang subur.",
-    price: "Rp 18.000 / ikat",
-    badge: "Tersedia",
-    badgeColor: "bg-[#2C5F1A]",
-  },
-  {
-    img: "photo-1762414103968-0e1c31b1aaca",
-    name: "Paket Hamper Panen",
-    desc: "Keranjang buah dan sayur segar pilihan — cocok untuk hadiah, oleh-oleh, dan acara spesial.",
-    price: "Rp 120.000 / keranjang",
-    badge: "Populer",
-    badgeColor: "bg-[#8B5E3C]",
-  },
-  {
-    img: "photo-1655178353433-2e774ba32ff4",
-    name: "Paket Agrowisata",
-    desc: "Kunjungan kebun + petik langsung + edukasi pertanian organik untuk keluarga dan sekolah.",
-    price: "Rp 75.000 / orang",
-    badge: "Wisata",
-    badgeColor: "bg-[#2C5F1A]",
+    icon: Scale,
+    label: "Ransum Harian",
+    value: "125",
+    unit: "gram",
+    desc: "2× sehari, pagi & sore",
+    bg: "#F0FDF4",
+    iconColor: "#2C5F1A",
   },
 ];
 
-const PROGRAMS = [
-  { icon: "🌱", title: "Pertanian Organik", desc: "Budidaya tanpa pestisida kimia. Menjaga kesuburan tanah jangka panjang." },
-  { icon: "🎓", title: "Edukasi Agrowisata", desc: "Program kunjungan kebun untuk pelajar, keluarga, dan komunitas." },
-  { icon: "🤝", title: "Kemitraan Petani", desc: "Memberdayakan petani lokal melalui sistem bagi hasil yang adil." },
-  { icon: "📦", title: "Distribusi Langsung", desc: "Pengiriman ke pasar, restoran, dan konsumen di Kota Batu tanpa perantara." },
+const EGG_QUALITIES = [
+  {
+    icon: Maximize2,
+    label: "Ukuran",
+    variants: ["Besar", "Sedang", "Kecil"],
+    variantColors: ["bg-[#8B5E3C]/15 text-[#6B3A1F]", "bg-[#A07850]/15 text-[#8B5E3C]", "bg-[#C4A882]/20 text-[#8B6040]"],
+    desc: "Dikelompokkan berdasarkan berat telur per butir.",
+  },
+  {
+    icon: Egg,
+    label: "Bentuk",
+    variants: ["Oval", "Bulat"],
+    variantColors: ["bg-[#2C5F1A]/10 text-[#1C4010]", "bg-[#4A8A30]/10 text-[#2C5F1A]"],
+    desc: "Standar bentuk ideal untuk konsumsi dan kemasan.",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Keutuhan Kerabang",
+    variants: ["Kompak", "Retak"],
+    variantColors: ["bg-[#2C5F1A]/10 text-[#1C4010]", "bg-red-100 text-red-700"],
+    desc: "Kerabang kompak lebih tahan lama dan aman konsumsi.",
+  },
+  {
+    icon: Palette,
+    label: "Warna",
+    variants: ["Cokelat Muda", "Cokelat", "Cokelat Gelap"],
+    variantColors: [],
+    isColor: true,
+    swatches: ["#D4A88A", "#A0704A", "#6B3A20"],
+    desc: "Variasi warna alami kulit telur ayam Lohmann Brown.",
+  },
 ];
 
-const WA_FARM = "6281234567890";
+const FEATURES = [
+  "Tingkat produksi telur 85–92% per hari",
+  "Tahan terhadap penyakit lingkungan tropis",
+  "Konversi pakan sangat efisien (FCR <2)",
+  "Telur berukuran konsisten dan bernilai jual tinggi",
+  "Tidak agresif, mudah dikelola dalam kandang koloni",
+];
 
-export default function GirimulyoFarm() {
+// ─── Components ──────────────────────────────────────────────────────────────
+
+function Hero() {
   return (
-    <div className="min-h-screen bg-[#F7F3EC]">
-      {/* Header */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-[#F7F3EC]/96 backdrop-blur-md border-b border-[#2C5F1A]/10">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-              <Leaf className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-sm tracking-wide text-[#1C1A16]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span>
-            </span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            {[{ l: "Beranda", to: "/" }, { l: "Girimulyo Farm", to: "/girimulyofarm" }, { l: "Manahayu Resort", to: "/manahayuresort" }].map(({ l, to }) => (
-              <Link key={to} href={to} className="text-sm font-medium text-[#1C1A16]/70 hover:text-[#2C5F1A] transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{l}</Link>
-            ))}
-          </nav>
-          <Link href="/" className="flex items-center gap-1.5 text-sm text-[#6B5E4A] hover:text-[#2C5F1A] transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            <ArrowLeft className="w-4 h-4" /> Beranda
-          </Link>
-        </div>
-      </header>
+    <section className="pt-16 relative overflow-hidden bg-[#1C1008]">
+      {/* BG image */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1694984716468-e61f15c4f851?w=1600&h=700&fit=crop&auto=format"
+          alt="Ayam Lohmann Brown di padang rumput hijau Girimulyo Farm"
+          className="w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/90 via-[#1C1008]/60 to-[#1C1008]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1C1008]/70 via-transparent to-transparent" />
+      </div>
 
-      {/* Hero */}
-      <section className="relative pt-16 min-h-[60vh] flex items-end overflow-hidden">
-        <div className="absolute inset-0 bg-[#0D2408]">
-          <img src="https://images.unsplash.com/photo-1762414103968-0e1c31b1aaca?w=1600&h=800&fit=crop&auto=format"
-            alt="Keranjang hasil panen sayuran dan buah segar Girimulyo Farm"
-            className="w-full h-full object-cover opacity-50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D2408] via-[#0D2408]/40 to-transparent" />
-        </div>
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pb-16 w-full">
-          <div className="inline-flex items-center gap-2 bg-[#2C5F1A] text-white text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            <Leaf className="w-3 h-3" /> Unit Usaha BUMDes
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-2xl">
+          <div className="inline-flex items-center gap-2 bg-[#8B5E3C]/80 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full mb-7"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <Bird className="w-3 h-3" /> Unit Peternakan · BUMDes Girimulyo
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4" style={{ fontFamily: "'Fraunces', serif" }}>
-            Girimulyo <em className="italic font-light text-[#A8D97A]">Farm</em>
+          <h1 className="text-5xl md:text-6xl font-bold text-white leading-[1.05] mb-4"
+            style={{ fontFamily: "'Fraunces', serif" }}>
+            Girimulyo <em className="italic font-light text-[#D4A882]">Farm</em>
           </h1>
-          <p className="text-white/65 text-lg max-w-xl leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Pertanian organik terpadu di jantung Desa Giripurno — menyehatkan meja makan dan menghidupkan ekonomi petani lokal.
+          <p className="text-[#D4A882] font-semibold text-base md:text-lg mb-3 tracking-wide"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Pusat Peternakan Ayam Petelur Berkualitas
           </p>
-        </div>
-      </section>
+          <p className="text-white/55 text-sm md:text-base leading-relaxed max-w-lg"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Mengembangkan populasi ayam Lohmann Brown pilihan di ketinggian Desa Giripurno untuk
+            menghasilkan telur segar bermutu tinggi bagi pasar lokal Kota Batu.
+          </p>
 
-      {/* Programs */}
-      <section className="py-16 bg-[#2C5F1A]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PROGRAMS.map(p => (
-              <div key={p.title} className="flex items-start gap-4">
-                <span className="text-3xl shrink-0">{p.icon}</span>
-                <div>
-                  <h4 className="font-bold text-white text-sm mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{p.title}</h4>
-                  <p className="text-white/60 text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{p.desc}</p>
-                </div>
+          {/* Quick stats strip */}
+          <div className="flex flex-wrap gap-6 mt-10">
+            {[
+              { v: "1.271", l: "Ekor Ayam" },
+              { v: "85–92%", l: "Produksi/Hari" },
+              { v: ">100", l: "Minggu Produktif" },
+            ].map(({ v, l }) => (
+              <div key={l}>
+                <div className="text-2xl font-bold text-white" style={{ fontFamily: "'Fraunces', serif" }}>{v}</div>
+                <div className="text-white/45 text-xs mt-0.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{l}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Products Grid */}
-      <section className="py-24 bg-[#F7F3EC]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-14">
-            <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Produk & Program</div>
-            <h2 className="text-4xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>Hasil Kebun & Paket Kami</h2>
+function TabbedContent() {
+  const [tab, setTab] = useState<Tab>("lohmann");
+
+  return (
+    <section className="py-20 bg-[#FDF8F0]">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Section label */}
+        <div className="text-center mb-12">
+          <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Data Teknis
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PRODUCTS.map(p => (
-              <div key={p.name} className="group bg-white rounded-2xl overflow-hidden border border-[#2C5F1A]/8 hover:shadow-lg hover:shadow-[#2C5F1A]/8 hover:border-[#2C5F1A]/20 transition-all duration-400 hover:-translate-y-1">
-                <div className="relative h-48 bg-[#1C3A10] overflow-hidden">
-                  <img src={`https://images.unsplash.com/${p.img}?w=600&h=400&fit=crop&auto=format`}
-                    alt={p.name} className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-600" />
-                  <div className={`absolute top-3 left-3 ${p.badgeColor} text-white text-[10px] font-bold px-2.5 py-1 rounded-full tracking-wide`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{p.badge}</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1C1A16]"
+            style={{ fontFamily: "'Fraunces', serif" }}>
+            Profil Unggas & Kualitas Produk
+          </h2>
+        </div>
+
+        {/* Tab bar */}
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex bg-[#EDE6D8] rounded-2xl p-1.5 gap-1">
+            {([
+              { id: "lohmann" as Tab, label: "🐔 Ayam Lohmann" },
+              { id: "telur" as Tab, label: "🥚 Kualitas Telur" },
+            ] as const).map(({ id, label }) => (
+              <button key={id} onClick={() => setTab(id)}
+                className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-250 whitespace-nowrap ${
+                  tab === id
+                    ? "bg-white text-[#1C1A16] shadow-sm shadow-[#8B5E3C]/10"
+                    : "text-[#6B5E4A] hover:text-[#1C1A16]"
+                }`}
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── TAB: Ayam Lohmann ── */}
+        {tab === "lohmann" && (
+          <div className="animate-in fade-in duration-300">
+            {/* 2×2 stat cards */}
+            <div className="grid grid-cols-2 gap-5 mb-12">
+              {STATS.map(({ icon: Icon, label, value, unit, desc, bg, iconColor }) => (
+                <div key={label}
+                  className="bg-white rounded-2xl p-6 md:p-7 border border-[#8B5E3C]/8 hover:border-[#8B5E3C]/25 hover:shadow-md transition-all duration-300 group">
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: bg }}>
+                      <Icon className="w-5 h-5" style={{ color: iconColor }} />
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-[#C4A882] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="text-xs font-bold tracking-widest uppercase text-[#A08060] mb-1.5"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {label}
+                  </p>
+                  <div className="flex items-baseline gap-1.5 mb-1">
+                    <span className="text-3xl font-bold text-[#1C1A16]"
+                      style={{ fontFamily: "'Fraunces', serif" }}>{value}</span>
+                    <span className="text-sm font-semibold text-[#8B5E3C]"
+                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{unit}</span>
+                  </div>
+                  <p className="text-xs text-[#9B8878] leading-relaxed"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{desc}</p>
                 </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-[#1C1A16] mb-2 text-base" style={{ fontFamily: "'Fraunces', serif" }}>{p.name}</h3>
-                  <p className="text-[#6B5E4A] text-xs leading-relaxed mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{p.desc}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-[#2C5F1A] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{p.price}</span>
-                    <a href={`https://wa.me/${WA_FARM}?text=Halo,%20saya%20tertarik%20dengan%20${encodeURIComponent(p.name)}%20dari%20Girimulyo%20Farm`}
-                      target="_blank" rel="noopener noreferrer"
-                      className="bg-[#25D366] hover:bg-[#1DAE55] text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      <ShoppingBag className="w-3 h-3" /> Pesan
-                    </a>
+              ))}
+            </div>
+
+            {/* Breed info card */}
+            <div className="bg-[#1C1008] rounded-2xl overflow-hidden">
+              <div className="md:flex">
+                <div className="md:w-72 h-52 md:h-auto shrink-0 bg-[#2A1A0A] overflow-hidden">
+                  <img
+                    src="https://images.unsplash.com/photo-1694984717361-6ad859014d2a?w=600&h=500&fit=crop&auto=format"
+                    alt="Ayam Lohmann Brown close-up di Girimulyo Farm"
+                    className="w-full h-full object-cover opacity-70"
+                  />
+                </div>
+                <div className="p-7 md:p-9 flex-1">
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-[#D4A882]/70 mb-3"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    Mengapa Lohmann Brown?
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-5"
+                    style={{ fontFamily: "'Fraunces', serif" }}>
+                    Ras Unggulan Pilihan Girimulyo Farm
+                  </h3>
+                  <ul className="space-y-3">
+                    {FEATURES.map(f => (
+                      <li key={f} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-4 h-4 text-[#6DBF40] shrink-0 mt-0.5" />
+                        <span className="text-white/65 text-sm leading-relaxed"
+                          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                          {f}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── TAB: Kualitas Telur ── */}
+        {tab === "telur" && (
+          <div className="animate-in fade-in duration-300">
+            {/* Hero egg image */}
+            <div className="relative h-52 rounded-2xl overflow-hidden mb-10 bg-[#2A1A0A]">
+              <img
+                src="https://images.unsplash.com/photo-1635843125569-b7fb33d26fab?w=1200&h=400&fit=crop&auto=format"
+                alt="Telur cokelat segar dalam keranjang hasil panen Girimulyo Farm"
+                className="w-full h-full object-cover opacity-60"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/80 via-[#1C1008]/30 to-transparent" />
+              <div className="absolute inset-0 flex items-center px-8">
+                <div>
+                  <p className="text-[#D4A882] text-xs font-bold tracking-widest uppercase mb-2"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    Standar Kualitas
+                  </p>
+                  <h3 className="text-3xl font-bold text-white"
+                    style={{ fontFamily: "'Fraunces', serif" }}>
+                    Telur Segar <em className="italic font-light text-[#D4A882]">Girimulyo</em>
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+            {/* Quality cards */}
+            <div className="space-y-4">
+              {EGG_QUALITIES.map(({ icon: Icon, label, variants, variantColors, desc, isColor, swatches }) => (
+                <div key={label}
+                  className="bg-white rounded-2xl p-6 border border-[#8B5E3C]/8 hover:border-[#8B5E3C]/20 hover:shadow-sm transition-all duration-300">
+                  <div className="flex items-start gap-5">
+                    {/* Icon */}
+                    <div className="w-10 h-10 rounded-xl bg-[#FFF7ED] flex items-center justify-center shrink-0">
+                      <Icon className="w-4.5 h-4.5 text-[#8B5E3C]" style={{ width: "18px", height: "18px" }} />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                        <div>
+                          <h4 className="font-bold text-[#1C1A16] text-sm mb-1"
+                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                            {label}
+                          </h4>
+                          <p className="text-[#9B8878] text-xs leading-relaxed"
+                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                            {desc}
+                          </p>
+                        </div>
+
+                        {/* Variant chips */}
+                        <div className="flex flex-wrap gap-2 shrink-0">
+                          {isColor && swatches
+                            ? variants.map((v, i) => (
+                              <div key={v} className="flex items-center gap-2 bg-[#F9F5EE] rounded-full px-3 py-1.5 border border-[#E8DFD0]">
+                                <span
+                                  className="w-4 h-4 rounded-full shrink-0 border border-white shadow-sm"
+                                  style={{ background: swatches[i] }}
+                                />
+                                <span className="text-[#4A3F30] text-xs font-medium"
+                                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                                  {v}
+                                </span>
+                              </div>
+                            ))
+                            : variants.map((v, i) => (
+                              <span key={v}
+                                className={`${variantColors[i] || "bg-[#F0EBE0] text-[#6B5E4A]"} text-xs font-semibold px-3 py-1.5 rounded-full`}
+                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                                {v}
+                              </span>
+                            ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Egg grade note */}
+            <div className="mt-8 bg-[#F0FDF4] border border-[#2C5F1A]/15 rounded-2xl px-6 py-5 flex items-start gap-4">
+              <CheckCircle2 className="w-5 h-5 text-[#2C5F1A] shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-[#1C4010] text-sm mb-1"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  Seleksi Telur Dilakukan Setiap Hari
+                </p>
+                <p className="text-[#4A7040] text-xs leading-relaxed"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  Setiap telur diseleksi berdasarkan ukuran, bentuk, keutuhan kerabang, dan warna sebelum dikemas dan didistribusikan ke pasar. Hanya telur berkualitas Grade A yang lolos seleksi.
+                </p>
               </div>
-            ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function ContactCTA() {
+  return (
+    <section className="py-16 bg-[#EDE6D8]">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="bg-[#2C5F1A] rounded-3xl px-8 py-12 md:px-14 md:py-14 flex flex-col md:flex-row items-center gap-10 justify-between">
+          <div className="max-w-md">
+            <p className="text-[#A8D97A] text-xs font-bold tracking-widest uppercase mb-3"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Hubungi Kami
+            </p>
+            <h2 className="text-3xl font-bold text-white mb-3"
+              style={{ fontFamily: "'Fraunces', serif" }}>
+              Pesan Telur atau<br />
+              <em className="italic font-light text-[#A8D97A]">Kunjungi Farm Kami</em>
+            </h2>
+            <p className="text-white/60 text-sm leading-relaxed"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Kami melayani pembelian langsung, pengiriman ke area Batu–Malang, dan kunjungan edukasi agrowisata untuk sekolah dan keluarga.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 w-full md:w-auto md:min-w-[220px]">
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20memesan%20telur%20dari%20Girimulyo%20Farm"
+              target="_blank" rel="noopener noreferrer"
+              className="bg-[#25D366] hover:bg-[#1DAE55] text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <Phone className="w-4 h-4" /> WhatsApp Pesan Telur
+            </a>
+            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20tertarik%20kunjungan%20agrowisata%20Girimulyo%20Farm"
+              target="_blank" rel="noopener noreferrer"
+              className="border border-white/25 hover:border-white/50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Daftar Agrowisata
+            </a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* CTA Section */}
-      <section className="py-20 bg-[#EDE6D8]">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="bg-[#2C5F1A] rounded-3xl p-12 md:p-16 flex flex-col md:flex-row items-center gap-10">
-            <div className="flex-1">
-              <div className="text-xs font-semibold tracking-widest uppercase text-[#A8D97A] mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Bergabung Bersama Kami</div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ fontFamily: "'Fraunces', serif" }}>
-                Beli Langsung dari Petani,
-                <br /><em className="italic font-light text-[#A8D97A]">atau Jadi Mitra Kami</em>
-              </h2>
-              <p className="text-white/70 text-sm leading-relaxed mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Kami melayani pembelian langsung, langganan mingguan, dan kemitraan untuk restoran, hotel, serta distributor di wilayah Malang Raya.
+function Footer() {
+  return (
+    <footer className="bg-[#1C1008] py-10">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
+          {/* Brand */}
+          <div className="max-w-xs">
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
+                <Leaf className="w-3.5 h-3.5 text-white" />
+              </div>
+              <span className="text-white font-bold text-sm tracking-wide"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Girimulyo <span className="text-[#D4A882]">Farm</span>
+              </span>
+            </div>
+            <p className="text-white/35 text-xs leading-relaxed"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Unit peternakan ayam petelur milik BUMDes Girimulyo, Desa Giripurno, Kota Batu.
+            </p>
+          </div>
+
+          {/* Contact */}
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <MapPin className="w-4 h-4 text-[#8B5E3C] shrink-0 mt-0.5" />
+              <p className="text-white/45 text-xs leading-relaxed"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Desa Giripurno, Kec. Bumiaji<br />Kota Batu, Jawa Timur 65336
               </p>
-              <ul className="mt-4 space-y-2">
-                {["Harga langsung dari petani", "Pengiriman ke area Batu & Malang", "Paket langganan mingguan tersedia"].map(t => (
-                  <li key={t} className="flex items-center gap-2 text-white/80 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    <CheckCircle className="w-4 h-4 text-[#A8D97A] shrink-0" /> {t}
-                  </li>
-                ))}
-              </ul>
             </div>
-            <div className="flex flex-col gap-4 shrink-0">
-              <a href={`https://wa.me/${WA_FARM}?text=Halo,%20saya%20ingin%20memesan%20produk%20Girimulyo%20Farm`}
-                target="_blank" rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#1DAE55] text-white font-semibold px-8 py-4 rounded-full flex items-center gap-3 transition-colors text-sm shadow-lg"
+            <div className="flex items-center gap-3">
+              <Phone className="w-4 h-4 text-[#8B5E3C] shrink-0" />
+              <a href="tel:+6281234567890" className="text-white/45 text-xs hover:text-white/70 transition-colors"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                <Phone className="w-4 h-4" /> Hubungi via WhatsApp
+                +62 812-3456-7890
               </a>
-              <a href={`https://wa.me/${WA_FARM}?text=Halo,%20saya%20tertarik%20menjadi%20mitra%20Girimulyo%20Farm`}
-                target="_blank" rel="noopener noreferrer"
-                className="border border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-full flex items-center gap-3 transition-colors text-sm justify-center"
+            </div>
+            <div className="flex items-center gap-3">
+              <Mail className="w-4 h-4 text-[#8B5E3C] shrink-0" />
+              <a href="mailto:farm@giripurno.desa.id" className="text-white/45 text-xs hover:text-white/70 transition-colors"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                <Users className="w-4 h-4" /> Jadi Mitra Farm
+                farm@giripurno.desa.id
               </a>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="bg-[#1C1A16] py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-              <Leaf className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="text-white text-sm font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span></span>
+        <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-white/20 text-xs"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            © 2024 Girimulyo Farm · BUMDes Girimulyo
+          </p>
+          <div className="flex gap-5">
+            <Link href="/" className="text-white/20 hover:text-white/45 text-xs transition-colors"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Beranda BUMDes
+            </Link>
+            <Link href="/manahayuresort" className="text-white/20 hover:text-white/45 text-xs transition-colors"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Manahayu Resort
+            </Link>
           </div>
-          <p className="text-white/30 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Desa Giripurno, Kec. Bumiaji, Kota Batu, Jawa Timur · © 2024</p>
-          <Link href="/manahayuresort" className="text-[#8B5E3C] hover:text-[#A07050] text-sm font-medium transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Manahayu Resort →
-          </Link>
         </div>
-      </footer>
+      </div>
+    </footer>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+export default function GirimulyoFarm() {
+  return (
+    <div className="min-h-screen bg-[#FDF8F0]">
+      <Navbar />
+      <Hero />
+      <TabbedContent />
+      <ContactCTA />
+      <Footer />
     </div>
   );
 }

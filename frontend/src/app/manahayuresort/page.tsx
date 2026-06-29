@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Navbar from "@/components/ui/Navbar";
 import { Leaf, Wifi, Wind, Coffee, Bath, Tv, TreePine, Phone, Star, ArrowLeft, Users, Maximize } from "lucide-react";
 
 const WA_RESORT = "6281298765432";
@@ -76,28 +77,7 @@ const FACILITIES = [
 export default function ManahayuResort() {
   return (
     <div className="min-h-screen bg-[#F7F3EC]">
-      {/* Header */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-[#F7F3EC]/96 backdrop-blur-md border-b border-[#2C5F1A]/10">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-              <Leaf className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-sm tracking-wide text-[#1C1A16]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span>
-            </span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            {[{ l: "Beranda", to: "/" }, { l: "Girimulyo Farm", to: "/girimulyofarm" }, { l: "Manahayu Resort", to: "/manahayuresort" }].map(({ l, to }) => (
-              <Link key={to} href={to} className="text-sm font-medium text-[#1C1A16]/70 hover:text-[#2C5F1A] transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{l}</Link>
-            ))}
-          </nav>
-          {/* Admin Login subtle link */}
-          <Link href="/booking" className="text-xs text-[#1C1A16]/30 hover:text-[#1C1A16]/60 transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Admin Login
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero */}
       <section className="relative pt-16 min-h-[70vh] flex items-end overflow-hidden">

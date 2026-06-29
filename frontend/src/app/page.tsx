@@ -1,78 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/ui/Navbar";
 import {
   Leaf, MapPin, Phone, Mail, Circle, Square, Triangle,
-  ChevronDown, ArrowRight, Menu, X, ExternalLink
+  ChevronDown, ArrowRight, ExternalLink
 } from "lucide-react";
-
-function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 ${scrolled ? "bg-[#F7F3EC]/96 backdrop-blur-md shadow-sm border-b border-[#2C5F1A]/10" : "bg-transparent"}`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center shrink-0">
-            <Leaf className="w-4 h-4 text-white" />
-          </div>
-          <span className={`font-bold text-sm tracking-wide transition-colors ${scrolled ? "text-[#1C1A16]" : "text-white"}`} style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span>
-          </span>
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-8">
-          {[
-            { label: "Beranda", to: "/" },
-            { label: "Girimulyo Farm", to: "/girimulyofarm" },
-            { label: "Manahayu Resort", to: "/manahayuresort" },
-          ].map(l => (
-            <Link key={l.to} href={l.to}
-              className={`text-sm font-medium transition-colors hover:text-[#2C5F1A] ${scrolled ? "text-[#1C1A16]/70" : "text-white/80"}`}
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              {l.label}
-            </Link>
-          ))}
-          <a href="https://desagiripurno.id" target="_blank" rel="noopener noreferrer"
-            className="bg-[#2C5F1A] text-white text-sm font-semibold px-5 py-2 rounded-full hover:bg-[#3A7A22] transition-colors flex items-center gap-1.5"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Portal Desa <ExternalLink className="w-3 h-3" />
-          </a>
-        </nav>
-
-        <button className={`md:hidden ${scrolled ? "text-[#1C1A16]" : "text-white"}`} onClick={() => setOpen(!open)}>
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {open && (
-        <div className="md:hidden bg-[#F7F3EC] border-t border-[#2C5F1A]/10 px-6 py-5 flex flex-col gap-4">
-          {[{ label: "Beranda", to: "/" }, { label: "Girimulyo Farm", to: "/girimulyofarm" }, { label: "Manahayu Resort", to: "/manahayuresort" }].map(l => (
-            <Link key={l.to} href={l.to} onClick={() => setOpen(false)}
-              className="text-sm font-medium text-[#1C1A16]/70 hover:text-[#2C5F1A]"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              {l.label}
-            </Link>
-          ))}
-          <a href="https://desagiripurno.id" target="_blank" rel="noopener noreferrer"
-            className="bg-[#2C5F1A] text-white text-sm font-semibold px-5 py-2.5 rounded-full text-center flex items-center justify-center gap-1.5"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Portal Desa <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-      )}
-    </header>
-  );
-}
 
 function Hero() {
   return (
@@ -89,11 +23,11 @@ function Hero() {
           Desa Giripurno · Kota Batu · Jawa Timur
         </div>
         <h1 className="text-5xl md:text-[68px] font-bold text-white leading-[1.04] mb-6" style={{ fontFamily: "'Fraunces', serif" }}>
-          Menggerakkan Ekonomi,
+          Sinergi Warga,
           <br /><em className="italic font-light text-[#A8D97A]">Membangun Desa</em>
         </h1>
         <p className="text-white/65 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-          BUMDes Girimulyo adalah motor penggerak ekonomi lokal Desa Giripurno — mengelola pertanian organik dan pariwisata resort untuk kesejahteraan bersama.
+          BUMDes Girimulyo hadir sebagai motor penggerak ekonomi Desa Giripurno. Kami mengelola potensi lokal melalui peternakan unggas berkualitas dan pariwisata alam terpadu untuk kesejahteraan masyarakat.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button onClick={() => document.getElementById("unit-usaha")?.scrollIntoView({ behavior: "smooth" })}
@@ -120,7 +54,9 @@ function BusinessUnits() {
           <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Unit Usaha</div>
           <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>Dua Pilar Unggulan</h2>
           <p className="mt-4 text-[#6B5E4A] max-w-lg mx-auto text-sm leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Dari ladang organik hingga resort alam — kami kelola dengan sepenuh hati untuk kemakmuran warga dan kenyamanan tamu.
+            Dari peternakan mandiri hingga kenyamanan resort di dataran tinggi, 
+            <br></br> 
+            kami kelola dengan sepenuh hati untuk memajukan perekonomian desa
           </p>
         </div>
 
@@ -133,7 +69,7 @@ function BusinessUnits() {
                 className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C3A10]/70 to-transparent" />
               <div className="absolute top-4 left-4 bg-[#2C5F1A] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                <Leaf className="w-3 h-3" /> Pertanian Organik
+                <Leaf className="w-3 h-3" /> Peternakan Desa
               </div>
               <div className="absolute bottom-5 left-6">
                 <p className="text-white/60 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Hasil panen langsung dari kebun</p>
@@ -142,10 +78,10 @@ function BusinessUnits() {
             <div className="p-8">
               <h3 className="text-2xl font-bold text-[#1C1A16] mb-3" style={{ fontFamily: "'Fraunces', serif" }}>Girimulyo Farm</h3>
               <p className="text-[#6B5E4A] text-sm leading-relaxed mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Pertanian organik terpadu di lahan subur Giripurno. Menghasilkan sayuran segar, buah lokal, dan produk olahan yang dipasarkan langsung ke konsumen dan restoran Kota Batu.
+                Pusat peternakan ayam petelur Lohmann kebanggaan desa. Dikelola secara profesional dengan standar pakan bermutu tinggi untuk menghasilkan telur berkualitas setiap hari.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
-                {["Sayuran Organik", "Buah Musiman", "Agrowisata", "Edukasi Tani"].map(tag => (
+                {["Ayam Lohmann", "Telur Berkualitas", "Peternakan Mandiri"].map(tag => (
                   <span key={tag} className="bg-[#EDE6D8] text-[#4A3F30] text-xs font-medium px-3 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{tag}</span>
                 ))}
               </div>
@@ -174,10 +110,10 @@ function BusinessUnits() {
             <div className="p-8">
               <h3 className="text-2xl font-bold text-[#1C1A16] mb-3" style={{ fontFamily: "'Fraunces', serif" }}>Manahayu Resort</h3>
               <p className="text-[#6B5E4A] text-sm leading-relaxed mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Penginapan eksklusif bernuansa alam tropis di ketinggian Giripurno. Cottage kayu, villa view panorama, dan paket wisata alam — pelarian sempurna dari hiruk-pikuk kota.
+                Nikmati ketenangan menginap di sejuknya dataran tinggi Giripurno. Kami menawarkan kenyamanan cottage kayu, pemandangan alam yang asri, dan keramahan khas pedesaan Kota Batu.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
-                {["Cottage Kayu", "Villa Panorama", "Paket Wisata", "Gathering"].map(tag => (
+                {["Villa Panorama", "Paket Wisata", "Holiday"].map(tag => (
                   <span key={tag} className="bg-[#F5EDE3] text-[#6B3A1F] text-xs font-medium px-3 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{tag}</span>
                 ))}
               </div>
@@ -292,8 +228,8 @@ function Footer() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#F7F3EC]">
-      <Header />
+    <div className="min-h-screen bg-[#F7F3EC] pt-16">
+      <Navbar />
       <Hero />
       <BusinessUnits />
       <WhySection />
