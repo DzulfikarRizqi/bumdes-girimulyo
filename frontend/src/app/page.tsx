@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import {
   Leaf, MapPin, Phone, Mail, Circle, Square, Triangle,
-  ChevronDown, ArrowRight, ExternalLink
+  ChevronDown, ArrowRight
 } from "lucide-react";
 
 function Hero() {
@@ -71,9 +71,9 @@ function BusinessUnits() {
               <div className="absolute top-4 left-4 bg-[#2C5F1A] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <Leaf className="w-3 h-3" /> Peternakan Desa
               </div>
-              <div className="absolute bottom-5 left-6">
+              {/* <div className="absolute bottom-5 left-6">
                 <p className="text-white/60 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Hasil panen langsung dari kebun</p>
-              </div>
+              </div> */}
             </div>
             <div className="p-8">
               <h3 className="text-2xl font-bold text-[#1C1A16] mb-3" style={{ fontFamily: "'Fraunces', serif" }}>Girimulyo Farm</h3>
@@ -103,9 +103,9 @@ function BusinessUnits() {
               <div className="absolute top-4 left-4 bg-[#8B5E3C] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 🌿 Resort & Wisata
               </div>
-              <div className="absolute bottom-5 left-6">
+              {/* <div className="absolute bottom-5 left-6">
                 <p className="text-white/60 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pengalaman menginap di alam terbuka</p>
-              </div>
+              </div> */}
             </div>
             <div className="p-8">
               <h3 className="text-2xl font-bold text-[#1C1A16] mb-3" style={{ fontFamily: "'Fraunces', serif" }}>Manahayu Resort</h3>
@@ -218,7 +218,7 @@ function Footer() {
             <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pemerintah Kota Batu</p>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             {/* <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pemerintah Kota Batu</a> */}
-            <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>© 2026 BUMDes Girimulyo. Hak cipta dilindungi.</p>
+            <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Desa Giripurno Kecamatan Bumiaji</p>
           </div>
         </div>
       </div>

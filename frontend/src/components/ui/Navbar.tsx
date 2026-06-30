@@ -28,11 +28,7 @@ export default function Navbar() {
 
   return (
     <header
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-            isSolid
-                ? "bg-white/95 text-[#1C1A16] shadow-sm border-b border-[#E5E3D8]/80"
-                : "bg-transparent text-white"
-    }`}
+        className={`fixed top-0 inset-x-0 z-50 bg-white/95 text-[#1C1A16] shadow-sm border-b border-[#E5E3D8]/80 `}
 >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         
