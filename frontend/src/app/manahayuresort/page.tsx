@@ -50,20 +50,20 @@ const ROOMS = [
     color: "border-[#2C5F1A]/15 hover:border-[#2C5F1A]/40",
     accent: "#2C5F1A",
   },
-  {
-    img: "photo-1721222206418-3de97d2ca96b",
-    name: "Forest Suite",
-    desc: "Suite eksklusif dikelilingi pohon pinus tua dengan private plunge pool, hammock, dan akses hiking trail pribadi.",
-    price: "Rp 1.750.000",
-    rating: 5.0,
-    reviews: 28,
-    capacity: 3,
-    size: "65m²",
-    amenities: [Wifi, Wind, Coffee, Bath, Tv],
-    amenityLabels: ["WiFi", "AC", "Sarapan", "Kamar Mandi", "TV"],
-    color: "border-[#8B5E3C]/15 hover:border-[#8B5E3C]/40",
-    accent: "#8B5E3C",
-  },
+  // {
+  //   img: "photo-1721222206418-3de97d2ca96b",
+  //   name: "Forest Suite",
+  //   desc: "Suite eksklusif dikelilingi pohon pinus tua dengan private plunge pool, hammock, dan akses hiking trail pribadi.",
+  //   price: "Rp 1.750.000",
+  //   rating: 5.0,
+  //   reviews: 28,
+  //   capacity: 3,
+  //   size: "65m²",
+  //   amenities: [Wifi, Wind, Coffee, Bath, Tv],
+  //   amenityLabels: ["WiFi", "AC", "Sarapan", "Kamar Mandi", "TV"],
+  //   color: "border-[#8B5E3C]/15 hover:border-[#8B5E3C]/40",
+  //   accent: "#8B5E3C",
+  // },
 ];
 
 const FACILITIES = [
@@ -100,9 +100,9 @@ export default function ManahayuResort() {
           </p>
           <div className="flex flex-wrap gap-6">
             {[
-              { val: "4", label: "Tipe Kamar" },
-              { val: "4.9★", label: "Rating Tamu" },
-              { val: "1.100m", label: "Ketinggian dpl" },
+              { val: "3", label: "Tipe Kamar" },
+              { val: "★ 4.9", label: "Rating Tamu" },
+              // { val: "1.100m", label: "Ketinggian dpl" },
             ].map(({ val, label }) => (
               <div key={label}>
                 <div className="text-2xl font-bold text-white" style={{ fontFamily: "'Fraunces', serif" }}>{val}</div>
@@ -132,14 +132,14 @@ export default function ManahayuResort() {
       </section>
 
       {/* Room Catalog */}
-      <section className="py-24 bg-[#F7F3EC]">
+      <section className="py-12 bg-[#F7F3EC]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-14">
             <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Kamar & Suite</div>
             <h2 className="text-4xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>Pilih Kamar Anda</h2>
             <p className="mt-3 text-[#6B5E4A] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Harga termasuk sarapan untuk 2 orang · Check-in 14.00 · Check-out 12.00</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 justify-items-center">
             {ROOMS.map(room => (
               <div key={room.name} className={`group bg-white rounded-3xl overflow-hidden border ${room.color} hover:shadow-xl transition-all duration-500 hover:-translate-y-1`}>
                 <div className="relative h-56 overflow-hidden" style={{ background: "#1C3A10" }}>

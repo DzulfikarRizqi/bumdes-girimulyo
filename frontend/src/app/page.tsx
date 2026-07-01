@@ -5,10 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import {
-  Leaf, MapPin, Phone, Mail, Circle, Square, Triangle,
+  Leaf, MapPin, Phone, Mail, Triangle,
   ChevronDown, ArrowRight, Menu, X, ExternalLink
 } from "lucide-react";
-import { FaYoutube, FaInstagram } from "react-icons/fa";
 import Footer from "@/components/ui/Footer";
 
 function Hero() {
@@ -174,10 +173,10 @@ const MISI_ITEMS = [
 ];
 
 const AKAL = [
-  { letter: "A", word: "Adaptif", desc: "Siap berubah dan menyesuaikan diri dengan dinamika kebutuhan masyarakat dan pasar." },
-  { letter: "K", word: "Kolaboratif", desc: "Tumbuh bersama melalui kerjasama lintas pemangku kepentingan desa dan mitra." },
-  { letter: "A", word: "Akurat", desc: "Bekerja dengan data, perencanaan yang tepat, dan keputusan berbasis fakta lapangan." },
-  { letter: "L", word: "Loyal", desc: "Setia pada misi pemberdayaan desa dan kepercayaan yang diberikan warga Giripurno." },
+  { letter: "A", word: "ADAPTIF", desc: "Siap berubah dan menyesuaikan diri dengan dinamika kebutuhan masyarakat dan pasar." },
+  { letter: "K", word: "KOLABORATIF", desc: "Tumbuh bersama melalui kerjasama lintas pemangku kepentingan desa dan mitra." },
+  { letter: "A", word: "AKURAT", desc: "Bekerja dengan data, perencanaan yang tepat, dan keputusan berbasis fakta lapangan." },
+  { letter: "L", word: "LOYAL", desc: "Setia pada misi pemberdayaan desa dan kepercayaan yang diberikan warga Giripurno." },
 ];
 
 function WhySection() {
@@ -230,7 +229,7 @@ function WhySection() {
             {/* Left — AKAL acronym hero */}
             <div className="bg-[#2C5F1A] rounded-3xl p-8 md:p-10 flex flex-col justify-between min-h-[340px]">
               <div>
-                <p className="text-[#A8D97A] text-[10px] font-bold tracking-widest uppercase mb-5"
+                <p className="text-[#A8D97A] font-bold tracking-widest uppercase mb-5"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Motto BUMDes Girimulyo
                 </p>
@@ -247,7 +246,7 @@ function WhySection() {
                 </div>
               </div>
               <div>
-                <p className="text-white/50 text-xs leading-relaxed"
+                <p className="text-white/50 leading-relaxed"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Setiap huruf mewakili nilai inti yang menjadi landasan kerja seluruh pengurus dan unit usaha BUMDes Girimulyo.
                 </p>
@@ -260,17 +259,19 @@ function WhySection() {
                 <div key={word}
                   className="bg-white rounded-2xl px-5 py-4 border border-[#2C5F1A]/8 hover:border-[#2C5F1A]/25 hover:shadow-sm transition-all duration-300 flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-[#2C5F1A] flex items-center justify-center shrink-0">
-                    <span className="text-white font-bold text-base"
+                    <span className="text-white font-bold text-md"
                       style={{ fontFamily: "'Fraunces', serif" }}>
                       {letter}
                     </span>
                   </div>
                   <div>
-                    <h4 className="font-bold text-[#1C1A16] text-sm mb-1"
-                      style={{ fontFamily: "'Fraunces', serif" }}>
+                    <h4
+                      className="text-md font-bold text-[#1C1A16] mb-1"
+                      style={{ fontFamily: "var(--font-montserrat), sans-serif" }} 
+                    >
                       {word}
                     </h4>
-                    <p className="text-[#6B5E4A] text-xs leading-relaxed"
+                    <p className="text-[#6B5E4A] leading-relaxed"
                       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       {desc}
                     </p>

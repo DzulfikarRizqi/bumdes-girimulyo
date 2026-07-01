@@ -51,7 +51,7 @@ export default function Navbar() {
             <Link
               key={link.to}
               href={link.to}
-              className={`text-sm font-medium transition-colors hover:text-[#2C5F1A] ${
+              className={` font-medium transition-colors hover:text-[#2C5F1A] ${
                 pathname === link.to ? "font-bold text-[#2C5F1A]" : "text-[#1C1A16]/70"
               }`}
             >
@@ -61,13 +61,13 @@ export default function Navbar() {
         </nav>
 
         {/* BAGIAN KANAN (Tombol) - Menggunakan flex-1 dan justify-end agar rata kanan */}
-        <div className="flex-1 flex items-center justify-end gap-4">
+        <div className="flex-1 min-w-0 flex items-center justify-end gap-3 flex-wrap">
           
           {/* Tampil HANYA di halaman Manahayu Resort */}
           {pathname === "/manahayuresort" && (
             <Link
                 href="/booking"
-                className="hidden md:inline-flex items-center justify-center rounded-full bg-[#8c561f] px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-[#2C5F1A]/30 transition hover:bg-[#de8328]"
+                className="hidden md:inline-flex min-w-[8rem] items-center justify-center rounded-full bg-[#8c561f] px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-[#2C5F1A]/30 transition hover:bg-[#de8328]"
             >
                 Admin Login
             </Link>
@@ -78,7 +78,7 @@ export default function Navbar() {
             href="https://desagiripurno.id"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden md:flex bg-[#2C5F1A] text-white text-sm font-semibold px-5 py-2 rounded-full hover:bg-[#3A7A22] transition-colors items-center gap-1.5"
+            className="hidden md:inline-flex min-w-[8rem] bg-[#2C5F1A] text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-[#3A7A22] transition-colors items-center gap-1.5"
           >
             Portal Desa <ExternalLink className="w-3 h-3" />
           </a>
