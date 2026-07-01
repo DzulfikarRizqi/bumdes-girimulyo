@@ -9,6 +9,7 @@ import {
   ChevronDown, ArrowRight, Menu, X, ExternalLink
 } from "lucide-react";
 import { FaYoutube, FaInstagram } from "react-icons/fa";
+import Footer from "@/components/ui/Footer";
 
 function Hero() {
   return (
@@ -378,90 +379,90 @@ function WhySection() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="bg-[#1C1A16] text-white/60 pt-16 pb-8">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
-          <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-                <Leaf className="w-4 h-4 text-white" />
-              </div>
-              <span className="text-white font-bold text-sm tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span>
-              </span>
-            </div>
-            <p className="text-sm leading-relaxed mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Badan Usaha Milik Desa Giripurno — menggerakkan ekonomi lokal melalui pertanian organik dan pariwisata resort.
-            </p>
-            <div className="flex gap-3">
-              {[
-                { icon: FaInstagram, href: "https://www.instagram.com/bumdesgirimulyo/", label: "Instagram" },
-                { icon: FaYoutube, href: "https://www.youtube.com/@BUMDESGIRIMULYO", label: "YouTube" },
-                { icon: Triangle, href: "#", label: "Sosial media lain (placeholder)" },
-              ].map((social, i) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={i}
-                    href={social.href}
-                    aria-label={social.label}
-                    target={social.href.startsWith("http") ? "_blank" : undefined}
-                    rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    onClick={(e) => {
-                      if (social.href === "#") {
-                        e.preventDefault();
-                      }
-                    }}
-                    className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:bg-white/10 hover:border-white/30 transition-all"
-                  >
-                    <Icon className="w-4 h-4" />
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Tautan</h4>
-            <ul className="space-y-2.5">
-              {[{ l: "Beranda", to: "/" }, { l: "Girimulyo Farm", to: "/girimulyofarm" }, { l: "Manahayu Resort", to: "/manahayuresort" }, { l: "Portal Desa Giripurno", to: "#" }].map(({ l, to }) => (
-                <li key={l}><Link href={to} className="text-sm hover:text-white transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{l}</Link></li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Kontak</h4>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-[#2C5F1A] shrink-0 mt-0.5" />
-                <p className="text-sm leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Desa Giripurno, Kec. Bumiaji,<br />Kota Batu, Jawa Timur 65336</p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-[#2C5F1A] shrink-0" />
-                <a href="tel:+6234112345" className="text-sm hover:text-white transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>(0341) 123-4567</a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-[#2C5F1A] shrink-0" />
-                <a href="mailto:bumdes@giripurno.desa.id" className="text-sm hover:text-white transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>bumdes@giripurno.desa.id</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="border-t border-white/8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>© 2026 BUMDes Girimulyo. Hak cipta dilindungi.</p>
-          <div className="flex items-center gap-4">
-            {/* <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Portal Desa Giripurno</a> */}
-            <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pemerintah Kota Batu</p>
-            <span className="w-1 h-1 rounded-full bg-white/20" />
-            {/* <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pemerintah Kota Batu</a> */}
-            <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Desa Giripurno Kecamatan Bumiaji</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
+// function Footer() {
+//   return (
+//     <footer className="bg-[#1C1A16] text-white/60 pt-16 pb-8">
+//       <div className="max-w-6xl mx-auto px-6">
+//         <div className="grid md:grid-cols-3 gap-12 mb-12">
+//           <div>
+//             <div className="flex items-center gap-2.5 mb-4">
+//               <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center">
+//                 <Leaf className="w-4 h-4 text-white" />
+//               </div>
+//               <span className="text-white font-bold text-sm tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//                 BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span>
+//               </span>
+//             </div>
+//             <p className="text-sm leading-relaxed mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//               Badan Usaha Milik Desa Giripurno — menggerakkan ekonomi lokal melalui pertanian organik dan pariwisata resort.
+//             </p>
+//             <div className="flex gap-3">
+//               {[
+//                 { icon: FaInstagram, href: "https://www.instagram.com/bumdesgirimulyo/", label: "Instagram" },
+//                 { icon: FaYoutube, href: "https://www.youtube.com/@BUMDESGIRIMULYO", label: "YouTube" },
+//                 { icon: Triangle, href: "#", label: "Sosial media lain (placeholder)" },
+//               ].map((social, i) => {
+//                 const Icon = social.icon;
+//                 return (
+//                   <a
+//                     key={i}
+//                     href={social.href}
+//                     aria-label={social.label}
+//                     target={social.href.startsWith("http") ? "_blank" : undefined}
+//                     rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+//                     onClick={(e) => {
+//                       if (social.href === "#") {
+//                         e.preventDefault();
+//                       }
+//                     }}
+//                     className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:bg-white/10 hover:border-white/30 transition-all"
+//                   >
+//                     <Icon className="w-4 h-4" />
+//                   </a>
+//                 );
+//               })}
+//             </div>
+//           </div>
+//           <div>
+//             <h4 className="text-white font-semibold text-sm mb-5 tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Tautan</h4>
+//             <ul className="space-y-2.5">
+//               {[{ l: "Beranda", to: "/" }, { l: "Girimulyo Farm", to: "/girimulyofarm" }, { l: "Manahayu Resort", to: "/manahayuresort" }, { l: "Portal Desa Giripurno", to: "#" }].map(({ l, to }) => (
+//                 <li key={l}><Link href={to} className="text-sm hover:text-white transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{l}</Link></li>
+//               ))}
+//             </ul>
+//           </div>
+//           <div>
+//             <h4 className="text-white font-semibold text-sm mb-5 tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Kontak</h4>
+//             <div className="space-y-3">
+//               <div className="flex items-start gap-3">
+//                 <MapPin className="w-4 h-4 text-[#2C5F1A] shrink-0 mt-0.5" />
+//                 <p className="text-sm leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Desa Giripurno, Kec. Bumiaji,<br />Kota Batu, Jawa Timur 65336</p>
+//               </div>
+//               <div className="flex items-center gap-3">
+//                 <Phone className="w-4 h-4 text-[#2C5F1A] shrink-0" />
+//                 <a href="tel:+6234112345" className="text-sm hover:text-white transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>(0341) 123-4567</a>
+//               </div>
+//               <div className="flex items-center gap-3">
+//                 <Mail className="w-4 h-4 text-[#2C5F1A] shrink-0" />
+//                 <a href="mailto:bumdes@giripurno.desa.id" className="text-sm hover:text-white transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>bumdes@giripurno.desa.id</a>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="border-t border-white/8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+//           <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>© 2026 BUMDes Girimulyo. Hak cipta dilindungi.</p>
+//           <div className="flex items-center gap-4">
+//             {/* <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Portal Desa Giripurno</a> */}
+//             <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pemerintah Kota Batu</p>
+//             <span className="w-1 h-1 rounded-full bg-white/20" />
+//             {/* <a href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pemerintah Kota Batu</a> */}
+//             <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Desa Giripurno Kecamatan Bumiaji</p>
+//           </div>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }
 
 export default function Home() {
   return (

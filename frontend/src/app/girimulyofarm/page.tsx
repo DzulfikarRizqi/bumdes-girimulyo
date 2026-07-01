@@ -8,6 +8,7 @@ import {
   Phone, MapPin, Mail, ChevronRight, CheckCircle2,
   Maximize2, Egg, Palette, ShieldCheck,
 } from "lucide-react";
+import Footer from "@/components/ui/Footer";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type Tab = "lohmann" | "telur";
@@ -392,74 +393,74 @@ function ContactCTA() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="bg-[#1C1008] py-10">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
-          {/* Brand */}
-          <div className="max-w-xs">
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-                <Leaf className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span className="text-white font-bold text-sm tracking-wide"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Girimulyo <span className="text-[#D4A882]">Farm</span>
-              </span>
-            </div>
-            <p className="text-white/35 text-xs leading-relaxed"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Unit peternakan ayam petelur milik BUMDes Girimulyo, Desa Giripurno, Kota Batu.
-            </p>
-          </div>
+// function Footer() {
+//   return (
+//     <footer className="bg-[#1C1008] py-10">
+//       <div className="max-w-5xl mx-auto px-6">
+//         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
+//           {/* Brand */}
+//           <div className="max-w-xs">
+//             <div className="flex items-center gap-2.5 mb-3">
+//               <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
+//                 <Leaf className="w-3.5 h-3.5 text-white" />
+//               </div>
+//               <span className="text-white font-bold text-sm tracking-wide"
+//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//                 Girimulyo <span className="text-[#D4A882]">Farm</span>
+//               </span>
+//             </div>
+//             <p className="text-white/35 text-xs leading-relaxed"
+//               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//               Unit peternakan ayam petelur milik BUMDes Girimulyo, Desa Giripurno, Kota Batu.
+//             </p>
+//           </div>
 
-          {/* Contact */}
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-[#8B5E3C] shrink-0 mt-0.5" />
-              <p className="text-white/45 text-xs leading-relaxed"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Desa Giripurno, Kec. Bumiaji<br />Kota Batu, Jawa Timur 65336
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-[#8B5E3C] shrink-0" />
-              <a href="tel:+6281234567890" className="text-white/45 text-xs hover:text-white/70 transition-colors"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                +62 812-3456-7890
-              </a>
-            </div>
-            <div className="flex items-center gap-3">
-              <Mail className="w-4 h-4 text-[#8B5E3C] shrink-0" />
-              <a href="mailto:farm@giripurno.desa.id" className="text-white/45 text-xs hover:text-white/70 transition-colors"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                farm@giripurno.desa.id
-              </a>
-            </div>
-          </div>
-        </div>
+//           {/* Contact */}
+//           <div className="space-y-3">
+//             <div className="flex items-start gap-3">
+//               <MapPin className="w-4 h-4 text-[#8B5E3C] shrink-0 mt-0.5" />
+//               <p className="text-white/45 text-xs leading-relaxed"
+//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//                 Desa Giripurno, Kec. Bumiaji<br />Kota Batu, Jawa Timur 65336
+//               </p>
+//             </div>
+//             <div className="flex items-center gap-3">
+//               <Phone className="w-4 h-4 text-[#8B5E3C] shrink-0" />
+//               <a href="tel:+6281234567890" className="text-white/45 text-xs hover:text-white/70 transition-colors"
+//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//                 +62 812-3456-7890
+//               </a>
+//             </div>
+//             <div className="flex items-center gap-3">
+//               <Mail className="w-4 h-4 text-[#8B5E3C] shrink-0" />
+//               <a href="mailto:farm@giripurno.desa.id" className="text-white/45 text-xs hover:text-white/70 transition-colors"
+//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//                 farm@giripurno.desa.id
+//               </a>
+//             </div>
+//           </div>
+//         </div>
 
-        <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-white/20 text-xs"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            © 2024 Girimulyo Farm · BUMDes Girimulyo
-          </p>
-          <div className="flex gap-5">
-            <Link href="/" className="text-white/20 hover:text-white/45 text-xs transition-colors"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Beranda BUMDes
-            </Link>
-            <Link href="/manahayuresort" className="text-white/20 hover:text-white/45 text-xs transition-colors"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Manahayu Resort
-            </Link>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
+//         <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+//           <p className="text-white/20 text-xs"
+//             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//             © 2024 Girimulyo Farm · BUMDes Girimulyo
+//           </p>
+//           <div className="flex gap-5">
+//             <Link href="/" className="text-white/20 hover:text-white/45 text-xs transition-colors"
+//               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//               Beranda BUMDes
+//             </Link>
+//             <Link href="/manahayuresort" className="text-white/20 hover:text-white/45 text-xs transition-colors"
+//               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+//               Manahayu Resort
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function GirimulyoFarm() {

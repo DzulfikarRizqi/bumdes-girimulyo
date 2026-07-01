@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import { Leaf, Wifi, Wind, Coffee, Bath, Tv, TreePine, Phone, Star, ArrowLeft, Users, Maximize } from "lucide-react";
+import Footer from "@/components/ui/Footer";
 
 const WA_RESORT = "6281298765432";
 
@@ -196,7 +197,7 @@ export default function ManahayuResort() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="bg-[#1C1A16] py-10">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
@@ -213,7 +214,8 @@ export default function ManahayuResort() {
             ← Girimulyo Farm
           </Link>
         </div>
-      </footer>
+      </footer> */}
+      <Footer />
     </div>
   );
 }
