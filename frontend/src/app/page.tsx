@@ -9,6 +9,7 @@ import {
   ChevronDown, ArrowRight, Menu, X, ExternalLink
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import Image from "next/image";
 
 function Hero() {
   return (
@@ -65,10 +66,18 @@ function BusinessUnits() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Farm Card */}
           <div className="group bg-white rounded-3xl overflow-hidden border border-[#2C5F1A]/10 hover:shadow-2xl hover:shadow-[#2C5F1A]/10 transition-all duration-500 hover:-translate-y-1.5">
-            <div className="relative h-72 bg-[#1C3A10] overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1762414103968-0e1c31b1aaca?w=800&h=520&fit=crop&auto=format"
+            <div className="relative h-72 bg-[#428c24] overflow-hidden">
+              {/* <img 
+                src="https://images.unsplash.com/photo-1762414103968-0e1c31b1aaca?w=800&h=520&fit=crop&auto=format"
                 alt="Keranjang hasil panen sayuran dan buah organik Girimulyo Farm"
-                className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" />
+                className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" 
+              /> */}
+              <Image
+                src="/cardGirifarm.jpg"
+                alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
+                fill
+                className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C3A10]/70 to-transparent" />
               <div className="absolute top-4 left-4 bg-[#2C5F1A] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <Leaf className="w-3 h-3" /> Peternakan Desa
@@ -98,9 +107,17 @@ function BusinessUnits() {
           {/* Resort Card */}
           <div className="group bg-white rounded-3xl overflow-hidden border border-[#8B5E3C]/10 hover:shadow-2xl hover:shadow-[#8B5E3C]/10 transition-all duration-500 hover:-translate-y-1.5">
             <div className="relative h-72 bg-[#3A1F0A] overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1760942992111-a65227a3b266?w=800&h=520&fit=crop&auto=format"
+              {/* <img 
+                src="https://images.unsplash.com/photo-1760942992111-a65227a3b266?w=800&h=520&fit=crop&auto=format"
                 alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
-                className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" />
+                className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" 
+              /> */}
+              <Image
+                src="/cardManahayu.JPG"
+                alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
+                fill
+                className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-[#3A1F0A]/70 to-transparent" />
               <div className="absolute top-4 left-4 bg-[#8B5E3C] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 🌿 Resort & Wisata
