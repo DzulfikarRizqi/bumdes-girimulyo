@@ -5,7 +5,7 @@ import {FaInstagram as Instagram, FaYoutube as Youtube} from "react-icons/fa";
 const socialLinks = [
   { icon: Instagram, href: "https://www.instagram.com/bumdesgirimulyo/", label: "Instagram" },
   { icon: Youtube, href: "https://www.youtube.com/@BUMDESGIRIMULYO", label: "YouTube" },
-  { icon: Triangle, href: "#", label: "Sosial media lain (placeholder)" },
+  // { icon: Triangle, href: "#", label: "Sosial media lain (placeholder)" },
 ];
 
 const quickLinks = [
