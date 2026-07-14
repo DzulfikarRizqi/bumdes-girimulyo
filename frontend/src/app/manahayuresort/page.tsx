@@ -10,7 +10,7 @@ import {
 import Footer from "@/components/ui/Footer";
 import Image from "next/image";
 
-const WA_RESORT = "6281298765432";
+const WA_RESORT = process.env.NEXT_PUBLIC_WA_RESORT ?? "";
 
 const ROOMS = [
   {
@@ -112,8 +112,15 @@ export default function ManahayuResort() {
       {/* Hero */}
       <section className="relative pt-16 min-h-[70vh] flex items-end overflow-hidden">
         <div className="absolute inset-0 bg-[#0D1E10]">
-          <Image
+          {/* <Image
             src="https://images.unsplash.com/photo-1648995505975-8fe3ebc7b253?w=1600&h=900&fit=crop&auto=format"
+            alt="Kolam renang resort berlatar perbukitan hijau Giripurno"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-55"
+          /> */}
+          <Image
+            src="/header-manahayu.JPG"
             alt="Kolam renang resort berlatar perbukitan hijau Giripurno"
             fill
             sizes="100vw"
@@ -304,25 +311,6 @@ export default function ManahayuResort() {
           </div>
         </div>
       </section>
-
-      {/* Footer
-      <footer className="bg-[#1C1A16] py-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-              <Leaf className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="text-white text-sm font-bold">BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span></span>
-          </div>
-          <p className="text-white/30 text-xs text-center">
-            Desa Giripurno, Kec. Bumiaji, Kota Batu, Jawa Timur · © 2024 · <a href={`https://wa.me/${WA_RESORT}`} className="hover:text-white/60">{WA_RESORT}</a>
-          </p>
-          <ArrowLeft className="hidden" />
-          <Link href="/girimulyofarm" className="text-[#2C5F1A] hover:text-[#4A8A30] text-sm font-medium transition-colors">
-            ← Girimulyo Farm
-          </Link>
-        </div>
-      </footer> */}
       <Footer />
     </div>
   );

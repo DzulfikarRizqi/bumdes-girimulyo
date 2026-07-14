@@ -67,7 +67,7 @@ export default function Navbar() {
           {pathname === "/manahayuresort" && (
             <Link
                 href="/booking"
-                className="hidden md:inline-flex min-w-[8rem] items-center justify-center rounded-full bg-[#8c561f] px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-[#2C5F1A]/30 transition hover:bg-[#de8328]"
+                className="text-sm hidden md:inline-flex min-w-[8rem] items-center justify-center rounded-full bg-[#8c561f] px-3.5 py-2 font-semibold text-white shadow-sm shadow-[#2C5F1A]/30 transition hover:bg-[#de8328]"
             >
                 Admin Login
             </Link>

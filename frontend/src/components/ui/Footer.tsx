@@ -110,7 +110,7 @@ export default function Footer() {
                 >
                   Desa Giripurno, Kec. Bumiaji,
                   <br />
-                  Kota Batu, Jawa Timur 65336
+                  Kota Batu, Jawa Timur, 65333
                 </p>
               </div>
               <div className="flex items-center gap-3">
@@ -120,7 +120,7 @@ export default function Footer() {
                   className="text-sm transition-colors hover:text-white"
   
                 >
-                  (0341) 123-4567
+                  (+62) 813-3329-1110
                 </a>
               </div>
               <div className="flex items-center gap-3">
@@ -130,7 +130,7 @@ export default function Footer() {
                   className="text-sm transition-colors hover:text-white"
   
                 >
-                  bumdes@giripurno.desa.id
+                  bumdesgirimulyo.id@gmail.com
                 </a>
               </div>
             </div>

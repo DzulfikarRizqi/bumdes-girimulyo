@@ -5,7 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import {
   Bird, Wheat, CalendarDays, Scale,
-  Phone, ChevronRight, CheckCircle2,
+  Phone, CheckCircle2,
   Maximize2, Egg, Palette, ShieldCheck,
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
@@ -133,8 +133,8 @@ function Hero() {
           <div className="flex flex-wrap gap-6 mt-10">
             {[
               { v: "1.271", l: "Ekor Ayam" },
-              { v: "85–92%", l: "Produksi/Hari" },
-              { v: ">100", l: "Minggu Produktif" },
+              { v: "25 jam", l: "Jadwal Bertelur" },
+              { v: "> 100 Minggu", l: "Usia Produktif" },
             ].map(({ v, l }) => (
               <div key={l}>
                 <div className="text-2xl font-bold text-white font-serif">{v}</div>
@@ -152,90 +152,115 @@ function TabbedContent() {
   const [tab, setTab] = useState<Tab>("lohmann");
 
   return (
-    <section className="py-20 bg-[#FDF8F0]">
-      <div className="max-w-5xl mx-auto px-6">
-        {/* Section label */}
-        <div className="text-center mb-12">
-          <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3">
+    <section className="py-20 md:py-28 bg-[#FDF8F0]">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header — left-aligned, editorial */}
+        <div className="mb-14 md:mb-16">
+          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8B5E3C] mb-4">
             Data Teknis
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1C1A16] font-serif">
-            Profil Unggas & Kualitas Produk
+          </p>
+          <h2 className="text-4xl md:text-[3.25rem] font-bold text-[#1C1A16] font-serif leading-[1.08]">
+            Profil Unggas<br className="hidden md:block" />{" "}
+            <span className="text-[#8B5E3C]/40">&</span>{" "}
+            Kualitas Produk
           </h2>
         </div>
 
-        {/* Tab bar */}
-        <div className="flex justify-center mb-10">
-          <div className="inline-flex bg-[#EDE6D8] rounded-2xl p-1.5 gap-1">
-            {([
-              { id: "lohmann" as Tab, label: "🐔 Ayam Lohmann" },
-              { id: "telur" as Tab, label: "🥚 Kualitas Telur" },
-            ] as const).map(({ id, label }) => (
-              <button key={id} onClick={() => setTab(id)}
-                className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-250 whitespace-nowrap ${
-                  tab === id
-                    ? "bg-white text-[#1C1A16] shadow-sm shadow-[#8B5E3C]/10"
-                    : "text-[#6B5E4A] hover:text-[#1C1A16]"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+        {/* Tab bar — underline indicator, left-aligned */}
+        <div className="flex gap-7 mb-14 border-b border-[#8B5E3C]/12">
+          {([
+            { id: "lohmann" as Tab, label: "Ayam Lohmann" },
+            { id: "telur" as Tab, label: "Kualitas Telur" },
+          ] as const).map(({ id, label }) => (
+            <button key={id} onClick={() => setTab(id)}
+              className={`pb-3.5 text-sm font-semibold tracking-wide transition-colors relative ${
+                tab === id
+                  ? "text-[#1C1A16]"
+                  : "text-[#8B5E3C]/40 hover:text-[#8B5E3C]/70"
+              }`}
+            >
+              {label}
+              {tab === id && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#2C5F1A] rounded-full" />
+              )}
+            </button>
+          ))}
         </div>
 
         {/* ── TAB: Ayam Lohmann ── */}
         {tab === "lohmann" && (
           <div className="animate-in fade-in duration-300">
-            {/* 2×2 stat cards */}
-            <div className="grid grid-cols-2 gap-5 mb-12">
-              {STATS.map(({ icon: Icon, label, value, unit, desc, bg, iconColor }) => (
-                <div key={label}
-                  className="bg-white rounded-2xl p-6 md:p-7 border border-[#8B5E3C]/8 hover:border-[#8B5E3C]/25 hover:shadow-md transition-all duration-300 group">
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: bg }}>
-                      <Icon className="w-5 h-5" style={{ color: iconColor }} />
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-[#C4A882] opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <p className="text-xs font-bold tracking-widest uppercase text-[#A08060] mb-1.5">
-                    {label}
+            {/* Asymmetric two-column: image + data sheet */}
+            <div className="grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-10 mb-10">
+              {/* Left — large image with floating stat */}
+              <div className="relative rounded-3xl overflow-hidden bg-[#2A1A0A] min-h-[340px] md:min-h-[440px]">
+                <Image
+                  src="https://images.unsplash.com/photo-1694984717361-6ad859014d2a?w=800&h=600&fit=crop&auto=format"
+                  alt="Ayam Lohmann Brown di Girimulyo Farm"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 55vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1008]/85 via-[#1C1008]/15 to-transparent" />
+
+                {/* Floating stat badge */}
+                <div className="absolute bottom-0 left-0 right-0 p-7 md:p-9">
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A882]/60 mb-2">
+                    Populasi Aktif
                   </p>
-                  <div className="flex items-baseline gap-1.5 mb-1">
-                    <span className="text-3xl font-bold text-[#1C1A16] font-serif">{value}</span>
-                    <span className="text-sm font-semibold text-[#8B5E3C]">{unit}</span>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-6xl md:text-7xl font-bold text-white font-serif leading-none">
+                      1.271
+                    </span>
+                    <span className="text-base font-semibold text-[#D4A882] tracking-wide">
+                      Ekor
+                    </span>
                   </div>
-                  <p className="text-xs text-[#9B8878] leading-relaxed">{desc}</p>
                 </div>
-              ))}
+              </div>
+
+              {/* Right — data specimen sheet */}
+              <div className="flex flex-col justify-center py-2">
+                {STATS.map(({ icon: Icon, label, value, unit, desc, iconColor }, i) => (
+                  <div
+                    key={label}
+                    className={`py-5 ${i !== 0 ? "border-t border-[#8B5E3C]/10" : ""}`}
+                  >
+                    <div className="flex items-center gap-2.5 mb-2">
+                      <Icon className="w-3.5 h-3.5" style={{ color: iconColor }} />
+                      <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-[#8B5E3C]">
+                        {label}
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl md:text-[2.75rem] font-bold text-[#1C1A16] font-serif leading-none">
+                        {value}
+                      </span>
+                      <span className="text-sm font-medium text-[#8B5E3C]">{unit}</span>
+                    </div>
+                    <p className="text-xs text-[#9B8878] mt-1.5">{desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Breed info card */}
-            <div className="bg-[#1C1008] rounded-2xl overflow-hidden">
-              <div className="md:flex">
-                <div className="md:w-72 h-52 md:h-auto shrink-0 bg-[#2A1A0A] overflow-hidden relative">
-                  <Image
-                    src="https://images.unsplash.com/photo-1694984717361-6ad859014d2a?w=600&h=500&fit=crop&auto=format"
-                    alt="Ayam Lohmann Brown close-up di Girimulyo Farm"
-                    fill
-                    sizes="288px"
-                    className="object-cover opacity-70"
-                  />
-                </div>
-                <div className="p-7 md:p-9 flex-1">
-                  <div className="text-[10px] font-bold tracking-widest uppercase text-[#D4A882]/70 mb-3">
+            {/* Breed features — wide editorial dark section */}
+            <div className="bg-[#1C1008] rounded-3xl p-8 md:p-10 lg:p-12">
+              <div className="md:flex md:items-start md:gap-14">
+                <div className="mb-7 md:mb-0 md:w-1/3 shrink-0">
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A882]/50 mb-3">
                     Mengapa Lohmann Brown?
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-5 font-serif">
+                  </p>
+                  <h3 className="text-2xl md:text-[1.65rem] font-bold text-white font-serif leading-snug">
                     Ras Unggulan Pilihan Girimulyo Farm
                   </h3>
-                  <ul className="space-y-3">
+                </div>
+                <div className="md:w-2/3">
+                  <ul className="space-y-3.5">
                     {FEATURES.map(f => (
-                      <li key={f} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-4 h-4 text-[#6DBF40] shrink-0 mt-0.5" />
-                        <span className="text-white/65 text-sm leading-relaxed">
-                          {f}
-                        </span>
+                      <li key={f} className="flex items-start gap-3.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#6DBF40] shrink-0 mt-2" />
+                        <span className="text-white/55 text-sm leading-relaxed">{f}</span>
                       </li>
                     ))}
                   </ul>
@@ -248,57 +273,59 @@ function TabbedContent() {
         {/* ── TAB: Kualitas Telur ── */}
         {tab === "telur" && (
           <div className="animate-in fade-in duration-300">
-            {/* Hero egg image */}
-            <div className="relative h-52 rounded-2xl overflow-hidden mb-10 bg-[#2A1A0A]">
+            {/* Image strip with overlay */}
+            <div className="relative h-48 md:h-60 rounded-3xl overflow-hidden mb-10 bg-[#2A1A0A]">
               <Image
                 src="https://images.unsplash.com/photo-1635843125569-b7fb33d26fab?w=1200&h=400&fit=crop&auto=format"
-                alt="Telur cokelat segar dalam keranjang hasil panen Girimulyo Farm"
+                alt="Telur cokelat segar hasil panen Girimulyo Farm"
                 fill
                 sizes="100vw"
-                className="object-cover opacity-60"
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/80 via-[#1C1008]/30 to-transparent" />
-              <div className="absolute inset-0 flex items-center px-8">
+              <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/85 via-[#1C1008]/40 to-transparent" />
+              <div className="absolute inset-0 flex items-center px-9 md:px-12">
                 <div>
-                  <p className="text-[#D4A882] text-xs font-bold tracking-widest uppercase mb-2">
+                  <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A882]/60 mb-2.5">
                     Standar Kualitas
                   </p>
-                  <h3 className="text-3xl font-bold text-white font-serif">
-                    Telur Segar <em className="italic font-light text-[#D4A882]">Girimulyo</em>
+                  <h3 className="text-3xl md:text-4xl font-bold text-white font-serif">
+                    Telur Segar{" "}
+                    <em className="italic font-light text-[#D4A882]">Girimulyo</em>
                   </h3>
                 </div>
               </div>
             </div>
 
-            {/* Quality cards */}
-            <div className="space-y-4">
+            {/* Quality cards — 2-col grid with colored left border */}
+            <div className="grid md:grid-cols-2 gap-4 mb-8">
               {EGG_QUALITIES.map(({ icon: Icon, label, variants, variantColors, desc, isColor, swatches }) => (
-                <div key={label}
-                  className="bg-white rounded-2xl p-6 border border-[#8B5E3C]/8 hover:border-[#8B5E3C]/20 hover:shadow-sm transition-all duration-300">
-                  <div className="flex items-start gap-5">
-                    {/* Icon */}
-                    <div className="w-10 h-10 rounded-xl bg-[#FFF7ED] flex items-center justify-center shrink-0">
-                      <Icon className="w-4.5 h-4.5 text-[#8B5E3C]" style={{ width: "18px", height: "18px" }} />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                        <div>
-                          <h4 className="font-bold text-[#1C1A16] text-sm mb-1">
-                            {label}
-                          </h4>
-                          <p className="text-[#9B8878] text-xs leading-relaxed">
-                            {desc}
-                          </p>
+                <div
+                  key={label}
+                  className="bg-white rounded-2xl border border-[#8B5E3C]/8 overflow-hidden hover:shadow-sm transition-shadow"
+                >
+                  <div className="flex h-full">
+                    {/* Colored left accent */}
+                    <div className="w-[3px] bg-[#8B5E3C]/40 shrink-0" />
+                    <div className="flex-1 p-6">
+                      <div className="flex items-center gap-2.5 mb-3">
+                        <div className="w-8 h-8 rounded-lg bg-[#FFF7ED] flex items-center justify-center">
+                          <Icon className="text-[#8B5E3C]" style={{ width: 16, height: 16 }} />
                         </div>
-
-                        {/* Variant chips */}
-                        <div className="flex flex-wrap gap-2 shrink-0">
-                          {isColor && swatches
-                            ? variants.map((v, i) => (
-                              <div key={v} className="flex items-center gap-2 bg-[#F9F5EE] rounded-full px-3 py-1.5 border border-[#E8DFD0]">
+                        <h4 className="font-bold text-[#1C1A16] text-sm">{label}</h4>
+                      </div>
+                      <p className="text-[#9B8878] text-xs leading-relaxed mb-4">
+                        {desc}
+                      </p>
+                      {/* Variant chips */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {isColor && swatches
+                          ? variants.map((v, i) => (
+                              <div
+                                key={v}
+                                className="flex items-center gap-2 bg-[#F9F5EE] rounded-full px-3 py-1.5 border border-[#E8DFD0]"
+                              >
                                 <span
-                                  className="w-4 h-4 rounded-full shrink-0 border border-white shadow-sm"
+                                  className="w-3.5 h-3.5 rounded-full shrink-0 border border-white shadow-sm"
                                   style={{ background: swatches[i] }}
                                 />
                                 <span className="text-[#4A3F30] text-xs font-medium">
@@ -306,13 +333,14 @@ function TabbedContent() {
                                 </span>
                               </div>
                             ))
-                            : variants.map((v, i) => (
-                              <span key={v}
-                                className={`${variantColors[i] || "bg-[#F0EBE0] text-[#6B5E4A]"} text-xs font-semibold px-3 py-1.5 rounded-full`}>
+                          : variants.map((v, i) => (
+                              <span
+                                key={v}
+                                className={`${variantColors[i] || "bg-[#F0EBE0] text-[#6B5E4A]"} text-xs font-semibold px-3 py-1.5 rounded-full`}
+                              >
                                 {v}
                               </span>
                             ))}
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -320,15 +348,17 @@ function TabbedContent() {
               ))}
             </div>
 
-            {/* Egg grade note */}
-            <div className="mt-8 bg-[#F0FDF4] border border-[#2C5F1A]/15 rounded-2xl px-6 py-5 flex items-start gap-4">
+            {/* Grade note */}
+            <div className="bg-[#F0FDF4] border border-[#2C5F1A]/15 rounded-2xl px-6 py-5 flex items-start gap-4">
               <CheckCircle2 className="w-5 h-5 text-[#2C5F1A] shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-[#1C4010] text-sm mb-1">
                   Seleksi Telur Dilakukan Setiap Hari
                 </p>
                 <p className="text-[#4A7040] text-xs leading-relaxed">
-                  Setiap telur diseleksi berdasarkan ukuran, bentuk, keutuhan kerabang, dan warna sebelum dikemas dan didistribusikan ke pasar. Hanya telur berkualitas Grade A yang lolos seleksi.
+                  Setiap telur diseleksi berdasarkan ukuran, bentuk, keutuhan
+                  kerabang, dan warna sebelum dikemas dan didistribusikan ke
+                  pasar. Hanya telur berkualitas Grade A yang lolos seleksi.
                 </p>
               </div>
             </div>
@@ -357,12 +387,12 @@ function ContactCTA() {
             </p>
           </div>
           <div className="flex flex-col gap-3 w-full md:w-auto md:min-w-[220px]">
-            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20memesan%20telur%20dari%20Girimulyo%20Farm"
+            <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WA_FARM}?text=Halo%2C%20saya%20ingin%20memesan%20telur%20dari%20Girimulyo%20Farm`}
               target="_blank" rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-[#1DAE55] text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm">
               <Phone className="w-4 h-4" /> WhatsApp Pesan Telur
             </a>
-            <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20tertarik%20kunjungan%20agrowisata%20Girimulyo%20Farm"
+            <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WA_FARM}?text=Halo%2C%20saya%20tertarik%20kunjungan%20agrowisata%20Girimulyo%20Farm`}
               target="_blank" rel="noopener noreferrer"
               className="border border-white/25 hover:border-white/50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm">
               Daftar Agrowisata
@@ -373,75 +403,6 @@ function ContactCTA() {
     </section>
   );
 }
-
-// function Footer() {
-//   return (
-//     <footer className="bg-[#1C1008] py-10">
-//       <div className="max-w-5xl mx-auto px-6">
-//         <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
-//           {/* Brand */}
-//           <div className="max-w-xs">
-//             <div className="flex items-center gap-2.5 mb-3">
-//               <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
-//                 <Leaf className="w-3.5 h-3.5 text-white" />
-//               </div>
-//               <span className="text-white font-bold text-sm tracking-wide"
-//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//                 Girimulyo <span className="text-[#D4A882]">Farm</span>
-//               </span>
-//             </div>
-//             <p className="text-white/35 text-xs leading-relaxed"
-//               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//               Unit peternakan ayam petelur milik BUMDes Girimulyo, Desa Giripurno, Kota Batu.
-//             </p>
-//           </div>
-
-//           {/* Contact */}
-//           <div className="space-y-3">
-//             <div className="flex items-start gap-3">
-//               <MapPin className="w-4 h-4 text-[#8B5E3C] shrink-0 mt-0.5" />
-//               <p className="text-white/45 text-xs leading-relaxed"
-//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//                 Desa Giripurno, Kec. Bumiaji<br />Kota Batu, Jawa Timur 65336
-//               </p>
-//             </div>
-//             <div className="flex items-center gap-3">
-//               <Phone className="w-4 h-4 text-[#8B5E3C] shrink-0" />
-//               <a href="tel:+6281234567890" className="text-white/45 text-xs hover:text-white/70 transition-colors"
-//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//                 +62 812-3456-7890
-//               </a>
-//             </div>
-//             <div className="flex items-center gap-3">
-//               <Mail className="w-4 h-4 text-[#8B5E3C] shrink-0" />
-//               <a href="mailto:farm@giripurno.desa.id" className="text-white/45 text-xs hover:text-white/70 transition-colors"
-//                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//                 farm@giripurno.desa.id
-//               </a>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="border-t border-white/8 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-//           <p className="text-white/20 text-xs"
-//             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//             © 2024 Girimulyo Farm · BUMDes Girimulyo
-//           </p>
-//           <div className="flex gap-5">
-//             <Link href="/" className="text-white/20 hover:text-white/45 text-xs transition-colors"
-//               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//               Beranda BUMDes
-//             </Link>
-//             <Link href="/manahayuresort" className="text-white/20 hover:text-white/45 text-xs transition-colors"
-//               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-//               Manahayu Resort
-//             </Link>
-//           </div>
-//         </div>
-//       </div>
-//     </footer>
-//   );
-// }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function GirimulyoFarm() {
