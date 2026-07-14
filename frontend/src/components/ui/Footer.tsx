@@ -27,14 +27,14 @@ export default function Footer() {
               </div>
               <span
                 className="text-sm font-bold tracking-wide text-white"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+
               >
                 BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span>
               </span>
             </div>
             <p
               className="mb-6 text-sm leading-relaxed"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+
             >
               Badan Usaha Milik Desa Giripurno — menggerakkan ekonomi lokal melalui pertanian organik dan pariwisata resort.
             </p>
@@ -63,7 +63,7 @@ export default function Footer() {
           <div>
             <h4
               className="mb-5 text-sm font-semibold tracking-wide text-white"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+
             >
               Tautan
             </h4>
@@ -76,7 +76,7 @@ export default function Footer() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm transition-colors hover:text-white"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      
                     >
                       {link.label}
                     </a>
@@ -84,7 +84,7 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="text-sm transition-colors hover:text-white"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      
                     >
                       {link.label}
                     </Link>
@@ -97,7 +97,7 @@ export default function Footer() {
           <div>
             <h4
               className="mb-5 text-sm font-semibold tracking-wide text-white"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+
             >
               Kontak
             </h4>
@@ -106,7 +106,7 @@ export default function Footer() {
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#2C5F1A]" />
                 <p
                   className="text-sm leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+  
                 >
                   Desa Giripurno, Kec. Bumiaji,
                   <br />
@@ -118,7 +118,7 @@ export default function Footer() {
                 <a
                   href="tel:+6234112345"
                   className="text-sm transition-colors hover:text-white"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+  
                 >
                   (0341) 123-4567
                 </a>
@@ -128,7 +128,7 @@ export default function Footer() {
                 <a
                   href="mailto:bumdes@giripurno.desa.id"
                   className="text-sm transition-colors hover:text-white"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+  
                 >
                   bumdes@giripurno.desa.id
                 </a>
@@ -138,15 +138,15 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
-          <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-xs text-white/25">
             © 2026 BUMDes Girimulyo. Hak cipta dilindungi.
           </p>
           <div className="flex items-center gap-4">
-            <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-xs text-white/25">
               Pemerintah Kota Batu
             </p>
             <span className="h-1 w-1 rounded-full bg-white/20" />
-            <p className="text-xs text-white/25" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-xs text-white/25">
               Desa Giripurno Kecamatan Bumiaji
             </p>
           </div>

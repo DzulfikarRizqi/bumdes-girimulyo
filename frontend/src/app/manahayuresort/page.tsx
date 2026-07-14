@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
-import { Leaf, Wifi, Wind, Coffee, Bath, Tv, TreePine, Phone, Star, ArrowLeft, Users, Maximize, HeartHandshake, Music, Camera, Briefcase, Landmark, BookOpen } from "lucide-react";
+import { 
+  Wifi, Wind, Coffee, Bath, Tv, TreePine, 
+  Phone, Star, Users, Maximize, HeartHandshake, 
+  Music, Camera, Briefcase, Landmark, BookOpen 
+} from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import Image from "next/image";
 
@@ -118,13 +122,13 @@ export default function ManahayuResort() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D1E10] via-[#0D1E10]/35 to-[#0D1E10]/30" />
         </div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 pb-16 w-full">
-          <div className="inline-flex items-center gap-2 bg-[#8B5E3C] text-white text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="inline-flex items-center gap-2 bg-[#8B5E3C] text-white text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
             🌿 Resort & Penginapan
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4" style={{ fontFamily: "'Fraunces', serif" }}>
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 font-serif">
             Manahayu <em className="italic font-light text-[#D4A574]">Resort</em>
           </h1>
-          <p className="text-white/65 text-lg max-w-xl leading-relaxed mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-white/65 text-lg max-w-xl leading-relaxed mb-8">
             Melarikan diri ke alam pegunungan Batu. Cottage kayu, villa tropis, dan udara segar Giripurno menanti Anda.
           </p>
           <div className="flex flex-wrap gap-6">
@@ -134,8 +138,8 @@ export default function ManahayuResort() {
               // { val: "1.100m", label: "Ketinggian dpl" },
             ].map(({ val, label }) => (
               <div key={label}>
-                <div className="text-2xl font-bold text-white" style={{ fontFamily: "'Fraunces', serif" }}>{val}</div>
-                <div className="text-white/50 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{label}</div>
+                <div className="text-2xl font-bold text-white font-serif">{val}</div>
+                <div className="text-white/50 text-xs">{label}</div>
               </div>
             ))}
           </div>
@@ -159,18 +163,18 @@ export default function ManahayuResort() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C1008]/60 via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
                 <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-3">
-                  <p className="text-[#1C1A16] text-xs font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <p className="text-[#1C1A16] text-xs font-bold">
                     Luas Area
                   </p>
-                  <p className="text-[#8B5E3C] text-lg font-bold" style={{ fontFamily: "'Fraunces', serif" }}>
+                  <p className="text-[#8B5E3C] text-lg font-bold font-serif">
                     ± 200 m²
                   </p>
                 </div>
                 <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-3">
-                  <p className="text-[#1C1A16] text-xs font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <p className="text-[#1C1A16] text-xs font-bold">
                     Kapasitas
                   </p>
-                  <p className="text-[#8B5E3C] text-lg font-bold" style={{ fontFamily: "'Fraunces', serif" }}>
+                  <p className="text-[#8B5E3C] text-lg font-bold font-serif">
                     hingga 150 orang
                   </p>
                 </div>
@@ -179,25 +183,25 @@ export default function ManahayuResort() {
 
             {/* Content side */}
             <div>
-              <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3">
                 Venue Serbaguna
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16] leading-tight mb-5" style={{ fontFamily: "'Fraunces', serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16] leading-tight mb-5 font-serif">
                 Pendopo <em className="italic font-light text-[#2C5F1A]">Manahayu</em>
               </h2>
-              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-4">
                 Di jantung Manahayu Resort berdiri sebuah pendopo Joglo tradisional beratap tumpang tiga, 
                 dibangun dari kayu jati pilihan. Bangunan ini bukan sekadar ornamen — ia adalah ruang hidup 
                 yang menghubungkan tamu dengan warisan budaya Jawa, sekaligus berfungsi sebagai venue 
                 serbaguna untuk berbagai acara.
               </p>
-              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-6">
                 Dengan kolom-kolom kayu yang menjulang dan teras terbuka menghadap perbukitan, 
                 pendopo ini menawarkan pengalaman yang tidak bisa digantikan oleh ruang serbaguna modern mana pun.
               </p>
               <div className="flex flex-wrap gap-2">
                 {["Kayu Jati Asli", "Atap Tumpang Tiga", "Teras Panorama"].map(tag => (
-                  <span key={tag} className="bg-[#D8CFC0] text-[#4A3F30] text-xs font-medium px-3 py-1.5 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <span key={tag} className="bg-[#D8CFC0] text-[#4A3F30] text-xs font-medium px-3 py-1.5 rounded-full">
                     {tag}
                   </span>
                 ))}
@@ -208,7 +212,7 @@ export default function ManahayuResort() {
           {/* Bottom: use cases grid */}
           <div>
             <div className="mb-10">
-              <h3 className="text-2xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>
+              <h3 className="text-2xl font-bold text-[#1C1A16] font-serif">
                 Pendopo ini cocok untuk
               </h3>
             </div>
@@ -218,10 +222,10 @@ export default function ManahayuResort() {
                   <div className="w-10 h-10 rounded-xl bg-[#F0FDF4] flex items-center justify-center mb-4 group-hover:bg-[#2C5F1A]/10 transition-colors">
                     <Icon className="w-5 h-5 text-[#2C5F1A]" />
                   </div>
-                  <h4 className="font-bold text-[#1C1A16] text-sm mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <h4 className="font-bold text-[#1C1A16] text-sm mb-2">
                     {title}
                   </h4>
-                  <p className="text-[#6B5E4A] text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <p className="text-[#6B5E4A] text-xs leading-relaxed">
                     {desc}
                   </p>
                 </div>
@@ -235,9 +239,9 @@ export default function ManahayuResort() {
       <section className="py-12 bg-[#F7F3EC]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-14">
-            <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Kamar & Suite</div>
-            <h2 className="text-4xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>Pilih Kamar Anda</h2>
-            <p className="mt-3 text-[#6B5E4A] text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Harga termasuk sarapan untuk 2 orang · Check-in 14.00 · Check-out 12.00</p>
+            <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-3">Kamar & Suite</div>
+            <h2 className="text-4xl font-bold text-[#1C1A16] font-serif">Pilih Kamar Anda</h2>
+            <p className="mt-3 text-[#6B5E4A] text-sm">Harga termasuk sarapan untuk 2 orang · Check-in 14.00 · Check-out 12.00</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 justify-items-center">
             {ROOMS.map(room => (
@@ -253,26 +257,26 @@ export default function ManahayuResort() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1">
                     <Star className="w-3 h-3 fill-[#F59E0B] text-[#F59E0B]" />
-                    <span className="text-[#1C1A16] text-xs font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{room.rating}</span>
-                    <span className="text-[#6B5E4A] text-[10px]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>({room.reviews})</span>
+                    <span className="text-[#1C1A16] text-xs font-bold">{room.rating}</span>
+                    <span className="text-[#6B5E4A] text-[10px]">({room.reviews})</span>
                   </div>
                 </div>
                 <div className="p-7">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>{room.name}</h3>
+                    <h3 className="text-xl font-bold text-[#1C1A16] font-serif">{room.name}</h3>
                     <div className="text-right">
-                      <div className="font-bold text-lg" style={{ color: room.accent, fontFamily: "'Fraunces', serif" }}>{room.price}</div>
-                      <div className="text-[#6B5E4A] text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>/malam</div>
+                      <div className="font-bold text-lg font-serif" style={{ color: room.accent }}>{room.price}</div>
+                      <div className="text-[#6B5E4A] text-xs">/malam</div>
                     </div>
                   </div>
-                  <p className="text-[#6B5E4A] text-sm leading-relaxed mb-5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{room.desc}</p>
+                  <p className="text-[#6B5E4A] text-sm leading-relaxed mb-5">{room.desc}</p>
 
                   {/* Meta */}
                   <div className="flex items-center gap-5 mb-5 text-[#4A3F30]">
-                    <span className="flex items-center gap-1.5 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    <span className="flex items-center gap-1.5 text-xs">
                       <Users className="w-3.5 h-3.5" /> {room.capacity} Tamu
                     </span>
-                    <span className="flex items-center gap-1.5 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    <span className="flex items-center gap-1.5 text-xs">
                       <Maximize className="w-3.5 h-3.5" /> {room.size}
                     </span>
                   </div>
@@ -280,7 +284,7 @@ export default function ManahayuResort() {
                   {/* Amenities */}
                   <div className="flex flex-wrap gap-2 mb-6">
                     {room.amenities.map((Icon, i) => (
-                      <div key={i} className="flex items-center gap-1 bg-[#EDE6D8] text-[#4A3F30] text-[10px] font-medium px-2.5 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <div key={i} className="flex items-center gap-1 bg-[#EDE6D8] text-[#4A3F30] text-[10px] font-medium px-2.5 py-1 rounded-full">
                         <Icon className="w-3 h-3" /> {room.amenityLabels[i]}
                       </div>
                     ))}
@@ -289,7 +293,7 @@ export default function ManahayuResort() {
                   <a href={`https://wa.me/${WA_RESORT}?text=Halo,%20saya%20ingin%20memesan%20${encodeURIComponent(room.name)}%20di%20Manahayu%20Resort`}
                     target="_blank" rel="noopener noreferrer"
                     className="w-full font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors text-sm"
-                    style={{ background: room.accent, color: "white", fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    style={{ background: room.accent, color: "white" }}
                     onMouseOver={e => (e.currentTarget.style.opacity = "0.88")}
                     onMouseOut={e => (e.currentTarget.style.opacity = "1")}>
                     <Phone className="w-4 h-4" /> Pesan Sekarang via WhatsApp
@@ -308,13 +312,13 @@ export default function ManahayuResort() {
             <div className="w-7 h-7 rounded-full bg-[#2C5F1A] flex items-center justify-center">
               <Leaf className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="text-white text-sm font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span></span>
+            <span className="text-white text-sm font-bold">BUMDes <span className="text-[#8B5E3C]">GIRIMULYO</span></span>
           </div>
-          <p className="text-white/30 text-xs text-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-white/30 text-xs text-center">
             Desa Giripurno, Kec. Bumiaji, Kota Batu, Jawa Timur · © 2024 · <a href={`https://wa.me/${WA_RESORT}`} className="hover:text-white/60">{WA_RESORT}</a>
           </p>
           <ArrowLeft className="hidden" />
-          <Link href="/girimulyofarm" className="text-[#2C5F1A] hover:text-[#4A8A30] text-sm font-medium transition-colors" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <Link href="/girimulyofarm" className="text-[#2C5F1A] hover:text-[#4A8A30] text-sm font-medium transition-colors">
             ← Girimulyo Farm
           </Link>
         </div>

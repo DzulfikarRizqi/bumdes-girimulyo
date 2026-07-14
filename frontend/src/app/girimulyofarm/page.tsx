@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import {
-  Leaf, ArrowLeft, Bird, Wheat, CalendarDays, Scale,
-  Phone, MapPin, Mail, ChevronRight, CheckCircle2,
+  Bird, Wheat, CalendarDays, Scale,
+  Phone, ChevronRight, CheckCircle2,
   Maximize2, Egg, Palette, ShieldCheck,
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
@@ -115,20 +115,16 @@ function Hero() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-24 md:py-32">
         <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-[#8B5E3C]/80 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full mb-7"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="inline-flex items-center gap-2 bg-[#8B5E3C]/80 backdrop-blur-sm text-white text-[10px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full mb-7">
             <Bird className="w-3 h-3" /> Unit Peternakan · BUMDes Girimulyo
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white leading-[1.05] mb-4"
-            style={{ fontFamily: "'Fraunces', serif" }}>
+          <h1 className="text-5xl md:text-6xl font-bold text-white leading-[1.05] mb-4 font-serif">
             Girimulyo <em className="italic font-light text-[#D4A882]">Farm</em>
           </h1>
-          <p className="text-[#D4A882] font-semibold text-base md:text-lg mb-3 tracking-wide"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-[#D4A882] font-semibold text-base md:text-lg mb-3 tracking-wide">
             Pusat Peternakan Ayam Petelur Berkualitas
           </p>
-          <p className="text-white/55 text-sm md:text-base leading-relaxed max-w-lg"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <p className="text-white/55 text-sm md:text-base leading-relaxed max-w-lg">
             Mengembangkan populasi ayam Lohmann Brown pilihan di ketinggian Desa Giripurno untuk
             menghasilkan telur segar bermutu tinggi bagi pasar lokal Kota Batu.
           </p>
@@ -141,8 +137,8 @@ function Hero() {
               { v: ">100", l: "Minggu Produktif" },
             ].map(({ v, l }) => (
               <div key={l}>
-                <div className="text-2xl font-bold text-white" style={{ fontFamily: "'Fraunces', serif" }}>{v}</div>
-                <div className="text-white/45 text-xs mt-0.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{l}</div>
+                <div className="text-2xl font-bold text-white font-serif">{v}</div>
+                <div className="text-white/45 text-xs mt-0.5">{l}</div>
               </div>
             ))}
           </div>
@@ -160,12 +156,10 @@ function TabbedContent() {
       <div className="max-w-5xl mx-auto px-6">
         {/* Section label */}
         <div className="text-center mb-12">
-          <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3">
             Data Teknis
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1C1A16]"
-            style={{ fontFamily: "'Fraunces', serif" }}>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1C1A16] font-serif">
             Profil Unggas & Kualitas Produk
           </h2>
         </div>
@@ -183,7 +177,7 @@ function TabbedContent() {
                     ? "bg-white text-[#1C1A16] shadow-sm shadow-[#8B5E3C]/10"
                     : "text-[#6B5E4A] hover:text-[#1C1A16]"
                 }`}
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              >
                 {label}
               </button>
             ))}
@@ -204,18 +198,14 @@ function TabbedContent() {
                     </div>
                     <ChevronRight className="w-4 h-4 text-[#C4A882] opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
-                  <p className="text-xs font-bold tracking-widest uppercase text-[#A08060] mb-1.5"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <p className="text-xs font-bold tracking-widest uppercase text-[#A08060] mb-1.5">
                     {label}
                   </p>
                   <div className="flex items-baseline gap-1.5 mb-1">
-                    <span className="text-3xl font-bold text-[#1C1A16]"
-                      style={{ fontFamily: "'Fraunces', serif" }}>{value}</span>
-                    <span className="text-sm font-semibold text-[#8B5E3C]"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{unit}</span>
+                    <span className="text-3xl font-bold text-[#1C1A16] font-serif">{value}</span>
+                    <span className="text-sm font-semibold text-[#8B5E3C]">{unit}</span>
                   </div>
-                  <p className="text-xs text-[#9B8878] leading-relaxed"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{desc}</p>
+                  <p className="text-xs text-[#9B8878] leading-relaxed">{desc}</p>
                 </div>
               ))}
             </div>
@@ -233,20 +223,17 @@ function TabbedContent() {
                   />
                 </div>
                 <div className="p-7 md:p-9 flex-1">
-                  <div className="text-[10px] font-bold tracking-widest uppercase text-[#D4A882]/70 mb-3"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div className="text-[10px] font-bold tracking-widest uppercase text-[#D4A882]/70 mb-3">
                     Mengapa Lohmann Brown?
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-5"
-                    style={{ fontFamily: "'Fraunces', serif" }}>
+                  <h3 className="text-xl font-bold text-white mb-5 font-serif">
                     Ras Unggulan Pilihan Girimulyo Farm
                   </h3>
                   <ul className="space-y-3">
                     {FEATURES.map(f => (
                       <li key={f} className="flex items-start gap-3">
                         <CheckCircle2 className="w-4 h-4 text-[#6DBF40] shrink-0 mt-0.5" />
-                        <span className="text-white/65 text-sm leading-relaxed"
-                          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <span className="text-white/65 text-sm leading-relaxed">
                           {f}
                         </span>
                       </li>
@@ -273,12 +260,10 @@ function TabbedContent() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/80 via-[#1C1008]/30 to-transparent" />
               <div className="absolute inset-0 flex items-center px-8">
                 <div>
-                  <p className="text-[#D4A882] text-xs font-bold tracking-widest uppercase mb-2"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <p className="text-[#D4A882] text-xs font-bold tracking-widest uppercase mb-2">
                     Standar Kualitas
                   </p>
-                  <h3 className="text-3xl font-bold text-white"
-                    style={{ fontFamily: "'Fraunces', serif" }}>
+                  <h3 className="text-3xl font-bold text-white font-serif">
                     Telur Segar <em className="italic font-light text-[#D4A882]">Girimulyo</em>
                   </h3>
                 </div>
@@ -299,12 +284,10 @@ function TabbedContent() {
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                         <div>
-                          <h4 className="font-bold text-[#1C1A16] text-sm mb-1"
-                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                          <h4 className="font-bold text-[#1C1A16] text-sm mb-1">
                             {label}
                           </h4>
-                          <p className="text-[#9B8878] text-xs leading-relaxed"
-                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                          <p className="text-[#9B8878] text-xs leading-relaxed">
                             {desc}
                           </p>
                         </div>
@@ -318,16 +301,14 @@ function TabbedContent() {
                                   className="w-4 h-4 rounded-full shrink-0 border border-white shadow-sm"
                                   style={{ background: swatches[i] }}
                                 />
-                                <span className="text-[#4A3F30] text-xs font-medium"
-                                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                                <span className="text-[#4A3F30] text-xs font-medium">
                                   {v}
                                 </span>
                               </div>
                             ))
                             : variants.map((v, i) => (
                               <span key={v}
-                                className={`${variantColors[i] || "bg-[#F0EBE0] text-[#6B5E4A]"} text-xs font-semibold px-3 py-1.5 rounded-full`}
-                                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                                className={`${variantColors[i] || "bg-[#F0EBE0] text-[#6B5E4A]"} text-xs font-semibold px-3 py-1.5 rounded-full`}>
                                 {v}
                               </span>
                             ))}
@@ -343,12 +324,10 @@ function TabbedContent() {
             <div className="mt-8 bg-[#F0FDF4] border border-[#2C5F1A]/15 rounded-2xl px-6 py-5 flex items-start gap-4">
               <CheckCircle2 className="w-5 h-5 text-[#2C5F1A] shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-[#1C4010] text-sm mb-1"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="font-semibold text-[#1C4010] text-sm mb-1">
                   Seleksi Telur Dilakukan Setiap Hari
                 </p>
-                <p className="text-[#4A7040] text-xs leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-[#4A7040] text-xs leading-relaxed">
                   Setiap telur diseleksi berdasarkan ukuran, bentuk, keutuhan kerabang, dan warna sebelum dikemas dan didistribusikan ke pasar. Hanya telur berkualitas Grade A yang lolos seleksi.
                 </p>
               </div>
@@ -366,31 +345,26 @@ function ContactCTA() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="bg-[#2C5F1A] rounded-3xl px-8 py-12 md:px-14 md:py-14 flex flex-col md:flex-row items-center gap-10 justify-between">
           <div className="max-w-md">
-            <p className="text-[#A8D97A] text-xs font-bold tracking-widest uppercase mb-3"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-[#A8D97A] text-xs font-bold tracking-widest uppercase mb-3">
               Hubungi Kami
             </p>
-            <h2 className="text-3xl font-bold text-white mb-3"
-              style={{ fontFamily: "'Fraunces', serif" }}>
+            <h2 className="text-3xl font-bold text-white mb-3 font-serif">
               Pesan Telur atau<br />
               <em className="italic font-light text-[#A8D97A]">Kunjungi Farm Kami</em>
             </h2>
-            <p className="text-white/60 text-sm leading-relaxed"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-white/60 text-sm leading-relaxed">
               Kami melayani pembelian langsung, pengiriman ke area Batu–Malang, dan kunjungan edukasi agrowisata untuk sekolah dan keluarga.
             </p>
           </div>
           <div className="flex flex-col gap-3 w-full md:w-auto md:min-w-[220px]">
             <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20memesan%20telur%20dari%20Girimulyo%20Farm"
               target="_blank" rel="noopener noreferrer"
-              className="bg-[#25D366] hover:bg-[#1DAE55] text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              className="bg-[#25D366] hover:bg-[#1DAE55] text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm">
               <Phone className="w-4 h-4" /> WhatsApp Pesan Telur
             </a>
             <a href="https://wa.me/6281234567890?text=Halo%2C%20saya%20tertarik%20kunjungan%20agrowisata%20Girimulyo%20Farm"
               target="_blank" rel="noopener noreferrer"
-              className="border border-white/25 hover:border-white/50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              className="border border-white/25 hover:border-white/50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm">
               Daftar Agrowisata
             </a>
           </div>

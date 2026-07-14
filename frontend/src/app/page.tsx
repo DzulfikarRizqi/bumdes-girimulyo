@@ -31,27 +31,26 @@ function Hero() {
       </div>
       <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#2C5F1A] via-[#8B5E3C] to-[#2C5F1A]" />
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/75 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/75 text-xs font-semibold tracking-widest uppercase px-4 py-2 rounded-full mb-8">
           {/* <Leaf className="w-3 h-3 text-[#6DBF40]" /> */}
           Desa Giripurno · Kota Batu · Jawa Timur
         </div>
-        <h1 className="text-5xl md:text-[68px] font-bold text-white leading-[1.04] mb-6" style={{ fontFamily: "'Fraunces', serif" }}>
+        <h1 className="text-5xl md:text-[68px] font-bold font-serif text-white leading-[1.04] mb-6">
           Sinergi Warga,
           <br /><em className="italic font-light text-[#A8D97A]">Membangun Desa</em>
         </h1>
-        <p className="text-white/65 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        <p className="text-white/65 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
           BUMDes Girimulyo hadir sebagai motor penggerak ekonomi Desa Giripurno. Kami mengelola potensi lokal melalui peternakan unggas berkualitas dan pariwisata alam terpadu untuk kesejahteraan masyarakat.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button onClick={() => document.getElementById("unit-usaha")?.scrollIntoView({ behavior: "smooth" })}
-            className="group bg-[#2C5F1A] hover:bg-[#3A7A22] text-white font-semibold px-8 py-4 rounded-full flex items-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-[#2C5F1A]/30 hover:-translate-y-0.5 cursor-pointer"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            className="group bg-[#2C5F1A] hover:bg-[#3A7A22] text-white font-semibold px-8 py-4 rounded-full flex items-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-[#2C5F1A]/30 hover:-translate-y-0.5 cursor-pointer">
             Lihat Unit Usaha <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/35">
-        <span className="text-[10px] tracking-widest uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Scroll ke bawah</span>
+        <span className="text-[10px] tracking-widest uppercase">Scroll ke bawah</span>
         <ChevronDown className="w-4 h-4 animate-bounce" />
       </div>
     </section>
@@ -64,9 +63,9 @@ function BusinessUnits() {
     <section id="unit-usaha" className="py-24 bg-[#F7F3EC]">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Unit Usaha</div>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>Dua Pilar Unggulan</h2>
-          <p className="mt-4 text-[#6B5E4A] max-w-lg mx-auto text-sm leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-4">Unit Usaha</div>
+          <h2 className="text-4xl md:text-5xl font-bold font-serif text-[#1C1A16]">Dua Pilar Unggulan</h2>
+          <p className="mt-4 text-[#6B5E4A] max-w-lg mx-auto text-sm leading-relaxed">
             Dari peternakan mandiri hingga kenyamanan resort di dataran tinggi, 
             <br></br> 
             kami kelola dengan sepenuh hati untuk memajukan perekonomian desa
@@ -91,27 +90,26 @@ function BusinessUnits() {
                 className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C3A10]/70 to-transparent" />
-              <div className="absolute top-4 left-4 bg-[#2C5F1A] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="absolute top-4 left-4 bg-[#2C5F1A] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5">
                 {/* <Leaf className="w-3 h-3" />  */}
                 Peternakan Desa
               </div>
               {/* <div className="absolute bottom-5 left-6">
-                <p className="text-white/60 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Hasil panen langsung dari kebun</p>
+                <p className="text-white/60 text-xs">Hasil panen langsung dari kebun</p>
               </div> */}
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-[#1C1A16] mb-3" style={{ fontFamily: "'Fraunces', serif" }}>Girimulyo Farm</h3>
-              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <h3 className="text-2xl font-bold font-serif text-[#1C1A16] mb-3">Girimulyo Farm</h3>
+              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-8">
                 Pusat peternakan ayam petelur Lohmann kebanggaan desa. Dikelola secara profesional dengan standar pakan bermutu tinggi untuk menghasilkan telur berkualitas setiap hari.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {["Ayam Lohmann", "Telur Berkualitas", "Peternakan Mandiri"].map(tag => (
-                  <span key={tag} className="bg-[#EDE6D8] text-[#4A3F30] text-xs font-medium px-3 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{tag}</span>
+                  <span key={tag} className="bg-[#EDE6D8] text-[#4A3F30] text-xs font-medium px-3 py-1 rounded-full">{tag}</span>
                 ))}
               </div>
               <button onClick={() => router.push("/girimulyofarm")}
-                className="group/btn w-full bg-[#2C5F1A] hover:bg-[#3A7A22] text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                className="group/btn w-full bg-[#2C5F1A] hover:bg-[#3A7A22] text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300">
                 Jelajahi Farm <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -133,26 +131,25 @@ function BusinessUnits() {
                 className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#3A1F0A]/70 to-transparent" />
-              <div className="absolute top-4 left-4 bg-[#8B5E3C] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="absolute top-4 left-4 bg-[#8B5E3C] text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5">
                 Resort & Wisata
               </div>
               {/* <div className="absolute bottom-5 left-6">
-                <p className="text-white/60 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Pengalaman menginap di alam terbuka</p>
+                <p className="text-white/60 text-xs">Pengalaman menginap di alam terbuka</p>
               </div> */}
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-[#1C1A16] mb-3" style={{ fontFamily: "'Fraunces', serif" }}>Manahayu Resort</h3>
-              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-8" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <h3 className="text-2xl font-bold font-serif text-[#1C1A16] mb-3">Manahayu Resort</h3>
+              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-8">
                 Nikmati ketenangan menginap di sejuknya dataran tinggi Giripurno. Kami menawarkan kenyamanan cottage kayu, pemandangan alam yang asri, dan keramahan khas pedesaan Kota Batu.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {["Villa Panorama", "Paket Wisata", "Holiday"].map(tag => (
-                  <span key={tag} className="bg-[#F5EDE3] text-[#6B3A1F] text-xs font-medium px-3 py-1 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{tag}</span>
+                  <span key={tag} className="bg-[#F5EDE3] text-[#6B3A1F] text-xs font-medium px-3 py-1 rounded-full">{tag}</span>
                 ))}
               </div>
               <button onClick={() => router.push("/manahayuresort")}
-                className="group/btn w-full bg-[#8B5E3C] hover:bg-[#A0703F] text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                className="group/btn w-full bg-[#8B5E3C] hover:bg-[#A0703F] text-white font-semibold py-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300">
                 Lihat Resort <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -185,7 +182,7 @@ function WhySection() {
       <div className="relative py-28 bg-[#1C3A10] overflow-hidden">
         {/* Decorative background watermark */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <span className="text-white/[0.04] font-bold leading-none" style={{ fontFamily: "'Fraunces', serif", fontSize: "min(28vw, 320px)" }}>
+          <span className="text-white/[0.04] font-bold font-serif leading-none" style={{ fontSize: "min(28vw, 320px)" }}>
             AKAL
           </span>
         </div>
@@ -195,13 +192,13 @@ function WhySection() {
           <div className="grid md:grid-cols-2 gap-10 items-center mb-16">
             {/* Left: text */}
             <div>
-              <div className="text-xs font-bold tracking-widest uppercase text-[#A8D97A] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="text-xs font-bold tracking-widest uppercase text-[#A8D97A] mb-3">
                 Motto BUMDes
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight" style={{ fontFamily: "'Fraunces', serif" }}>
+              <h2 className="text-4xl md:text-5xl font-bold font-serif text-white leading-tight">
                 Empat Nilai <em className="italic font-light text-[#A8D97A]">Fondasi</em>
               </h2>
-              <p className="mt-4 text-white/45 text-sm max-w-lg leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <p className="mt-4 text-white/45 text-sm max-w-lg leading-relaxed">
                 Setiap huruf dalam &ldquo;AKAL&rdquo; mewakili komitmen yang menjadi landasan kerja seluruh pengurus dan unit usaha BUMDes Girimulyo.
               </p>
             </div>
@@ -218,7 +215,7 @@ function WhySection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1C3A10]/80 via-[#1C3A10]/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-white/50 text-[10px] tracking-widest uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-white/50 text-[10px] tracking-widest uppercase">
                   Desa Giripurno · Kecamatan Bumiaji · Kota Batu
                 </p>
               </div>
@@ -229,18 +226,18 @@ function WhySection() {
             {AKAL.map(({ letter, word, desc }, i) => (
               <div key={word} className="group relative bg-white/[0.07] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-6 hover:bg-white/[0.12] hover:border-white/[0.18] transition-all duration-400">
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-5xl font-bold text-[#A8D97A]/30 leading-none group-hover:text-[#A8D97A]/50 transition-colors" style={{ fontFamily: "'Fraunces', serif" }}>
+                  <span className="text-5xl font-bold font-serif text-[#A8D97A]/30 leading-none group-hover:text-[#A8D97A]/50 transition-colors">
                     {letter}
                   </span>
                   <div className="h-px flex-1 bg-white/10" />
-                  <span className="text-[10px] font-bold text-white/20 tracking-widest" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <span className="text-[10px] font-bold text-white/20 tracking-widest">
                     0{i + 1}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-white mb-2 tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <h3 className="text-sm font-bold text-white mb-2 tracking-wide">
                   {word}
                 </h3>
-                <p className="text-white/40 text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-white/40 text-xs leading-relaxed">
                   {desc}
                 </p>
               </div>
@@ -261,17 +258,17 @@ function WhySection() {
 
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="inline-flex items-center gap-2 bg-[#2C5F1A] text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <div className="inline-flex items-center gap-2 bg-[#2C5F1A] text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">
                     Visi
                   </div>
                   <div className="h-px flex-1 bg-white/10" />
                 </div>
-                <p className="text-white font-bold text-lg md:text-2xl leading-[1.5]" style={{ fontFamily: "'Fraunces', serif" }}>
+                <p className="text-white font-bold font-serif text-lg md:text-2xl leading-[1.5]">
                   &ldquo;Terwujudnya BUMDes Girimulyo yang Mandiri sebagai Basis Pengembangan Perekonomian Desa dan Lembaga Ekonomi Antar Desa yang Berbasis pada Kerjasama dan Gotong Royong.&rdquo;
                 </p>
               </div>
               <div className="relative z-10 mt-8 pt-5 border-t border-white/10">
-                <p className="text-white/25 text-[10px] tracking-widest uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-white/25 text-[10px] tracking-widest uppercase">
                   BUMDes Girimulyo · Desa Giripurno
                 </p>
               </div>
@@ -280,7 +277,7 @@ function WhySection() {
             {/* Misi — right panel */}
             <div className="bg-white rounded-3xl p-8 md:p-10 border border-[#2C5F1A]/8">
               <div className="flex items-center gap-3 mb-8">
-                <div className="inline-flex items-center gap-2 bg-[#EDE6D8] text-[#8B5E3C] text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <div className="inline-flex items-center gap-2 bg-[#EDE6D8] text-[#8B5E3C] text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">
                   Misi
                 </div>
                 <div className="h-px flex-1 bg-[#E5E3D8]" />
@@ -291,7 +288,7 @@ function WhySection() {
                   <div key={i} className="group flex items-stretch gap-4">
                     {/* Left: number + connector line */}
                     <div className="flex flex-col items-center shrink-0 w-7">
-                      <div className="w-7 h-7 rounded-full bg-[#2C5F1A] text-white text-[10px] font-bold flex items-center justify-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <div className="w-7 h-7 rounded-full bg-[#2C5F1A] text-white text-[10px] font-bold flex items-center justify-center">
                         {i + 1}
                       </div>
                       {i < MISI_ITEMS.length - 1 && (
@@ -300,7 +297,7 @@ function WhySection() {
                     </div>
                     {/* Right: content */}
                     <div className={`py-2.5 ${i < MISI_ITEMS.length - 1 ? "pb-5" : ""}`}>
-                      <p className="text-[#4A3F30] text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      <p className="text-[#4A3F30] text-xs leading-relaxed">
                         {m}
                       </p>
                     </div>
@@ -321,11 +318,11 @@ function WhySection() {
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           {/* Quote */}
           <div className="relative mb-16">
-            <div className="absolute -top-6 -left-2 text-white/[0.06] select-none pointer-events-none leading-none" style={{ fontFamily: "'Fraunces', serif", fontSize: "200px" }}>
+            <div className="absolute -top-6 -left-2 text-white/[0.06] select-none pointer-events-none font-serif leading-none" style={{ fontSize: "200px" }}>
               &ldquo;
             </div>
             <blockquote className="relative z-10 max-w-4xl">
-              <p className="text-white text-2xl md:text-4xl font-bold leading-[1.4] tracking-tight" style={{ fontFamily: "'Fraunces', serif" }}>
+              <p className="text-white text-2xl md:text-4xl font-bold font-serif leading-[1.4] tracking-tight">
                 BUMDes harus menjadi wadah yang{" "}
                 <em className="italic font-light text-[#EDE6D8]">menyatukan sekaligus melindungi</em>{" "}
                 pelaku ekonomi kecil, menjadi bisnis yang lebih besar tanpa harus mendominasi usaha yang dalam proses berkembang.
@@ -344,10 +341,10 @@ function WhySection() {
                 <div className="w-11 h-11 rounded-xl bg-white/[0.12] flex items-center justify-center mb-5 group-hover:bg-white/[0.2] transition-colors">
                   <Icon className="w-5 h-5 text-[#EDE6D8]" />
                 </div>
-                <h4 className="text-white font-bold text-base mb-2" style={{ fontFamily: "'Fraunces', serif" }}>
+                <h4 className="text-white font-bold font-serif text-base mb-2">
                   {title}
                 </h4>
-                <p className="text-white/55 text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                <p className="text-white/55 text-xs leading-relaxed">
                   {desc}
                 </p>
               </div>
