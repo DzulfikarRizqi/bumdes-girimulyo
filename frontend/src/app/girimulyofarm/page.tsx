@@ -9,6 +9,7 @@ import {
   Maximize2, Egg, Palette, ShieldCheck,
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import Image from "next/image";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 type Tab = "lohmann" | "telur";
@@ -101,10 +102,12 @@ function Hero() {
     <section className="pt-16 relative overflow-hidden bg-[#1C1008]">
       {/* BG image */}
       <div className="absolute inset-0">
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1694984716468-e61f15c4f851?w=1600&h=700&fit=crop&auto=format"
           alt="Ayam Lohmann Brown di padang rumput hijau Girimulyo Farm"
-          className="w-full h-full object-cover opacity-40"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/90 via-[#1C1008]/60 to-[#1C1008]/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1C1008]/70 via-transparent to-transparent" />
@@ -220,11 +223,13 @@ function TabbedContent() {
             {/* Breed info card */}
             <div className="bg-[#1C1008] rounded-2xl overflow-hidden">
               <div className="md:flex">
-                <div className="md:w-72 h-52 md:h-auto shrink-0 bg-[#2A1A0A] overflow-hidden">
-                  <img
+                <div className="md:w-72 h-52 md:h-auto shrink-0 bg-[#2A1A0A] overflow-hidden relative">
+                  <Image
                     src="https://images.unsplash.com/photo-1694984717361-6ad859014d2a?w=600&h=500&fit=crop&auto=format"
                     alt="Ayam Lohmann Brown close-up di Girimulyo Farm"
-                    className="w-full h-full object-cover opacity-70"
+                    fill
+                    sizes="288px"
+                    className="object-cover opacity-70"
                   />
                 </div>
                 <div className="p-7 md:p-9 flex-1">
@@ -258,10 +263,12 @@ function TabbedContent() {
           <div className="animate-in fade-in duration-300">
             {/* Hero egg image */}
             <div className="relative h-52 rounded-2xl overflow-hidden mb-10 bg-[#2A1A0A]">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1635843125569-b7fb33d26fab?w=1200&h=400&fit=crop&auto=format"
                 alt="Telur cokelat segar dalam keranjang hasil panen Girimulyo Farm"
-                className="w-full h-full object-cover opacity-60"
+                fill
+                sizes="100vw"
+                className="object-cover opacity-60"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#1C1008]/80 via-[#1C1008]/30 to-transparent" />
               <div className="absolute inset-0 flex items-center px-8">

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
-import { Leaf, Wifi, Wind, Coffee, Bath, Tv, TreePine, Phone, Star, ArrowLeft, Users, Maximize } from "lucide-react";
+import { Leaf, Wifi, Wind, Coffee, Bath, Tv, TreePine, Phone, Star, ArrowLeft, Users, Maximize, HeartHandshake, Music, Camera, Briefcase, Landmark, BookOpen } from "lucide-react";
 import Footer from "@/components/ui/Footer";
+import Image from "next/image";
 
 const WA_RESORT = "6281298765432";
 
@@ -66,13 +67,37 @@ const ROOMS = [
   // },
 ];
 
-const FACILITIES = [
-  { icon: "🏊", title: "Kolam Renang", desc: "Kolam renang terbuka dengan view hutan" },
-  { icon: "🌿", title: "Hiking Trail", desc: "Jalur trekking alam 3 km" },
-  { icon: "🍽️", title: "Restoran", desc: "Masakan lokal & internasional" },
-  { icon: "🧘", title: "Yoga Deck", desc: "Area yoga terbuka di tepi kebun" },
-  { icon: "🔥", title: "Bonfire Area", desc: "Area api unggun malam hari" },
-  { icon: "📸", title: "Foto Spot", desc: "View kota Batu dari ketinggian" },
+const PENDOPO_USES = [
+  {
+    icon: HeartHandshake,
+    title: "Pernikahan & Resepsi",
+    desc: "Suasana Joglo yang otentik menjadi latar pernikahan yang tak terlupakan. Pendopo dapat diatur untuk resepsi dengan kapasitas hingga 150 tamu, lengkap dengan area pelaminan dan taman sekitarnya.",
+  },
+  {
+    icon: Music,
+    title: "Pertunjukan Seni",
+    desc: "Panggung alami untuk pagelaran tari tradisional, gamelan, dan kesenian Jawa. Struktur kayu terbuka menciptakan akustik alami dan pencahayaan yang memukau saat senja.",
+  },
+  {
+    icon: Camera,
+    title: "Lokasi Syuting & Fotografi",
+    desc: "Arsitektur Joglo kayu jati dengan atap tumpang tiga dan pemandangan perbukitan hijau menjadikan pendopo lokasi favorit untuk film, iklan, dan sesi foto prewedding.",
+  },
+  {
+    icon: Briefcase,
+    title: "Acara Korporat & Seminar",
+    desc: "Rapat kerja, team building, atau seminar dalam setting yang berbeda dari ruang kantor biasa. Tersedia proyektor, sound system, dan area breakout outdoor.",
+  },
+  {
+    icon: BookOpen,
+    title: "Workshop & Kelas Seni",
+    desc: "Tempat belajar membatik, merajut, atau memasak masakan tradisional Jawa. Instruktur lokal dari Desa Giripurno memandu peserta dalam suasana yang autentik.",
+  },
+  {
+    icon: Landmark,
+    title: "Upacara Adat & Budaya",
+    desc: "Menyelenggarakan ritual dan upacara adat Jawa dengan pemandu budaya yang berpengalaman. Pendopo menyatu dengan tradisi turun-temurun masyarakat Giripurno.",
+  },
 ];
 
 export default function ManahayuResort() {
@@ -83,9 +108,13 @@ export default function ManahayuResort() {
       {/* Hero */}
       <section className="relative pt-16 min-h-[70vh] flex items-end overflow-hidden">
         <div className="absolute inset-0 bg-[#0D1E10]">
-          <img src="https://images.unsplash.com/photo-1648995505975-8fe3ebc7b253?w=1600&h=900&fit=crop&auto=format"
+          <Image
+            src="https://images.unsplash.com/photo-1648995505975-8fe3ebc7b253?w=1600&h=900&fit=crop&auto=format"
             alt="Kolam renang resort berlatar perbukitan hijau Giripurno"
-            className="w-full h-full object-cover opacity-55" />
+            fill
+            sizes="100vw"
+            className="object-cover opacity-55"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D1E10] via-[#0D1E10]/35 to-[#0D1E10]/30" />
         </div>
         <div className="relative z-10 max-w-6xl mx-auto px-6 pb-16 w-full">
@@ -113,20 +142,91 @@ export default function ManahayuResort() {
         </div>
       </section>
 
-      {/* Facilities strip */}
-      <section className="py-14 bg-[#EDE6D8]">
+      {/* Pendopo Section */}
+      <section className="py-20 bg-[#EDE6D8]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>Fasilitas Resort</h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {FACILITIES.map(f => (
-              <div key={f.title} className="bg-white rounded-xl p-4 text-center border border-[#8B5E3C]/8 hover:border-[#8B5E3C]/25 hover:shadow-sm transition-all">
-                <div className="text-2xl mb-2">{f.icon}</div>
-                <div className="font-semibold text-[#1C1A16] text-xs mb-0.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{f.title}</div>
-                <div className="text-[#6B5E4A] text-[10px]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{f.desc}</div>
+          {/* Top: two-column layout */}
+          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center mb-16">
+            {/* Image side */}
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-[#1C1008]">
+              <Image
+                src="https://images.unsplash.com/photo-1555217851-6141535bd771?w=900&h=680&fit=crop&auto=format"
+                alt="Pendopo Joglo tradisional di Manahayu Resort Giripurno"
+                fill
+                sizes="(max-width:768px)100vw,50vw"
+                className="object-cover opacity-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1008]/60 via-transparent to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+                <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-3">
+                  <p className="text-[#1C1A16] text-xs font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    Luas Area
+                  </p>
+                  <p className="text-[#8B5E3C] text-lg font-bold" style={{ fontFamily: "'Fraunces', serif" }}>
+                    ± 200 m²
+                  </p>
+                </div>
+                <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-3">
+                  <p className="text-[#1C1A16] text-xs font-bold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    Kapasitas
+                  </p>
+                  <p className="text-[#8B5E3C] text-lg font-bold" style={{ fontFamily: "'Fraunces', serif" }}>
+                    hingga 150 orang
+                  </p>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Content side */}
+            <div>
+              <div className="text-xs font-bold tracking-widest uppercase text-[#8B5E3C] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Venue Serbaguna
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16] leading-tight mb-5" style={{ fontFamily: "'Fraunces', serif" }}>
+                Pendopo <em className="italic font-light text-[#2C5F1A]">Manahayu</em>
+              </h2>
+              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Di jantung Manahayu Resort berdiri sebuah pendopo Joglo tradisional beratap tumpang tiga, 
+                dibangun dari kayu jati pilihan. Bangunan ini bukan sekadar ornamen — ia adalah ruang hidup 
+                yang menghubungkan tamu dengan warisan budaya Jawa, sekaligus berfungsi sebagai venue 
+                serbaguna untuk berbagai acara.
+              </p>
+              <p className="text-[#6B5E4A] text-sm leading-relaxed mb-6" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Dengan kolom-kolom kayu yang menjulang dan teras terbuka menghadap perbukitan, 
+                pendopo ini menawarkan pengalaman yang tidak bisa digantikan oleh ruang serbaguna modern mana pun.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["Kayu Jati Asli", "Atap Tumpang Tiga", "Teras Panorama"].map(tag => (
+                  <span key={tag} className="bg-[#D8CFC0] text-[#4A3F30] text-xs font-medium px-3 py-1.5 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom: use cases grid */}
+          <div>
+            <div className="mb-10">
+              <h3 className="text-2xl font-bold text-[#1C1A16]" style={{ fontFamily: "'Fraunces', serif" }}>
+                Pendopo ini cocok untuk
+              </h3>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {PENDOPO_USES.map(({ icon: Icon, title, desc }) => (
+                <div key={title} className="bg-white rounded-2xl p-6 border border-[#8B5E3C]/8 hover:border-[#2C5F1A]/25 hover:shadow-md transition-all duration-300 group">
+                  <div className="w-10 h-10 rounded-xl bg-[#F0FDF4] flex items-center justify-center mb-4 group-hover:bg-[#2C5F1A]/10 transition-colors">
+                    <Icon className="w-5 h-5 text-[#2C5F1A]" />
+                  </div>
+                  <h4 className="font-bold text-[#1C1A16] text-sm mb-2" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {title}
+                  </h4>
+                  <p className="text-[#6B5E4A] text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -143,9 +243,13 @@ export default function ManahayuResort() {
             {ROOMS.map(room => (
               <div key={room.name} className={`group bg-white rounded-3xl overflow-hidden border ${room.color} hover:shadow-xl transition-all duration-500 hover:-translate-y-1`}>
                 <div className="relative h-56 overflow-hidden" style={{ background: "#1C3A10" }}>
-                  <img src={`https://images.unsplash.com/${room.img}?w=800&h=500&fit=crop&auto=format`}
+                  <Image
+                    src={`https://images.unsplash.com/${room.img}?w=800&h=500&fit=crop&auto=format`}
                     alt={`${room.name} Manahayu Resort`}
-                    className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" />
+                    fill
+                    sizes="(max-width:640px)100vw,(max-width:1024px)50vw,33vw"
+                    className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1">
                     <Star className="w-3 h-3 fill-[#F59E0B] text-[#F59E0B]" />

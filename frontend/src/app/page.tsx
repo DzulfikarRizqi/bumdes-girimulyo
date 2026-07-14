@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import {
-  Leaf, MapPin, Phone, Mail, Triangle,
-  ChevronDown, ArrowRight, Menu, X, ExternalLink
+  ChevronDown, ArrowRight, Handshake, Shield, Sprout
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import Image from "next/image";
@@ -165,8 +163,6 @@ function BusinessUnits() {
   );
 }
 
-type IdentityTab = "motto" | "visi" | "kesimpulan";
-
 const MISI_ITEMS = [
   "Pengembangan usaha ekonomi melalui usaha ekonomi produktif dengan melibatkan masyarakat.",
   "Menjalin kerjasama dengan semua pihak dalam pengembangan Usaha BUM Desa.",
@@ -183,202 +179,181 @@ const AKAL = [
 ];
 
 function WhySection() {
-  const [tab, setTab] = useState<IdentityTab>("motto");
-
-  const tabs: { id: IdentityTab; label: string }[] = [
-    { id: "motto", label: "Motto" },
-    { id: "visi", label: "Visi & Misi" },
-    { id: "kesimpulan", label: "Kesimpulan" },
-  ];
-
   return (
-    <section className="py-24 bg-[#EDE6D8]">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Section header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12">
-          <div>
-            <div className="text-xs font-semibold tracking-widest uppercase text-[#8B5E3C] mb-3"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Identitas BUMDes
+    <section className="bg-[#EDE6D8]">
+      {/* ── MOTTO: AKAL ── */}
+      <div className="relative py-28 bg-[#1C3A10] overflow-hidden">
+        {/* Decorative background watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+          <span className="text-white/[0.04] font-bold leading-none" style={{ fontFamily: "'Fraunces', serif", fontSize: "min(28vw, 320px)" }}>
+            AKAL
+          </span>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1C3A10] via-transparent to-[#1C3A10]" />
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-10 items-center mb-16">
+            {/* Left: text */}
+            <div>
+              <div className="text-xs font-bold tracking-widest uppercase text-[#A8D97A] mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Motto BUMDes
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight" style={{ fontFamily: "'Fraunces', serif" }}>
+                Empat Nilai <em className="italic font-light text-[#A8D97A]">Fondasi</em>
+              </h2>
+              <p className="mt-4 text-white/45 text-sm max-w-lg leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Setiap huruf dalam &ldquo;AKAL&rdquo; mewakili komitmen yang menjadi landasan kerja seluruh pengurus dan unit usaha BUMDes Girimulyo.
+              </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16] leading-tight"
-              style={{ fontFamily: "'Fraunces', serif" }}>
-              Jati Diri &{" "}
-              <em className="italic font-light text-[#2C5F1A]">Arah Kami</em>
-            </h2>
+
+            {/* Right: placeholder image */}
+            <div className="relative rounded-2xl overflow-hidden aspect-[16/9] bg-[#2A4A1A]">
+              <Image
+                // src="/cardGirifarm.JPG"
+                src="/Petani.JPG"
+                alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C3A10]/80 via-[#1C3A10]/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-white/50 text-[10px] tracking-widest uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  Desa Giripurno · Kecamatan Bumiaji · Kota Batu
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Tab pills */}
-          <div className="flex bg-[#D8CFC0] rounded-2xl p-1.5 gap-1 self-start md:self-auto shrink-0">
-            {tabs.map(({ id, label }) => (
-              <button
-                key={id}
-                onClick={() => setTab(id)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-250 whitespace-nowrap cursor-pointer ${
-                  tab === id
-                    ? "bg-white text-[#1C1A16] shadow-sm shadow-[#8B5E3C]/15"
-                    : "text-[#6B5E4A] hover:text-[#1C1A16]"
-                }`}
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                {label}
-              </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {AKAL.map(({ letter, word, desc }, i) => (
+              <div key={word} className="group relative bg-white/[0.07] backdrop-blur-sm border border-white/[0.08] rounded-2xl p-6 hover:bg-white/[0.12] hover:border-white/[0.18] transition-all duration-400">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-5xl font-bold text-[#A8D97A]/30 leading-none group-hover:text-[#A8D97A]/50 transition-colors" style={{ fontFamily: "'Fraunces', serif" }}>
+                    {letter}
+                  </span>
+                  <div className="h-px flex-1 bg-white/10" />
+                  <span className="text-[10px] font-bold text-white/20 tracking-widest" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    0{i + 1}
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold text-white mb-2 tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  {word}
+                </h3>
+                <p className="text-white/40 text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  {desc}
+                </p>
+              </div>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* ── TAB: MOTTO ── */}
-        {tab === "motto" && (
+      {/* ── VISI & MISI ── */}
+      <div className="py-24 bg-[#F7F3EC]">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Left — AKAL acronym hero */}
-            <div className="bg-[#2C5F1A] rounded-3xl p-8 md:p-10 flex flex-col justify-between min-h-[340px]">
-              <div>
-                <p className="text-[#A8D97A] font-bold tracking-widest uppercase mb-5"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Motto BUMDes Girimulyo
-                </p>
-                <div className="flex gap-3 mb-5">
-                  {"AKAL".split("").map((l, i) => (
-                    <div key={i}
-                      className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/12 border border-white/20 flex items-center justify-center">
-                      <span className="text-3xl md:text-4xl font-bold text-white"
-                        style={{ fontFamily: "'Fraunces', serif" }}>
-                        {l}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <p className="text-white/50 leading-relaxed"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Setiap huruf mewakili nilai inti yang menjadi landasan kerja seluruh pengurus dan unit usaha BUMDes Girimulyo.
-                </p>
-              </div>
-            </div>
+            {/* Visi — left panel */}
+            <div className="relative bg-[#1C1A16] rounded-3xl p-10 md:p-12 overflow-hidden flex flex-col justify-between">
+              {/* Decorative gradient orb */}
+              <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#2C5F1A]/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-[#8B5E3C]/15 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Right — letter breakdown */}
-            <div className="flex flex-col gap-4">
-              {AKAL.map(({ letter, word, desc }) => (
-                <div key={word}
-                  className="bg-white rounded-2xl px-5 py-4 border border-[#2C5F1A]/8 hover:border-[#2C5F1A]/25 hover:shadow-sm transition-all duration-300 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#2C5F1A] flex items-center justify-center shrink-0">
-                    <span className="text-white font-bold text-md"
-                      style={{ fontFamily: "'Fraunces', serif" }}>
-                      {letter}
-                    </span>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="inline-flex items-center gap-2 bg-[#2C5F1A] text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    Visi
                   </div>
-                  <div>
-                    <h4
-                      className="text-md font-bold text-[#1C1A16] mb-1"
-                      style={{ fontFamily: "var(--font-montserrat), sans-serif" }} 
-                    >
-                      {word}
-                    </h4>
-                    <p className="text-[#6B5E4A] leading-relaxed"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {desc}
-                    </p>
-                  </div>
+                  <div className="h-px flex-1 bg-white/10" />
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── TAB: VISI & MISI ── */}
-        {tab === "visi" && (
-          <div className="grid md:grid-cols-5 gap-6">
-            {/* Visi */}
-            <div className="md:col-span-2 bg-[#1C1A16] rounded-3xl p-8 md:p-10 flex flex-col justify-between min-h-[360px]">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-[#2C5F1A] text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full mb-6"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  {/* <Leaf className="w-3 h-3" />  */}
-                  Visi
-                </div>
-                <p className="text-white font-bold text-base md:text-lg leading-relaxed"
-                  style={{ fontFamily: "'Fraunces', serif" }}>
-                  "Terwujudnya BUMDes Girimulyo yang Mandiri sebagai Basis Pengembangan Perekonomian Desa dan Lembaga Ekonomi Antar Desa yang Berbasis pada Kerjasama dan Gotong Royong."
+                <p className="text-white font-bold text-lg md:text-2xl leading-[1.5]" style={{ fontFamily: "'Fraunces', serif" }}>
+                  &ldquo;Terwujudnya BUMDes Girimulyo yang Mandiri sebagai Basis Pengembangan Perekonomian Desa dan Lembaga Ekonomi Antar Desa yang Berbasis pada Kerjasama dan Gotong Royong.&rdquo;
                 </p>
               </div>
-              <div className="mt-6 pt-5 border-t border-white/10">
-                <p className="text-white/35 text-[10px] tracking-widest uppercase"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <div className="relative z-10 mt-8 pt-5 border-t border-white/10">
+                <p className="text-white/25 text-[10px] tracking-widest uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   BUMDes Girimulyo · Desa Giripurno
                 </p>
               </div>
             </div>
 
-            {/* Misi */}
-            <div className="md:col-span-3 bg-white rounded-3xl p-8 md:p-10 border border-[#2C5F1A]/8">
-              <div className="inline-flex items-center gap-2 bg-[#EDE6D8] text-[#8B5E3C] text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full mb-6"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Misi
+            {/* Misi — right panel */}
+            <div className="bg-white rounded-3xl p-8 md:p-10 border border-[#2C5F1A]/8">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="inline-flex items-center gap-2 bg-[#EDE6D8] text-[#8B5E3C] text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  Misi
+                </div>
+                <div className="h-px flex-1 bg-[#E5E3D8]" />
               </div>
-              <ul className="space-y-4">
+
+              <div className="space-y-0">
                 {MISI_ITEMS.map((m, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <span className="w-6 h-6 rounded-full bg-[#2C5F1A]/10 text-[#2C5F1A] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {i + 1}
-                    </span>
-                    <p className="text-[#4A3F30] text-sm leading-relaxed"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {m}
-                    </p>
-                  </li>
+                  <div key={i} className="group flex items-stretch gap-4">
+                    {/* Left: number + connector line */}
+                    <div className="flex flex-col items-center shrink-0 w-7">
+                      <div className="w-7 h-7 rounded-full bg-[#2C5F1A] text-white text-[10px] font-bold flex items-center justify-center" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        {i + 1}
+                      </div>
+                      {i < MISI_ITEMS.length - 1 && (
+                        <div className="w-px flex-1 bg-[#2C5F1A]/15 my-1" />
+                      )}
+                    </div>
+                    {/* Right: content */}
+                    <div className={`py-2.5 ${i < MISI_ITEMS.length - 1 ? "pb-5" : ""}`}>
+                      <p className="text-[#4A3F30] text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        {m}
+                      </p>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
-        )}
+        </div>
+      </div>
 
-        {/* ── TAB: KESIMPULAN ── */}
-        {tab === "kesimpulan" && (
-          <div className="flex flex-col md:flex-row gap-6">
-            {/* Quote block */}
-            <div className="flex-1 bg-[#2C5F1A] rounded-3xl p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
-              {/* Decorative quotemark */}
-              <div className="absolute top-6 left-8 text-white/8 select-none pointer-events-none"
-                style={{ fontFamily: "'Fraunces', serif", fontSize: "180px", lineHeight: 1 }}>
-                "
-              </div>
-              <p className="relative z-10 text-white text-xl md:text-2xl font-bold leading-[1.4] tracking-tight"
-                style={{ fontFamily: "'Fraunces', serif" }}>
-                "BUMDes harus menjadi wadah yang{" "}
-                <em className="italic font-light text-[#A8D97A]">menyatukan sekaligus melindungi</em>{" "}
-                pelaku ekonomi kecil, menjadi bisnis yang lebih besar tanpa harus mendominasi usaha / bisnis yang dalam proses berkembang."
+      {/* ── KESIMPULAN ── */}
+      <div className="relative py-24 bg-[#2C5F1A] overflow-hidden">
+        {/* Decorative orbs */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#A8D97A]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1C3A10]/40 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          {/* Quote */}
+          <div className="relative mb-16">
+            <div className="absolute -top-6 -left-2 text-white/[0.06] select-none pointer-events-none leading-none" style={{ fontFamily: "'Fraunces', serif", fontSize: "200px" }}>
+              &ldquo;
+            </div>
+            <blockquote className="relative z-10 max-w-4xl">
+              <p className="text-white text-2xl md:text-4xl font-bold leading-[1.4] tracking-tight" style={{ fontFamily: "'Fraunces', serif" }}>
+                BUMDes harus menjadi wadah yang{" "}
+                <em className="italic font-light text-[#EDE6D8]">menyatukan sekaligus melindungi</em>{" "}
+                pelaku ekonomi kecil, menjadi bisnis yang lebih besar tanpa harus mendominasi usaha yang dalam proses berkembang.
               </p>
-              <div className="mt-8 flex items-center gap-3">
-                <div className="w-8 h-px bg-white/30" />
-                <p className="text-white/45 text-xs tracking-widest uppercase"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Prinsip BUMDes Girimulyo
+            </blockquote>
+          </div>
+
+          {/* Principle cards */}
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { icon: Handshake, title: "Menyatukan", desc: "BUMDes adalah rumah bersama bagi seluruh pelaku ekonomi kecil di desa — petani, pengrajin, hingga pedagang lokal." },
+              { icon: Shield, title: "Melindungi", desc: "Hadir sebagai payung yang memastikan usaha kecil tidak terpinggirkan oleh kepentingan modal besar." },
+              { icon: Sprout, title: "Bukan Mendominasi", desc: "BUMDes tumbuh bersama, bukan di atas usaha warga — pertumbuhan yang inklusif dan berkeadilan." },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="group bg-white/[0.1] backdrop-blur-sm border border-white/[0.12] rounded-2xl p-7 hover:bg-white/[0.18] hover:border-white/[0.22] transition-all duration-400">
+                <div className="w-11 h-11 rounded-xl bg-white/[0.12] flex items-center justify-center mb-5 group-hover:bg-white/[0.2] transition-colors">
+                  <Icon className="w-5 h-5 text-[#EDE6D8]" />
+                </div>
+                <h4 className="text-white font-bold text-base mb-2" style={{ fontFamily: "'Fraunces', serif" }}>
+                  {title}
+                </h4>
+                <p className="text-white/55 text-xs leading-relaxed" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  {desc}
                 </p>
               </div>
-            </div>
-
-            {/* Side annotation cards */}
-            <div className="flex flex-col gap-4 md:w-72 shrink-0">
-              {[
-                { icon: "🤝", title: "Menyatukan", desc: "BUMDes adalah rumah bersama bagi seluruh pelaku ekonomi kecil di desa — petani, pengrajin, hingga pedagang lokal." },
-                { icon: "🛡️", title: "Melindungi", desc: "Hadir sebagai payung yang memastikan usaha kecil tidak terpinggirkan oleh kepentingan modal besar." },
-                { icon: "🌱", title: "Bukan Mendominasi", desc: "BUMDes tumbuh bersama, bukan di atas usaha warga — pertumbuhan yang inklusif dan berkeadilan." },
-              ].map(({ icon, title, desc }) => (
-                <div key={title}
-                  className="bg-white rounded-2xl px-5 py-4 border border-[#2C5F1A]/8 hover:border-[#2C5F1A]/25 hover:shadow-sm transition-all duration-300 flex items-start gap-4">
-                  <span className="text-xl shrink-0 mt-0.5">{icon}</span>
-                  <div>
-                    <h4 className="font-bold text-[#1C1A16] text-sm mb-1"
-                      style={{ fontFamily: "'Fraunces', serif" }}>{title}</h4>
-                    <p className="text-[#6B5E4A] text-xs leading-relaxed"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
