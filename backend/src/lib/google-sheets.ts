@@ -80,7 +80,7 @@ export async function getAllBookings(): Promise<Booking[]> {
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: getSpreadsheetId(),
-    range: `${SHEET_NAME}!A2:Q`,
+    range: `${SHEET_NAME}!A5:Q`,
   });
 
   const rows = res.data.values || [];

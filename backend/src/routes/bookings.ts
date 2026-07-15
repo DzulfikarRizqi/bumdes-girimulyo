@@ -109,7 +109,7 @@ router.put("/:id", async (req, res) => {
       sisaPembayaran: fields.sisaPembayaran,
     };
 
-    await updateBooking(idx + 2, updated);
+    await updateBooking(idx + 5, updated);
     res.json(updated);
   } catch (err) {
     console.error("PUT /bookings error:", err);
@@ -126,7 +126,7 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ error: "Booking tidak ditemukan" });
     }
 
-    await deleteBooking(idx + 2);
+    await deleteBooking(idx + 5);
     res.json({ success: true });
   } catch (err) {
     console.error("DELETE /bookings error:", err);
