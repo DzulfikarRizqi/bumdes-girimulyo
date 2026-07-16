@@ -14,10 +14,7 @@ export default function BookingLogin() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`,
-          { credentials: "include" }
-        );
+        const res = await fetch("/api/auth/me");
         if (res.ok) {
           router.replace("/booking/dashboard");
           return;
@@ -36,15 +33,11 @@ export default function BookingLogin() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);

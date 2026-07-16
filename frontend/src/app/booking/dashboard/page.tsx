@@ -12,8 +12,6 @@ import {
   User,
 } from "lucide-react";
 
-const API = process.env.NEXT_PUBLIC_API_URL;
-
 interface RoomConfig {
   nomor: string;
   tipe: string;
@@ -191,8 +189,7 @@ export default function DashboardPage() {
 
   const fetchBookings = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/api/bookings`, {
-        credentials: "include",
+      const res = await fetch("/api/bookings", {
       });
       if (res.ok) {
         const data = await res.json();
@@ -208,8 +205,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch(`${API}/api/auth/me`, {
-          credentials: "include",
+        const res = await fetch("/api/auth/me", {
         });
         if (res.status === 401 || !res.ok) {
           router.replace("/booking");
@@ -220,7 +216,7 @@ export default function DashboardPage() {
         return;
       }
       fetchBookings();
-      fetch(`${API}/api/rooms`, { credentials: "include" })
+      fetch("/api/rooms")
         .then((r) => r.json())
         .then((data) => setRooms(Array.isArray(data) ? data : []))
         .catch(() => {});
@@ -230,9 +226,8 @@ export default function DashboardPage() {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API}/api/auth/logout`, {
+      await fetch("/api/auth/logout", {
         method: "POST",
-        credentials: "include",
       });
     } catch {
       // proceed with redirect anyway
@@ -268,9 +263,8 @@ export default function DashboardPage() {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Yakin ingin menghapus booking ini?")) return;
     try {
-      const res = await fetch(`${API}/api/bookings/${id}`, {
+      const res = await fetch(`/api/bookings/${id}`, {
         method: "DELETE",
-        credentials: "include",
       });
       if (res.ok) {
         setBookings((prev) => prev.filter((b) => b.idBooking !== id));
@@ -295,14 +289,13 @@ export default function DashboardPage() {
 
     try {
       const url = editingId
-        ? `${API}/api/bookings/${editingId}`
-        : `${API}/api/bookings`;
+        ? `/api/bookings/${editingId}`
+        : "/api/bookings";
       const method = editingId ? "PUT" : "POST";
 
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify(payload),
       });
 
