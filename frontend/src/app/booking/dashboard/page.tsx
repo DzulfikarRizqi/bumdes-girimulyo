@@ -14,12 +14,11 @@ import {
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
-const ROOMS = [
-  { nomor: "Couple 1", tipe: "Couple", hargaPerMalam: 500000 },
-  { nomor: "Family 2", tipe: "Family", hargaPerMalam: 850000 },
-  { nomor: "Family 3", tipe: "Family", hargaPerMalam: 850000 },
-  { nomor: "Special 1", tipe: "Special", hargaPerMalam: 1200000 },
-];
+interface RoomConfig {
+  nomor: string;
+  tipe: string;
+  hargaPerMalam: number;
+}
 
 interface Booking {
   no: number;
@@ -73,7 +72,20 @@ function formatRupiah(n: number) {
 
 function formatDate(d: string) {
   if (!d) return "—";
-  const date = new Date(d + "T00:00:00");
+  let date: Date;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+    date = new Date(d + "T00:00:00");
+  } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
+    const [m, day, y] = d.split("/");
+    date = new Date(+y, +m - 1, +day);
+  } else if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(d)) {
+    const parts = d.split("/");
+    const y = parts[2].length === 2 ? 2000 + +parts[2] : +parts[2];
+    date = new Date(y, +parts[0] - 1, +parts[1]);
+  } else {
+    date = new Date(d);
+  }
+  if (isNaN(date.getTime())) return d;
   return date.toLocaleDateString("id-ID", {
     day: "numeric",
     month: "short",
@@ -89,18 +101,19 @@ function calcNights(checkIn: string, checkOut: string) {
   return diff > 0 ? diff : 0;
 }
 
-function getRoomsByTipe(tipe: string) {
-  return ROOMS.filter((r) => r.tipe === tipe);
+function getRoomsByTipe(tipe: string, rooms: RoomConfig[]) {
+  return rooms.filter((r) => r.tipe === tipe);
 }
 
-function getHargaPerMalam(nomor: string) {
-  return ROOMS.find((r) => r.nomor === nomor)?.hargaPerMalam ?? 0;
+function getHargaPerMalam(nomor: string, rooms: RoomConfig[]) {
+  return rooms.find((r) => r.nomor === nomor)?.hargaPerMalam ?? 0;
 }
 
 export default function DashboardPage() {
   const router = useRouter();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [rooms, setRooms] = useState<RoomConfig[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -108,7 +121,7 @@ export default function DashboardPage() {
   const [submitting, setSubmitting] = useState(false);
 
   const nights = calcNights(form.tanggalCheckIn, form.tanggalCheckOut);
-  const harga = getHargaPerMalam(form.nomorKamar);
+  const harga = getHargaPerMalam(form.nomorKamar, rooms);
   const totalHarga = nights * harga;
   const sisa = totalHarga - form.jumlahBayar;
 
@@ -143,6 +156,10 @@ export default function DashboardPage() {
         return;
       }
       fetchBookings();
+      fetch(`${API}/api/rooms`, { credentials: "include" })
+        .then((r) => r.json())
+        .then((data) => setRooms(Array.isArray(data) ? data : []))
+        .catch(() => {});
     };
     checkAuth();
   }, [router, fetchBookings]);
@@ -242,8 +259,8 @@ export default function DashboardPage() {
     const next = { ...form, [key]: value };
 
     if (key === "tipeKamar") {
-      const rooms = getRoomsByTipe(value as string);
-      next.nomorKamar = rooms.length > 0 ? rooms[0].nomor : "";
+      const filtered = getRoomsByTipe(value as string, rooms);
+      next.nomorKamar = filtered.length > 0 ? filtered[0].nomor : "";
     }
 
     if (key === "tanggalCheckIn" || key === "tanggalCheckOut") {
@@ -251,6 +268,12 @@ export default function DashboardPage() {
         const n = calcNights(value as string, next.tanggalCheckOut);
         if (n <= 0) next.tanggalCheckOut = "";
       }
+    }
+
+    if (key === "statusPembayaran" && value === "Lunas") {
+      const n = calcNights(next.tanggalCheckIn, next.tanggalCheckOut);
+      const h = getHargaPerMalam(next.nomorKamar, rooms);
+      next.jumlahBayar = n * h;
     }
 
     setForm(next);
@@ -318,7 +341,7 @@ export default function DashboardPage() {
                     ID
                   </th>
                   <th className="text-left px-4 py-3 text-[#6B5E4A] text-xs font-semibold uppercase tracking-wider">
-                    Tamu
+                    Nama
                   </th>
                   <th className="text-left px-4 py-3 text-[#6B5E4A] text-xs font-semibold uppercase tracking-wider">
                     HP
@@ -363,9 +386,9 @@ export default function DashboardPage() {
                     </td>
                   </tr>
                 ) : (
-                  bookings.map((b) => (
+                  bookings.map((b, i) => (
                     <tr
-                      key={b.idBooking}
+                      key={b.idBooking || `row-${i}`}
                       className="border-b border-[#8B5E3C]/8 hover:bg-[#FDF8F0]/50 transition-colors"
                     >
                       <td className="px-4 py-3 text-[#4A3F30] text-xs font-mono">
@@ -542,7 +565,7 @@ export default function DashboardPage() {
                     onChange={(e) => updateForm("nomorKamar", e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl border border-[#D8CFC0] bg-[#FDF8F0] text-[#1C1A16] text-sm focus:outline-none focus:ring-2 focus:ring-[#2C5F1A]/30 focus:border-[#2C5F1A] transition-colors cursor-pointer"
                   >
-                    {getRoomsByTipe(form.tipeKamar).map((r) => (
+                    {getRoomsByTipe(form.tipeKamar, rooms).map((r) => (
                       <option key={r.nomor} value={r.nomor}>
                         {r.nomor}
                       </option>
@@ -652,6 +675,7 @@ export default function DashboardPage() {
                     type="number"
                     required
                     min={0}
+                    readOnly={form.statusPembayaran === "Lunas"}
                     value={form.jumlahBayar}
                     onChange={(e) =>
                       updateForm(
@@ -659,7 +683,8 @@ export default function DashboardPage() {
                         parseInt(e.target.value) || 0
                       )
                     }
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#D8CFC0] bg-[#FDF8F0] text-[#1C1A16] text-sm focus:outline-none focus:ring-2 focus:ring-[#2C5F1A]/30 focus:border-[#2C5F1A] transition-colors"
+                    onFocus={(e) => e.target.select()}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#D8CFC0] bg-[#FDF8F0] text-[#1C1A16] text-sm focus:outline-none focus:ring-2 focus:ring-[#2C5F1A]/30 focus:border-[#2C5F1A] transition-colors read-only:opacity-60 read-only:cursor-not-allowed [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                 </div>
               </div>
@@ -730,8 +755,7 @@ export default function DashboardPage() {
       <footer className="border-t border-[#8B5E3C]/10 mt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
           <p className="text-[#A89A86] text-xs">
-            &copy; {new Date().getFullYear()} Manahayu Resort &middot; BUMDes
-            Girimulyo
+            &copy; {new Date().getFullYear()}{" "}Manahayu Resort &middot; BUMDes Girimulyo
           </p>
         </div>
       </footer>

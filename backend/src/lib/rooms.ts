@@ -1,10 +1,13 @@
 import type { RoomConfig } from "../types/index.js";
 
 export const ROOMS: RoomConfig[] = [
-  { nomor: "Couple 1", tipe: "Couple", hargaPerMalam: 500000 },
-  { nomor: "Family 2", tipe: "Family", hargaPerMalam: 850000 },
-  { nomor: "Family 3", tipe: "Family", hargaPerMalam: 850000 },
-  { nomor: "Special 1", tipe: "Special", hargaPerMalam: 1200000 },
+  { nomor: "Couple 1", tipe: "Couple", hargaPerMalam: 299000 },
+  { nomor: "Couple 2", tipe: "Couple", hargaPerMalam: 299000 },
+  { nomor: "Couple 3", tipe: "Couple", hargaPerMalam: 299000 },
+  { nomor: "Family 1", tipe: "Family", hargaPerMalam: 399000 },
+  { nomor: "Family 2", tipe: "Family", hargaPerMalam: 399000 },
+  { nomor: "Family 3", tipe: "Family", hargaPerMalam: 399000 },
+  { nomor: "Special 1", tipe: "Special", hargaPerMalam: 599000 },
 ];
 
 export function getRoomByNomor(nomor: string): RoomConfig | undefined {

@@ -32,13 +32,73 @@ function getSpreadsheetId(): string {
   return id;
 }
 
+function isSerialDate(value: unknown): boolean {
+  if (typeof value === "number" && value > 40000 && value < 60000 && Number.isInteger(value)) {
+    return true;
+  }
+  if (typeof value === "string" && /^\d{4,5}$/.test(value.trim())) {
+    const num = Number(value);
+    return num > 40000 && num < 60000;
+  }
+  return false;
+}
+
+function serialToDate(serial: number): string {
+  const epoch = new Date(1899, 11, 30);
+  const date = new Date(epoch.getTime() + serial * 86400000);
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function toDate(val: unknown): string {
+  if (val === undefined || val === null) return "";
+  const str = String(val).trim();
+  if (!str) return "";
+
+  if (isSerialDate(val)) {
+    const num = typeof val === "number" ? val : Number(val);
+    return serialToDate(num);
+  }
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+
+  if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(str)) {
+    const parts = str.split("/");
+    let y: number;
+    let m: string;
+    let d: string;
+    if (parts[2].length === 4) {
+      m = String(Number(parts[0])).padStart(2, "0");
+      d = String(Number(parts[1])).padStart(2, "0");
+      y = Number(parts[2]);
+    } else {
+      m = String(Number(parts[0])).padStart(2, "0");
+      d = String(Number(parts[1])).padStart(2, "0");
+      y = 2000 + Number(parts[2]);
+    }
+    return `${y}-${m}-${d}`;
+  }
+
+  const parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) {
+    const y = parsed.getFullYear();
+    const m = String(parsed.getMonth() + 1).padStart(2, "0");
+    const d = String(parsed.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
+  return str;
+}
+
 function bookingToRow(b: Booking): (string | number)[] {
   return [
     b.no,
     b.idBooking,
     b.tanggalPemesanan,
     b.namaTamu,
-    b.noHP,
+    `'${b.noHP}`,
     b.tipeKamar,
     b.nomorKamar,
     b.tanggalCheckIn,
@@ -58,13 +118,13 @@ function rowToBooking(row: (string | number)[], index: number): Booking {
   return {
     no: Number(row[0]) || index + 1,
     idBooking: String(row[1] || ""),
-    tanggalPemesanan: String(row[2] || ""),
+    tanggalPemesanan: toDate(row[2]),
     namaTamu: String(row[3] || ""),
-    noHP: String(row[4] || ""),
+    noHP: String(row[4] || "").replace(/^'/, ""),
     tipeKamar: String(row[5] || "") as Booking["tipeKamar"],
     nomorKamar: String(row[6] || ""),
-    tanggalCheckIn: String(row[7] || ""),
-    tanggalCheckOut: String(row[8] || ""),
+    tanggalCheckIn: toDate(row[7]),
+    tanggalCheckOut: toDate(row[8]),
     jumlahMalam: Number(row[9]) || 0,
     jumlahTamu: Number(row[10]) || 0,
     permintaanKhusus: String(row[11] || ""),
@@ -80,18 +140,48 @@ export async function getAllBookings(): Promise<Booking[]> {
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: getSpreadsheetId(),
-    range: `${SHEET_NAME}!A5:Q`,
+    range: `${SHEET_NAME}!A2:Q`,
+    valueRenderOption: "UNFORMATTED_VALUE",
   });
 
   const rows = res.data.values || [];
-  return rows.map((row, i) => rowToBooking(row, i));
+  return rows
+    .filter((row) => row[1] && String(row[1]).trim().startsWith("BK"))
+    .map((row, i) => rowToBooking(row, i));
+}
+
+export async function getBookingSheetRow(idBooking: string): Promise<number | null> {
+  const sheets = getSheets();
+  const res = await sheets.spreadsheets.get({
+    spreadsheetId: getSpreadsheetId(),
+    ranges: [`${SHEET_NAME}!A2:B`],
+    fields: "sheets.data.rowData",
+  });
+
+  const rowData = res.data.sheets?.[0]?.data?.[0]?.rowData || [];
+  for (let i = 0; i < rowData.length; i++) {
+    const cellB = rowData[i]?.values?.[1]?.userEnteredValue?.stringValue
+      ?? rowData[i]?.values?.[1]?.userEnteredValue?.numberValue
+      ?? "";
+    if (String(cellB).trim() === idBooking) {
+      return i + 2;
+    }
+  }
+  return null;
 }
 
 export async function addBooking(booking: Booking): Promise<void> {
   const sheets = getSheets();
-  await sheets.spreadsheets.values.append({
+  const res = await sheets.spreadsheets.values.get({
     spreadsheetId: getSpreadsheetId(),
-    range: `${SHEET_NAME}!A:Q`,
+    range: `${SHEET_NAME}!A:A`,
+  });
+  const allRows = res.data.values || [];
+  const nextRow = allRows.length + 1;
+  const range = `${SHEET_NAME}!A${nextRow}:Q${nextRow}`;
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: getSpreadsheetId(),
+    range,
     valueInputOption: "USER_ENTERED",
     requestBody: { values: [bookingToRow(booking)] },
   });

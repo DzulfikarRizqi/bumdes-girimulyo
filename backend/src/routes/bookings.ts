@@ -5,6 +5,7 @@ import {
   updateBooking,
   deleteBooking,
   getNextBookingNumber,
+  getBookingSheetRow,
 } from "../lib/google-sheets.js";
 import { getRoomByNomor } from "../lib/rooms.js";
 import type { Booking } from "../types/index.js";
@@ -87,29 +88,56 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const bookings = await getAllBookings();
-    const idx = bookings.findIndex((b) => b.idBooking === id);
-    if (idx === -1) {
+    const existing = bookings.find((b) => b.idBooking === id);
+    if (!existing) {
       return res.status(404).json({ error: "Booking tidak ditemukan" });
     }
 
+    const sheetRow = await getBookingSheetRow(id);
+    if (sheetRow === null) {
+      return res.status(404).json({ error: "Booking tidak ditemukan di sheet" });
+    }
+
     const body = req.body as Partial<Booking>;
-    const room = getRoomByNomor(body.nomorKamar || bookings[idx].nomorKamar);
-    const fields = calculateFields(body, room?.hargaPerMalam);
+    const room = getRoomByNomor(body.nomorKamar || existing.nomorKamar);
+
+    const tanggalCheckIn = body.tanggalCheckIn || existing.tanggalCheckIn;
+    const tanggalCheckOut = body.tanggalCheckOut || existing.tanggalCheckOut;
+
+    let jumlahMalam = existing.jumlahMalam;
+    if (tanggalCheckIn && tanggalCheckOut) {
+      const ci = new Date(tanggalCheckIn);
+      const co = new Date(tanggalCheckOut);
+      jumlahMalam = Math.round((co.getTime() - ci.getTime()) / 86400000);
+      if (jumlahMalam < 0) jumlahMalam = 0;
+    }
+
+    const hargaPerMalam = room?.hargaPerMalam ?? body.hargaPerMalam ?? existing.hargaPerMalam;
+    const totalHarga = hargaPerMalam * jumlahMalam;
+    const jumlahBayar = body.jumlahBayar ?? existing.jumlahBayar;
+    const sisaPembayaran = totalHarga - jumlahBayar;
 
     const updated: Booking = {
-      ...bookings[idx],
-      ...body,
-      no: bookings[idx].no,
-      idBooking: bookings[idx].idBooking,
-      tanggalPemesanan: bookings[idx].tanggalPemesanan,
-      tipeKamar: (room?.tipe || body.tipeKamar || bookings[idx].tipeKamar) as Booking["tipeKamar"],
-      jumlahMalam: fields.jumlahMalam,
-      hargaPerMalam: fields.hargaPerMalam,
-      totalHarga: fields.totalHarga,
-      sisaPembayaran: fields.sisaPembayaran,
+      no: existing.no,
+      idBooking: existing.idBooking,
+      tanggalPemesanan: existing.tanggalPemesanan,
+      namaTamu: body.namaTamu ?? existing.namaTamu,
+      noHP: body.noHP ?? existing.noHP,
+      tipeKamar: (room?.tipe || body.tipeKamar || existing.tipeKamar) as Booking["tipeKamar"],
+      nomorKamar: body.nomorKamar ?? existing.nomorKamar,
+      tanggalCheckIn,
+      tanggalCheckOut,
+      jumlahMalam,
+      jumlahTamu: body.jumlahTamu ?? existing.jumlahTamu,
+      permintaanKhusus: body.permintaanKhusus ?? existing.permintaanKhusus,
+      hargaPerMalam,
+      totalHarga,
+      statusPembayaran: body.statusPembayaran ?? existing.statusPembayaran,
+      jumlahBayar,
+      sisaPembayaran,
     };
 
-    await updateBooking(idx + 5, updated);
+    await updateBooking(sheetRow, updated);
     res.json(updated);
   } catch (err) {
     console.error("PUT /bookings error:", err);
@@ -121,12 +149,17 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const bookings = await getAllBookings();
-    const idx = bookings.findIndex((b) => b.idBooking === id);
-    if (idx === -1) {
+    const existing = bookings.find((b) => b.idBooking === id);
+    if (!existing) {
       return res.status(404).json({ error: "Booking tidak ditemukan" });
     }
 
-    await deleteBooking(idx + 5);
+    const sheetRow = await getBookingSheetRow(id);
+    if (sheetRow === null) {
+      return res.status(404).json({ error: "Booking tidak ditemukan di sheet" });
+    }
+
+    await deleteBooking(sheetRow);
     res.json({ success: true });
   } catch (err) {
     console.error("DELETE /bookings error:", err);

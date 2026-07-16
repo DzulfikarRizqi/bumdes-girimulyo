@@ -129,7 +129,7 @@ export default function BookingLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#2C5F1A] hover:bg-[#234D15] disabled:opacity-60 text-white font-semibold text-sm py-3 rounded-xl transition-colors"
+              className="w-full bg-[#2C5F1A] hover:bg-[#234D15] disabled:opacity-60 text-white font-semibold text-sm py-3 rounded-xl transition-colors cursor-pointer"
             >
               {loading ? "Masuk..." : "Masuk"}
             </button>
@@ -137,9 +137,8 @@ export default function BookingLogin() {
         </div>
 
         <p className="text-center text-[#A89A86] text-xs mt-6">
-          &copy; {new Date().getFullYear()} Manahayu Resort &middot; BUMDes
-          Girimulyo
-        </p>
+  &copy; {new Date().getFullYear()}{" "}Manahayu Resort &middot; BUMDes Girimulyo
+</p>
       </div>
     </div>
   );

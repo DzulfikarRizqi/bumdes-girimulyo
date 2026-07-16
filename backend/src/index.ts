@@ -4,6 +4,7 @@ import cors from "cors";
 import session from "express-session";
 import authRoutes from "./routes/auth.js";
 import bookingRoutes from "./routes/bookings.js";
+import roomRoutes from "./routes/rooms.js";
 import { requireAuth } from "./middleware/auth.js";
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(session({
 }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/rooms", roomRoutes);
 app.use("/api/bookings", requireAuth, bookingRoutes);
 
 app.get("/api/health", (_req, res) => {
