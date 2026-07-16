@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import type { Booking } from "../types/index.js";
+import { normalizeDateValue } from "./date.js";
 
 const SHEET_NAME = "Booking Kamar";
 
@@ -44,12 +45,33 @@ function isSerialDate(value: unknown): boolean {
 }
 
 function serialToDate(serial: number): string {
-  const epoch = new Date(1899, 11, 30);
-  const date = new Date(epoch.getTime() + serial * 86400000);
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
+  const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  let remaining = serial;
+  let year = 1900;
+
+  while (true) {
+    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    const daysInYear = leap ? 366 : 365;
+    if (remaining <= daysInYear) break;
+    remaining -= daysInYear;
+    year++;
+  }
+
+  let month = 1;
+  for (let m = 0; m < 12; m++) {
+    let dim = DAYS_IN_MONTH[m];
+    if (m === 1 && year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
+      dim = 29;
+    }
+    if (remaining <= dim) break;
+    remaining -= dim;
+    month++;
+  }
+
+  const mm = String(month).padStart(2, "0");
+  const dd = String(remaining).padStart(2, "0");
+  return `${year}-${mm}-${dd}`;
 }
 
 function toDate(val: unknown): string {
@@ -62,34 +84,7 @@ function toDate(val: unknown): string {
     return serialToDate(num);
   }
 
-  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
-
-  if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(str)) {
-    const parts = str.split("/");
-    let y: number;
-    let m: string;
-    let d: string;
-    if (parts[2].length === 4) {
-      m = String(Number(parts[0])).padStart(2, "0");
-      d = String(Number(parts[1])).padStart(2, "0");
-      y = Number(parts[2]);
-    } else {
-      m = String(Number(parts[0])).padStart(2, "0");
-      d = String(Number(parts[1])).padStart(2, "0");
-      y = 2000 + Number(parts[2]);
-    }
-    return `${y}-${m}-${d}`;
-  }
-
-  const parsed = new Date(str);
-  if (!isNaN(parsed.getTime())) {
-    const y = parsed.getFullYear();
-    const m = String(parsed.getMonth() + 1).padStart(2, "0");
-    const d = String(parsed.getDate()).padStart(2, "0");
-    return `${y}-${m}-${d}`;
-  }
-
-  return str;
+  return normalizeDateValue(str);
 }
 
 function bookingToRow(b: Booking): (string | number)[] {
@@ -201,11 +196,41 @@ export async function updateBooking(
   });
 }
 
+async function getSheetIdByName(name: string): Promise<number> {
+  const sheets = getSheets();
+  const res = await sheets.spreadsheets.get({
+    spreadsheetId: getSpreadsheetId(),
+    fields: "sheets.properties",
+  });
+  const prop = res.data.sheets?.find(
+    (s) => s.properties?.title === name
+  );
+  const sheetId = prop?.properties?.sheetId;
+  if (sheetId === undefined || sheetId === null) {
+    throw new Error(`Sheet "${name}" not found`);
+  }
+  return sheetId;
+}
+
 export async function deleteBooking(rowIndex: number): Promise<void> {
   const sheets = getSheets();
-  await sheets.spreadsheets.values.clear({
+  const sheetId = await getSheetIdByName(SHEET_NAME);
+  await sheets.spreadsheets.batchUpdate({
     spreadsheetId: getSpreadsheetId(),
-    range: `${SHEET_NAME}!A${rowIndex}:Q${rowIndex}`,
+    requestBody: {
+      requests: [
+        {
+          deleteDimension: {
+            range: {
+              sheetId,
+              dimension: "ROWS",
+              startIndex: rowIndex - 1,
+              endIndex: rowIndex,
+            },
+          },
+        },
+      ],
+    },
   });
 }
 

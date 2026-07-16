@@ -72,31 +72,41 @@ function formatRupiah(n: number) {
 
 function formatDate(d: string) {
   if (!d) return "—";
-  let date: Date;
-  if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
-    date = new Date(d + "T00:00:00");
-  } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
-    const [m, day, y] = d.split("/");
-    date = new Date(+y, +m - 1, +day);
-  } else if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(d)) {
-    const parts = d.split("/");
-    const y = parts[2].length === 2 ? 2000 + +parts[2] : +parts[2];
-    date = new Date(y, +parts[0] - 1, +parts[1]);
-  } else {
-    date = new Date(d);
-  }
-  if (isNaN(date.getTime())) return d;
+
+  const normalizeDateValue = (value: string): string => {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+
+    const match = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if (match) {
+      const day = Number(match[1]);
+      const month = Number(match[2]);
+      const year = match[3].length === 2 ? 2000 + Number(match[3]) : Number(match[3]);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      const yyyy = String(date.getUTCFullYear());
+      const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+      const dd = String(date.getUTCDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    return value;
+  };
+
+  const normalized = normalizeDateValue(d);
+  const date = new Date(`${normalized}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return d;
+
   return date.toLocaleDateString("id-ID", {
     day: "numeric",
     month: "short",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
 
 function calcNights(checkIn: string, checkOut: string) {
   if (!checkIn || !checkOut) return 0;
-  const a = new Date(checkIn + "T00:00:00");
-  const b = new Date(checkOut + "T00:00:00");
+  const a = new Date(`${checkIn}T00:00:00Z`);
+  const b = new Date(`${checkOut}T00:00:00Z`);
   const diff = Math.round((b.getTime() - a.getTime()) / 86400000);
   return diff > 0 ? diff : 0;
 }
@@ -109,6 +119,41 @@ function getHargaPerMalam(nomor: string, rooms: RoomConfig[]) {
   return rooms.find((r) => r.nomor === nomor)?.hargaPerMalam ?? 0;
 }
 
+function todayStr(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function isDateInRange(dateStr: string, rangeStart: string, rangeEnd: string): boolean {
+  return dateStr >= rangeStart && dateStr < rangeEnd;
+}
+
+function getBookedRanges(
+  bookings: Booking[],
+  nomorKamar: string,
+  excludeId?: string
+): { start: string; end: string }[] {
+  return bookings
+    .filter(
+      (b) =>
+        b.nomorKamar === nomorKamar &&
+        b.idBooking !== excludeId &&
+        b.tanggalCheckIn &&
+        b.tanggalCheckOut
+    )
+    .map((b) => ({ start: b.tanggalCheckIn, end: b.tanggalCheckOut }));
+}
+
+function isDateBooked(
+  dateStr: string,
+  bookedRanges: { start: string; end: string }[]
+): boolean {
+  return bookedRanges.some((r) => isDateInRange(dateStr, r.start, r.end));
+}
+
 export default function DashboardPage() {
   const router = useRouter();
 
@@ -119,11 +164,30 @@ export default function DashboardPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
+  const [overlapError, setOverlapError] = useState<string | null>(null);
 
   const nights = calcNights(form.tanggalCheckIn, form.tanggalCheckOut);
   const harga = getHargaPerMalam(form.nomorKamar, rooms);
   const totalHarga = nights * harga;
   const sisa = totalHarga - form.jumlahBayar;
+
+  const bookedRanges = getBookedRanges(bookings, form.nomorKamar, editingId ?? undefined);
+
+  function checkOverlap(checkIn: string, checkOut: string, nomor: string) {
+    if (!checkIn || !checkOut || !nomor) {
+      setOverlapError(null);
+      return;
+    }
+    const ranges = getBookedRanges(bookings, nomor, editingId ?? undefined);
+    const hasOverlap = ranges.some(
+      (r) => checkIn < r.end && checkOut > r.start
+    );
+    setOverlapError(
+      hasOverlap
+        ? "Kamar sudah dipesan pada tanggal tersebut. Silakan pilih tanggal lain."
+        : null
+    );
+  }
 
   const fetchBookings = useCallback(async () => {
     try {
@@ -179,6 +243,7 @@ export default function DashboardPage() {
   const openAdd = () => {
     setEditingId(null);
     setForm(EMPTY_FORM);
+    setOverlapError(null);
     setModalOpen(true);
   };
 
@@ -196,6 +261,7 @@ export default function DashboardPage() {
       statusPembayaran: b.statusPembayaran,
       jumlahBayar: b.jumlahBayar,
     });
+    setOverlapError(null);
     setModalOpen(true);
   };
 
@@ -216,6 +282,7 @@ export default function DashboardPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (overlapError || nights <= 0) return;
     setSubmitting(true);
 
     const payload = {
@@ -277,6 +344,11 @@ export default function DashboardPage() {
     }
 
     setForm(next);
+
+    const ci = key === "tanggalCheckIn" ? (value as string) : next.tanggalCheckIn;
+    const co = key === "tanggalCheckOut" ? (value as string) : next.tanggalCheckOut;
+    const nomor = key === "nomorKamar" ? (value as string) : next.nomorKamar;
+    checkOverlap(ci, co, nomor);
   };
 
   if (loading) {
@@ -581,10 +653,12 @@ export default function DashboardPage() {
                     Tanggal Check-in
                   </label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A89A86]" />
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A89A86] pointer-events-none" />
                     <input
                       type="date"
+                      lang="id"
                       required
+                      min={todayStr()}
                       value={form.tanggalCheckIn}
                       onChange={(e) =>
                         updateForm("tanggalCheckIn", e.target.value)
@@ -598,9 +672,10 @@ export default function DashboardPage() {
                     Tanggal Check-out
                   </label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A89A86]" />
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A89A86] pointer-events-none" />
                     <input
                       type="date"
+                      lang="id"
                       required
                       min={form.tanggalCheckIn || undefined}
                       value={form.tanggalCheckOut}
@@ -612,6 +687,13 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Overlap warning */}
+              {overlapError && (
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl px-4 py-2.5">
+                  {overlapError}
+                </div>
+              )}
 
               {/* Jumlah Tamu */}
               <div>
@@ -736,7 +818,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={submitting || nights <= 0}
+                  disabled={submitting || nights <= 0 || !!overlapError}
                   className="flex-1 py-2.5 rounded-xl bg-[#2C5F1A] hover:bg-[#234D15] disabled:opacity-50 text-white text-sm font-semibold transition-colors cursor-pointer"
                 >
                   {submitting

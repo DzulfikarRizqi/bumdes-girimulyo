@@ -8,9 +8,22 @@ import {
   getBookingSheetRow,
 } from "../lib/google-sheets.js";
 import { getRoomByNomor } from "../lib/rooms.js";
+import { parseDateValue } from "../lib/date.js";
 import type { Booking } from "../types/index.js";
 
 const router = Router();
+
+function isOverlap(
+  bookings: Booking[],
+  nomorKamar: string,
+  checkIn: string,
+  checkOut: string,
+  excludeId?: string
+): boolean {
+  return bookings
+    .filter((b) => b.nomorKamar === nomorKamar && b.idBooking !== excludeId)
+    .some((b) => b.tanggalCheckIn < checkOut && b.tanggalCheckOut > checkIn);
+}
 
 function generateIdBooking(num: number): string {
   return `BK-${String(num).padStart(3, "0")}`;
@@ -25,9 +38,11 @@ function calculateFields(
 > {
   let jumlahMalam = partial.jumlahMalam || 0;
   if (partial.tanggalCheckIn && partial.tanggalCheckOut) {
-    const ci = new Date(partial.tanggalCheckIn);
-    const co = new Date(partial.tanggalCheckOut);
-    jumlahMalam = Math.round((co.getTime() - ci.getTime()) / 86400000);
+    const ci = parseDateValue(partial.tanggalCheckIn);
+    const co = parseDateValue(partial.tanggalCheckOut);
+    if (ci && co) {
+      jumlahMalam = Math.round((co.getTime() - ci.getTime()) / 86400000);
+    }
   }
 
   const hargaPerMalam =
@@ -55,6 +70,13 @@ router.post("/", async (req, res) => {
     const num = await getNextBookingNumber();
     const room = getRoomByNomor(body.nomorKamar || "");
     const fields = calculateFields(body, room?.hargaPerMalam);
+
+    if (body.tanggalCheckIn && body.tanggalCheckOut && body.nomorKamar) {
+      const existing = await getAllBookings();
+      if (isOverlap(existing, body.nomorKamar, body.tanggalCheckIn, body.tanggalCheckOut)) {
+        return res.status(409).json({ error: "Kamar sudah dipesan pada tanggal tersebut" });
+      }
+    }
 
     const booking: Booking = {
       no: num,
@@ -106,10 +128,12 @@ router.put("/:id", async (req, res) => {
 
     let jumlahMalam = existing.jumlahMalam;
     if (tanggalCheckIn && tanggalCheckOut) {
-      const ci = new Date(tanggalCheckIn);
-      const co = new Date(tanggalCheckOut);
-      jumlahMalam = Math.round((co.getTime() - ci.getTime()) / 86400000);
-      if (jumlahMalam < 0) jumlahMalam = 0;
+      const ci = parseDateValue(tanggalCheckIn);
+      const co = parseDateValue(tanggalCheckOut);
+      if (ci && co) {
+        jumlahMalam = Math.round((co.getTime() - ci.getTime()) / 86400000);
+        if (jumlahMalam < 0) jumlahMalam = 0;
+      }
     }
 
     const hargaPerMalam = room?.hargaPerMalam ?? body.hargaPerMalam ?? existing.hargaPerMalam;
@@ -136,6 +160,10 @@ router.put("/:id", async (req, res) => {
       jumlahBayar,
       sisaPembayaran,
     };
+
+    if (isOverlap(bookings, updated.nomorKamar, updated.tanggalCheckIn, updated.tanggalCheckOut, id)) {
+      return res.status(409).json({ error: "Kamar sudah dipesan pada tanggal tersebut" });
+    }
 
     await updateBooking(sheetRow, updated);
     res.json(updated);
