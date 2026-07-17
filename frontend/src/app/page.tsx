@@ -20,7 +20,7 @@ function Hero() {
           className="w-full h-full object-cover opacity-50 mix-blend-luminosity" 
         /> */}
         <Image
-          src="/hero-section-2.webp"
+          src="/hero-landing.webp"
           alt="Pemandangan Hutan Gunung Arjuno Bumiaji"
           fill
           priority
@@ -82,7 +82,6 @@ function BusinessUnits() {
                 className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" 
               /> */}
               <Image
-                // src="/cardGirifarm.JPG"
                 src="/card-girifarm.webp"
                 alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
                 fill
@@ -124,7 +123,7 @@ function BusinessUnits() {
                 className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-700" 
               /> */}
               <Image
-                src="/cardManahayu.JPG"
+                src="/card-manahayu.webp"
                 alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -206,8 +205,7 @@ function WhySection() {
             {/* Right: placeholder image */}
             <div className="relative rounded-2xl overflow-hidden aspect-[16/9] bg-[#2A4A1A]">
               <Image
-                // src="/cardGirifarm.JPG"
-                src="/Petani.JPG"
+                src="/petani.webp"
                 alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

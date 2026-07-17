@@ -120,7 +120,7 @@ export default function ManahayuResort() {
             className="object-cover opacity-55"
           /> */}
           <Image
-            src="/header-manahayu.JPG"
+            src="/hero-manahayu.webp"
             alt="Kolam renang resort berlatar perbukitan hijau Giripurno"
             fill
             sizes="100vw"

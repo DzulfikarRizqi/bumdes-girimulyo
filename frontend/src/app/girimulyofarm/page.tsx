@@ -372,7 +372,7 @@ function TabbedContent() {
 function ContactCTA() {
   return (
     <section className="py-16 bg-[#EDE6D8]">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-6">
         <div className="bg-[#2C5F1A] rounded-3xl px-8 py-12 md:px-14 md:py-14 flex flex-col md:flex-row items-center gap-10 justify-between">
           <div className="max-w-md">
             <p className="text-[#A8D97A] text-xs font-bold tracking-widest uppercase mb-3">
@@ -392,11 +392,11 @@ function ContactCTA() {
               className="bg-[#25D366] hover:bg-[#1DAE55] text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm">
               <Phone className="w-4 h-4" /> WhatsApp Pesan Telur
             </a>
-            <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WA_FARM}?text=Halo%2C%20saya%20tertarik%20kunjungan%20agrowisata%20Girimulyo%20Farm`}
+            {/* <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WA_FARM}?text=Halo%2C%20saya%20tertarik%20kunjungan%20agrowisata%20Girimulyo%20Farm`}
               target="_blank" rel="noopener noreferrer"
               className="border border-white/25 hover:border-white/50 text-white font-semibold px-7 py-3.5 rounded-xl flex items-center justify-center gap-2.5 transition-colors text-sm">
               Daftar Agrowisata
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
