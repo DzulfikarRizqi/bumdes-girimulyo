@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Leaf, Menu, X, ExternalLink } from "lucide-react";
+import { Menu, X, ExternalLink } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,8 +36,14 @@ export default function Navbar() {
         {/* BAGIAN KIRI (Logo) - Menggunakan flex-1 agar porsi ruangnya seimbang dengan kanan */}
         <div className="flex-1 flex items-center justify-start">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center shrink-0">
-              <Leaf className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-full bg-[#2C5F1A] flex items-center justify-center shrink-0 overflow-hidden">
+              <Image
+                src="/logo-bumdes.png"
+                alt="Logo BUMDes Girimulyo"
+                width={32}
+                height={32}
+                className="object-cover"
+              />
             </div>
             {/* Warna teks dikunci menjadi gelap permanen agar tidak hilang di latar krem */}
             <span className="font-bold text-sm tracking-wide text-[#1C1A16]">
