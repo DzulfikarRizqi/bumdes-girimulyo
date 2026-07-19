@@ -18,8 +18,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isHome = pathname === "/";
-  const isSolid = !isHome || scrolled;
+
 
   const navLinks = [
     { label: "Beranda", to: "/" },
@@ -29,8 +28,12 @@ export default function Navbar() {
 
   return (
     <header
-        className={`fixed top-0 inset-x-0 z-50 bg-white/95 text-[#1C1A16] shadow-sm border-b border-[#E5E3D8]/80 `}
->
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-white/85 backdrop-blur-xl shadow-sm border-b border-[#E5E3D8]/60"
+          : "bg-white/70 backdrop-blur-md border-b border-transparent"
+      } text-[#1C1A16]`}
+    >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         
         {/* BAGIAN KIRI (Logo) - Menggunakan flex-1 agar porsi ruangnya seimbang dengan kanan */}

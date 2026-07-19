@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
 import {
-  ChevronDown, ArrowRight, Handshake, Shield, Sprout
+  ChevronDown, ArrowRight
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import Image from "next/image";
@@ -13,12 +12,6 @@ function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-[#0D2408]">
-        {/* <img 
-          // src="https://images.unsplash.com/photo-1556019947-8695cb3d4e81?w=1600&h=900&fit=crop&auto=format"
-          src="/heroSection.JPG"
-          alt="Pemandangan udara desa berlatar pegunungan hijau" 
-          className="w-full h-full object-cover opacity-50 mix-blend-luminosity" 
-        /> */}
         <Image
           src="/hero-landing.webp"
           alt="Pemandangan Hutan Gunung Arjuno Bumiaji"
@@ -49,7 +42,7 @@ function Hero() {
           </button>
         </div>
       </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/35">
+      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/35">
         <span className="text-[10px] tracking-widest uppercase">Scroll ke bawah</span>
         <ChevronDown className="w-4 h-4 animate-bounce" />
       </div>
@@ -202,20 +195,29 @@ function WhySection() {
               </p>
             </div>
 
-            {/* Right: placeholder image */}
+            {/* Right: image with quote overlay */}
             <div className="relative rounded-2xl overflow-hidden aspect-[16/9] bg-[#2A4A1A]">
               <Image
                 src="/petani.webp"
                 alt="Kolam renang resort dengan tanaman tropis dan gazebo bambu"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover opacity-85 group-hover:scale-105 transition-transform duration-700"
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C3A10]/80 via-[#1C3A10]/20 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-white/50 text-[10px] tracking-widest uppercase">
-                  Desa Giripurno · Kecamatan Bumiaji · Kota Batu
-                </p>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1C3A10]/85 via-[#1C3A10]/50 to-[#0D2408]/85" />
+
+              <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-12">
+                {/* Quote mark — negative margin agar menempel di atas blockquote */}
+                <div className="text-[#A8D97A]/20 select-none pointer-events-none font-serif leading-[0.5] text-5xl md:text-6xl -mb-[0.2em] ml-1">
+                  &ldquo;
+                </div>
+                <blockquote>
+                  <p className="text-white text-sm md:text-base font-bold font-serif leading-relaxed md:leading-[1.7]">
+                    BUMDes harus menjadi wadah yang{" "}
+                    <em className="italic font-light text-[#A8D97A]">menyatukan sekaligus melindungi</em>{" "}
+                    pelaku ekonomi kecil, menjadi bisnis yang lebih besar tanpa harus mendominasi usaha yang dalam proses berkembang.
+                  </p>
+                </blockquote>
               </div>
             </div>
           </div>
@@ -307,49 +309,7 @@ function WhySection() {
         </div>
       </div>
 
-      {/* ── KESIMPULAN ── */}
-      <div className="relative py-24 bg-[#2C5F1A] overflow-hidden">
-        {/* Decorative orbs */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#A8D97A]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1C3A10]/40 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
-          {/* Quote */}
-          <div className="relative mb-16">
-            <div className="absolute -top-6 -left-2 text-white/[0.06] select-none pointer-events-none font-serif leading-none" style={{ fontSize: "200px" }}>
-              &ldquo;
-            </div>
-            <blockquote className="relative z-10 max-w-4xl">
-              <p className="text-white text-2xl md:text-4xl font-bold font-serif leading-[1.4] tracking-tight">
-                BUMDes harus menjadi wadah yang{" "}
-                <em className="italic font-light text-[#EDE6D8]">menyatukan sekaligus melindungi</em>{" "}
-                pelaku ekonomi kecil, menjadi bisnis yang lebih besar tanpa harus mendominasi usaha yang dalam proses berkembang.
-              </p>
-            </blockquote>
-          </div>
-
-          {/* Principle cards */}
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              { icon: Handshake, title: "Menyatukan", desc: "BUMDes adalah rumah bersama bagi seluruh pelaku ekonomi kecil di desa — petani, pengrajin, hingga pedagang lokal." },
-              { icon: Shield, title: "Melindungi", desc: "Hadir sebagai payung yang memastikan usaha kecil tidak terpinggirkan oleh kepentingan modal besar." },
-              { icon: Sprout, title: "Bukan Mendominasi", desc: "BUMDes tumbuh bersama, bukan di atas usaha warga — pertumbuhan yang inklusif dan berkeadilan." },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="group bg-white/[0.1] backdrop-blur-sm border border-white/[0.12] rounded-2xl p-7 hover:bg-white/[0.18] hover:border-white/[0.22] transition-all duration-400">
-                <div className="w-11 h-11 rounded-xl bg-white/[0.12] flex items-center justify-center mb-5 group-hover:bg-white/[0.2] transition-colors">
-                  <Icon className="w-5 h-5 text-[#EDE6D8]" />
-                </div>
-                <h4 className="text-white font-bold font-serif text-base mb-2">
-                  {title}
-                </h4>
-                <p className="text-white/55 text-xs leading-relaxed">
-                  {desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
