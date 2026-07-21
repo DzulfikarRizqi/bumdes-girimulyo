@@ -7,10 +7,10 @@ function getSecret(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
-export async function signToken(payload: Record<string, unknown>): Promise<string> {
+export async function signToken(payload: Record<string, unknown>, expiresIn = "10m"): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("24h")
+    .setExpirationTime(expiresIn)
     .sign(getSecret());
 }
 
@@ -19,18 +19,26 @@ export async function verifyToken(token: string) {
   return payload;
 }
 
-export function getTokenFromRequest(request: NextRequest): string | null {
+function getCookieValue(request: NextRequest, name: string): string | null {
   const cookieHeader = request.headers.get("cookie") || "";
   const cookies = cookieHeader.split(";").map((c) => c.trim());
   for (const cookie of cookies) {
-    const [name, ...rest] = cookie.split("=");
-    if (name === "token") return rest.join("=");
+    const [key, ...rest] = cookie.split("=");
+    if (key === name) return rest.join("=");
   }
   return null;
 }
 
+export function getTokenFromCookie(request: NextRequest): string | null {
+  return getCookieValue(request, "token");
+}
+
+export function getTempTokenFromCookie(request: NextRequest): string | null {
+  return getCookieValue(request, "temp_token");
+}
+
 export async function requireAuth(request: NextRequest): Promise<boolean> {
-  const token = getTokenFromRequest(request);
+  const token = getTokenFromCookie(request);
   if (!token) return false;
   try {
     await verifyToken(token);

@@ -3,8 +3,14 @@ import type { Booking } from "./types";
 import { normalizeDateValue } from "./date";
 
 const SHEET_NAME = "Booking Kamar";
+const CACHE_TTL = 10_000;
 
 let sheetsClient: ReturnType<typeof google.sheets> | null = null;
+let bookingsCache: { data: Booking[]; timestamp: number } | null = null;
+
+function invalidateBookingCache() {
+  bookingsCache = null;
+}
 
 function getSheets() {
   if (sheetsClient) return sheetsClient;
@@ -132,6 +138,10 @@ function rowToBooking(row: unknown[], index: number): Booking {
 }
 
 export async function getAllBookings(): Promise<Booking[]> {
+  if (bookingsCache && Date.now() - bookingsCache.timestamp < CACHE_TTL) {
+    return bookingsCache.data;
+  }
+
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: getSpreadsheetId(),
@@ -140,9 +150,16 @@ export async function getAllBookings(): Promise<Booking[]> {
   });
 
   const rows = res.data.values as unknown[][] | undefined | null;
-  return (rows || [])
+  const bookings = (rows || [])
     .filter((row): row is unknown[] => !!(row && row[1] && String(row[1]).trim().startsWith("BK")))
     .map((row, i) => rowToBooking(row, i));
+
+  bookingsCache = { data: bookings, timestamp: Date.now() };
+  return bookings;
+}
+
+export function invalidateCache() {
+  invalidateBookingCache();
 }
 
 export async function getBookingSheetRow(idBooking: string): Promise<number | null> {
@@ -180,6 +197,7 @@ export async function addBooking(booking: Booking): Promise<void> {
     valueInputOption: "USER_ENTERED",
     requestBody: { values: [bookingToRow(booking)] },
   });
+  invalidateBookingCache();
 }
 
 export async function updateBooking(
@@ -194,6 +212,7 @@ export async function updateBooking(
     valueInputOption: "USER_ENTERED",
     requestBody: { values: [bookingToRow(booking)] },
   });
+  invalidateBookingCache();
 }
 
 async function getSheetIdByName(name: string): Promise<number> {
@@ -232,6 +251,7 @@ export async function deleteBooking(rowIndex: number): Promise<void> {
       ],
     },
   });
+  invalidateBookingCache();
 }
 
 export async function getNextBookingNumber(): Promise<number> {

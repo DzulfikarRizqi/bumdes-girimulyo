@@ -3,7 +3,6 @@ import { requireAuth } from "@/lib/auth";
 import {
   getAllBookings,
   addBooking,
-  getNextBookingNumber,
 } from "@/lib/google-sheets";
 import { getRoomByNomor } from "@/lib/rooms";
 import { parseDateValue } from "@/lib/date";
@@ -71,12 +70,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = (await request.json()) as Partial<Booking>;
-    const num = await getNextBookingNumber();
+    const existing = await getAllBookings();
+    const num = existing.length === 0 ? 1 : Math.max(...existing.map((b) => b.no)) + 1;
     const room = getRoomByNomor(body.nomorKamar || "");
     const fields = calculateFields(body, room?.hargaPerMalam);
 
     if (body.tanggalCheckIn && body.tanggalCheckOut && body.nomorKamar) {
-      const existing = await getAllBookings();
       if (isOverlap(existing, body.nomorKamar, body.tanggalCheckIn, body.tanggalCheckOut)) {
         return NextResponse.json(
           { error: "Kamar sudah dipesan pada tanggal tersebut" },
