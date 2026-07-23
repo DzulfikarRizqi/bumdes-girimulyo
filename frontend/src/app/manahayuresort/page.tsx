@@ -1,25 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Navbar from "@/components/ui/Navbar";
 import {
   Wifi, Wind, Coffee, Bath, Tv, TreePine,
-  Phone, Star, Users, Maximize, HeartHandshake,
-  Music, Camera, Briefcase, BookOpen, Landmark,
-  ArrowRight
+  Phone, Users, Maximize, HeartHandshake,
+  Camera, Landmark,
+  ArrowRight, X, ChevronLeft, ChevronRight, ImageIcon
 } from "lucide-react";
 import Footer from "@/components/ui/Footer";
 import Image from "next/image";
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function getImageSrc(img: string): string {
+  return img.startsWith("/") ? img : `https://images.unsplash.com/${img}?w=1200&h=800&fit=crop&auto=format`;
+}
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const WA_RESORT = process.env.NEXT_PUBLIC_WA_RESORT ?? "";
 
 const ROOMS = [
   {
-    img: "photo-1768178540284-ab256d312e61",
-    name: "Cottage Kayu",
+    images: ["photo-1768178540284-ab256d312e61"],
+    name: "Special Room",
     desc: "Cottage kayu tradisional dengan kolam pribadi dan pemandangan hutan pinus. Nuansa alam yang intim dan tenang.",
-    price: "Rp 850.000",
+    price: "Rp 599.000",
     rating: 4.9,
     reviews: 87,
     capacity: 2,
@@ -29,10 +34,10 @@ const ROOMS = [
     color: "#2C5F1A",
   },
   {
-    img: "photo-1760942992111-a65227a3b266",
-    name: "Villa Tropis",
+    images: ["/family-1.webp", "/family-2.webp"],
+    name: "Family Room",
     desc: "Villa luas berlantai dua dengan kolam renang bersama, teras panorama, dan ruang keluarga berdesain tropis modern.",
-    price: "Rp 1.400.000",
+    price: "Rp 399.000",
     rating: 4.8,
     reviews: 62,
     capacity: 4,
@@ -42,10 +47,10 @@ const ROOMS = [
     color: "#8B5E3C",
   },
   {
-    img: "photo-1749453841669-5661423f5bc6",
-    name: "Lakeside Cabin",
+    images: ["/couple-1.webp", "/couple-2.webp", "/couple-3.webp", "/couple-4.webp"],
+    name: "Couple Room",
     desc: "Kabin kayu di tepi danau buatan. Pemandangan air sepanjang hari, dilengkapi kayak dan pancing gratis untuk tamu.",
-    price: "Rp 1.100.000",
+    price: "Rp 299.000",
     rating: 4.9,
     reviews: 45,
     capacity: 2,
@@ -62,20 +67,8 @@ const PENDOPO_USES = [
     desc: "Suasana Joglo yang otentik menjadi latar pernikahan yang tak terlupakan. Pendopo dapat diatur untuk resepsi dengan kapasitas hingga 150 tamu, lengkap dengan area pelaminan dan taman sekitarnya.",
   },
   {
-    icon: Music, title: "Pertunjukan Seni",
-    desc: "Panggung alami untuk pagelaran tari tradisional, gamelan, dan kesenian Jawa. Struktur kayu terbuka menciptakan akustik alami dan pencahayaan yang memukau saat senja.",
-  },
-  {
     icon: Camera, title: "Lokasi Syuting & Fotografi",
     desc: "Arsitektur Joglo kayu jati dengan atap tumpang tiga dan pemandangan perbukitan hijau menjadikan pendopo lokasi favorit untuk film, iklan, dan sesi foto prewedding.",
-  },
-  {
-    icon: Briefcase, title: "Acara Korporat & Seminar",
-    desc: "Rapat kerja, team building, atau seminar dalam setting yang berbeda dari ruang kantor biasa. Tersedia proyektor, sound system, dan area breakout outdoor.",
-  },
-  {
-    icon: BookOpen, title: "Workshop & Kelas Seni",
-    desc: "Tempat belajar membatik, merajut, atau memasak masakan tradisional Jawa. Instruktur lokal dari Desa Giripurno memandu peserta dalam suasana yang autentik.",
   },
   {
     icon: Landmark, title: "Upacara Adat & Budaya",
@@ -227,8 +220,8 @@ function PendopoSection() {
               Venue Serbaguna
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-[#1C1A16] leading-tight mb-5 font-serif">
-              Pendopo{" "}
-              <em className="italic font-light text-[#2C5F1A]">Manahayu</em>
+              Pendopo 
+              <em className="italic text-[#2C5F1A]">Manahayu</em>
             </h2>
             <p className="text-[#6B5E4A] text-sm leading-relaxed mb-4">
               Di jantung Manahayu Resort berdiri sebuah pendopo Joglo tradisional beratap tumpang tiga,
@@ -275,7 +268,120 @@ function PendopoSection() {
   );
 }
 
-function RoomCatalog() {
+function GalleryLightbox({
+  room,
+  imgIdx,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  room: (typeof ROOMS)[number];
+  imgIdx: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose, onPrev, onNext]);
+
+  const total = room.images.length;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex flex-col"
+      onClick={onClose}
+      role="dialog"
+      aria-label={`Galeri ${room.name}`}
+    >
+      {/* Top bar */}
+      <div className="flex items-center justify-between px-4 md:px-6 py-4 shrink-0">
+        <div className="flex items-center gap-3">
+          <span className="text-white/60 text-xs tracking-wider uppercase font-medium">{room.name}</span>
+          <span className="text-white/25 text-xs">{imgIdx + 1} / {total}</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+          aria-label="Tutup"
+        >
+          <X className="w-5 h-5 text-white" />
+        </button>
+      </div>
+
+      {/* Image area */}
+      <div className="flex-1 relative flex items-center justify-center px-4" onClick={(e) => e.stopPropagation()}>
+        <div className="relative w-full h-full max-w-5xl max-h-[80vh]">
+          <Image
+            src={getImageSrc(room.images[imgIdx])}
+            alt={`${room.name} — Foto ${imgIdx + 1}`}
+            fill
+            sizes="(max-width: 1024px) calc(100vw - 32px), 1024px"
+            className="object-contain"
+            priority
+          />
+        </div>
+
+        {/* Nav arrows */}
+        {total > 1 && (
+          <>
+            <button
+              onClick={onPrev}
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Sebelumnya"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
+            <button
+              onClick={onNext}
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Berikutnya"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Dot indicators */}
+      {total > 1 && (
+        <div className="flex items-center justify-center gap-2 py-4 shrink-0">
+          {room.images.map((_, i) => (
+            <button
+              key={i}
+              onClick={(e) => {
+                e.stopPropagation();
+                const diff = i - imgIdx;
+                if (diff > 0) for (let j = 0; j < diff; j++) onNext();
+                else for (let j = 0; j < -diff; j++) onPrev();
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                i === imgIdx ? "bg-white w-6" : "bg-white/30 hover:bg-white/50"
+              }`}
+              aria-label={`Foto ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RoomCatalog({
+  onOpenGallery,
+}: {
+  onOpenGallery: (roomIdx: number, imgIdx: number) => void;
+}) {
   useScrollReveal();
 
   return (
@@ -295,7 +401,7 @@ function RoomCatalog() {
           </p>
         </div>
 
-        {/* Staggered grid: first card full-width, rest in 2-col */}
+        {/* Staggered grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {ROOMS.map((room, i) => (
             <div
@@ -304,26 +410,41 @@ function RoomCatalog() {
               style={{ transitionDelay: `${i * 0.15}s` }}
             >
               {/* Image */}
-              <div className={`relative overflow-hidden bg-[#1C3A10] ${i === 0 ? "md:col-span-2 min-h-[300px]" : "h-56"}`}>
+              <div
+                className={`relative overflow-hidden bg-[#1C3A10] cursor-pointer ${i === 0 ? "md:col-span-2 min-h-[300px]" : "h-56"}`}
+                onClick={() => onOpenGallery(i, 0)}
+              >
                 <Image
-                  src={`https://images.unsplash.com/${room.img}?w=800&h=500&fit=crop&auto=format`}
+                  src={getImageSrc(room.images[0])}
                   alt={`${room.name} Manahayu Resort`}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                {/* Rating badge */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1 shadow-lg">
-                  <Star className="w-3 h-3 fill-[#F59E0B] text-[#F59E0B]" />
-                  <span className="text-[#1C1A16] text-xs font-bold">{room.rating}</span>
-                  <span className="text-[#6B5E4A] text-[10px]">({room.reviews})</span>
-                </div>
-                {/* Price on image for compact cards */}
+
+                {/* Multi-image badge */}
+                {room.images.length > 1 && (
+                  <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white/90 text-[10px] font-medium px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                    <ImageIcon className="w-3 h-3" />
+                    {room.images.length}
+                  </div>
+                )}
+
+                {/* Price badge on compact cards */}
                 {i !== 0 && (
                   <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
                     <div className="text-[10px] text-[#6B5E4A] font-medium">Mulai</div>
                     <div className="font-bold font-serif text-sm" style={{ color: room.color }}>{room.price}</div>
+                  </div>
+                )}
+
+                {/* Hover hint */}
+                {room.images.length > 1 && (
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <span className="text-white/0 group-hover:text-white/90 text-xs font-medium tracking-wider transition-all duration-300 translate-y-2 group-hover:translate-y-0 flex items-center gap-1.5">
+                      <ImageIcon className="w-3.5 h-3.5" /> Lihat {room.images.length} Foto
+                    </span>
                   </div>
                 )}
               </div>
@@ -393,13 +514,51 @@ function RoomCatalog() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function ManahayuResort() {
   useScrollReveal();
+  const [gallery, setGallery] = useState<{ roomIdx: number; imgIdx: number } | null>(null);
+
+  const openGallery = useCallback((roomIdx: number, imgIdx: number) => {
+    setGallery({ roomIdx, imgIdx });
+  }, []);
+
+  const closeGallery = useCallback(() => {
+    setGallery(null);
+  }, []);
+
+  const prevImage = useCallback(() => {
+    if (!gallery) return;
+    const total = ROOMS[gallery.roomIdx].images.length;
+    setGallery({
+      ...gallery,
+      imgIdx: (gallery.imgIdx - 1 + total) % total,
+    });
+  }, [gallery]);
+
+  const nextImage = useCallback(() => {
+    if (!gallery) return;
+    const total = ROOMS[gallery.roomIdx].images.length;
+    setGallery({
+      ...gallery,
+      imgIdx: (gallery.imgIdx + 1) % total,
+    });
+  }, [gallery]);
 
   return (
     <div className="min-h-screen bg-[#F7F3EC]">
       <Navbar />
       <Hero />
       <PendopoSection />
-      <RoomCatalog />
+      <RoomCatalog onOpenGallery={openGallery} />
+
+      {gallery && (
+        <GalleryLightbox
+          room={ROOMS[gallery.roomIdx]}
+          imgIdx={gallery.imgIdx}
+          onClose={closeGallery}
+          onPrev={prevImage}
+          onNext={nextImage}
+        />
+      )}
+
       <Footer />
     </div>
   );
