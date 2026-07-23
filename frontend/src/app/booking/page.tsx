@@ -134,11 +134,22 @@ export default function BookingLogin() {
   return (
     <div className="min-h-screen bg-[#FDF8F0] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#1C1A16] font-serif">
-            Manahayu Resort
-          </h1>
-          <p className="text-[#8B5E3C] text-sm font-medium mt-1 tracking-wide uppercase">
+        <div className="mb-8">
+          <div className="flex items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => router.push("/manahayuresort")}
+              className="w-10 h-10 rounded-full border border-[#636361] bg-[#7F7F7F] flex items-center justify-center text-[#FFFFFF] hover:text-[#0F0F0F] hover:bg-[#D4D4D4] transition-colors cursor-pointer shrink-0"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <h1 className="text-3xl font-bold text-[#1C1A16] font-serif">
+              Manahayu Resort
+            </h1>
+          </div>
+          <p className="text-center text-[#8B5E3C] text-sm font-medium mt-1 tracking-wide uppercase">
             Admin Panel
           </p>
         </div>
@@ -281,7 +292,7 @@ export default function BookingLogin() {
         </div>
 
         <p className="text-center text-[#A89A86] text-xs mt-6">
-          &copy; {new Date().getFullYear()} Manahayu Resort &middot; BUMDes Girimulyo
+          &copy; {new Date().getFullYear()}{" "}Manahayu Resort &middot; BUMDes Girimulyo
         </p>
       </div>
     </div>

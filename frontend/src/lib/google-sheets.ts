@@ -57,7 +57,7 @@ function serialToDate(serial: number): string {
   let year = 1900;
 
   while (true) {
-    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    const leap = year === 1900 || (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
     const daysInYear = leap ? 366 : 365;
     if (remaining <= daysInYear) break;
     remaining -= daysInYear;
@@ -67,7 +67,7 @@ function serialToDate(serial: number): string {
   let month = 1;
   for (let m = 0; m < 12; m++) {
     let dim = DAYS_IN_MONTH[m];
-    if (m === 1 && year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
+    if (m === 1 && (year === 1900 || (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)))) {
       dim = 29;
     }
     if (remaining <= dim) break;

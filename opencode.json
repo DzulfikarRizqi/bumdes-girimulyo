@@ -9,5 +9,11 @@
         "API_KEY": "{env:TESTSPRITE}"
       }
     }
+  },
+  "lsp": {
+    "typescript-server": {
+      "command": ["typescript-language-server", "--stdio"],
+      "extensions": [".ts", ".tsx", ".js", ".jsx"]
+    }
   }
 }
